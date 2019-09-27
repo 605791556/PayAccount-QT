@@ -1,6 +1,9 @@
 #include "paycount_qt.h"
 #include "CLockDlg.h"
 #include "CStaffMngDlg.h"
+#include "CSetPwdDlg.h"
+#include "CUserMngDlg.h"
+#include "CBookMngDlg.h"
 
 void PayAccountCallback(void* p,string strData)
 {
@@ -201,7 +204,7 @@ void PayCount_QT::BtnMax()
 
 void PayCount_QT::BtnInit()
 {
-	int nType = QMessageBox::question(this,CH("警告"),CH("初始化操作将会清除所有数据！确认继续此操作？"),
+	int nType = QMessageBox::warning(this,CH("警告"),CH("初始化操作将会清除所有数据！确认继续此操作？"),
 		QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
 	switch(nType)
 	{
@@ -227,11 +230,13 @@ void PayCount_QT::BtnInit()
 }
 void PayCount_QT::BtnAccount()
 {
-	
+	CUserMngDlg dlg;
+	dlg.exec();
 }
 void PayCount_QT::BtnPwd()
 {
-
+	CSetPwdDlg dlg;
+	dlg.exec();
 }
 void PayCount_QT::BtnStaff()
 {
@@ -240,7 +245,8 @@ void PayCount_QT::BtnStaff()
 }
 void PayCount_QT::BtnBook()
 {
-
+	CBookMngDlg dlg;
+	dlg.exec();
 }
 void PayCount_QT::BtnProject()
 {

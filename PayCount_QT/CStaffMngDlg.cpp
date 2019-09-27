@@ -175,7 +175,7 @@ void CStaffMngDlg::SetListCtrlValue()
 		n++;
 	}
 
-	str = QString(CH("共%1条记录")).arg(nCount);
+	str = QString(CH("共%1条记录")).arg(m_nCount);
 	ui.label_number->setText(str);
 	int ns = m_nCount%20;
 	m_nPage = m_nCount/20;
@@ -284,6 +284,11 @@ void CStaffMngDlg::st_BtnEdit()
 	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
 	int nRow = btn->property("button").toInt();
 	QString strStaffID = ui.tableWidget->item(nRow,1)->data(1).toString();
+
+	CAddStaffDlg dlg(this,false,nRow);
+	dlg.exec();
+
+	g_Globle.SetCallback(StaffMngCallback,this);
 	
 }
 void CStaffMngDlg::st_BtnDel()
@@ -315,6 +320,8 @@ void CStaffMngDlg::BtnAdd()
 {
 	CAddStaffDlg dlg;
 	dlg.exec();
+
+	g_Globle.SetCallback(StaffMngCallback,this);
 }
 void CStaffMngDlg::BtnGo()
 {

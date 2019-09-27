@@ -22,6 +22,7 @@
 #include <QStandardItemModel>
 #include <QComboBox>
 #include <QScrollBar>
+#include <QHBoxLayout>
 #include "common.h"
 #include <json/json.h>
 #include <json/config.h>

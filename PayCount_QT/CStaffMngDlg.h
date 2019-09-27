@@ -15,7 +15,6 @@ public:
 	CStaffMngDlg(QWidget *parent = 0);
 	~CStaffMngDlg();
 
-private:
 	Ui::CStaffMngDlg ui;
 	void resizeEvent(QResizeEvent *);
 
