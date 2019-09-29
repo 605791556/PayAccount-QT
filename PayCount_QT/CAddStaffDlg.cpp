@@ -73,6 +73,7 @@ CAddStaffDlg::CAddStaffDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	m_bAdd = bAdd;
 	m_row  = row;
 	ui.setupUi(this);
+	CGloble::SetButtonStyle(ui.BTN_SAVE,":/PayCount_QT/pic/ok.png",3);
 	connect(this,&CAddStaffDlg::sg_CalBak,this,&CAddStaffDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 	InitDlg(stfMng,bAdd);
@@ -188,8 +189,10 @@ void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,int age,QString
 	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_MDF_STAFF;
-	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=strName.toStdString();
-	root[CMD_STAFFMSG[EM_STAFF_MSG_SEX]]=strSex.toStdString();
+	string sstrname = strName.toLocal8Bit();
+	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=sstrname;
+	string sstrsex = strSex.toLocal8Bit();
+	root[CMD_STAFFMSG[EM_STAFF_MSG_SEX]]=sstrsex;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_AGE]]=age;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]]=strStaffID.toStdString();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_IDCARD]]=strIdcard.toStdString();

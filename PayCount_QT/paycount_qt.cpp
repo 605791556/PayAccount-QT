@@ -222,10 +222,6 @@ void PayCount_QT::BtnInit()
 			}
 		}
 		break;
-	case QMessageBox::Cancel:
-		break;
-	default:
-		break;
 	}
 }
 void PayCount_QT::BtnAccount()

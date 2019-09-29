@@ -15,7 +15,6 @@ public:
 	CBookMngDlg(QWidget *parent = 0);
 	~CBookMngDlg();
 
-private:
 	Ui::CBookMngDlg ui;
 	void resizeEvent(QResizeEvent *);
 

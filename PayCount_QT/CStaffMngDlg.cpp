@@ -286,9 +286,10 @@ void CStaffMngDlg::st_BtnEdit()
 	QString strStaffID = ui.tableWidget->item(nRow,1)->data(1).toString();
 
 	CAddStaffDlg dlg(this,false,nRow);
-	dlg.exec();
-
+	int nType = dlg.exec();
 	g_Globle.SetCallback(StaffMngCallback,this);
+	if(nType == QDialog::Accepted)
+		BtnFind();
 	
 }
 void CStaffMngDlg::st_BtnDel()
@@ -319,9 +320,11 @@ void CStaffMngDlg::BtnFind()
 void CStaffMngDlg::BtnAdd()
 {
 	CAddStaffDlg dlg;
-	dlg.exec();
+	int nType = dlg.exec();
 
 	g_Globle.SetCallback(StaffMngCallback,this);
+	if(nType == QDialog::Accepted)
+		BtnFind();
 }
 void CStaffMngDlg::BtnGo()
 {

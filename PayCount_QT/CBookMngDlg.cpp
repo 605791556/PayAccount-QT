@@ -1,4 +1,5 @@
 #include "CBookMngDlg.h"
+#include "CAddBookDlg.h"
 
 void BookMngCallback(void* p,string strData)
 {
@@ -69,7 +70,6 @@ CBookMngDlg::CBookMngDlg(QWidget *parent)
 	connect(this,&CBookMngDlg::sg_CalBak,this,&CBookMngDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
 	connect(ui.BTN_FIND,SIGNAL(clicked()),this,SLOT(BtnFind()));
-	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
 	connect(ui.BTN_GO,SIGNAL(clicked()),this,SLOT(BtnGo()));
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
@@ -117,30 +117,6 @@ void CBookMngDlg::InitListCtrl()
 	ui.tableWidget->setColumnWidth(15,75);
 }
 
-void CBookMngDlg::st_BtnEdit()
-{
-	QObject *pObject = this->sender();
-	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
-	int nRow = btn->property("button").toInt();
-	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
-
-}
-void CBookMngDlg::st_BtnDel()
-{
-	QObject *pObject = this->sender();
-	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
-	int nRow = btn->property("button").toInt();
-	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
-	QString strName = ui.tableWidget->item(nRow,2)->text();
-
-	QString str = QString(CH("该操作将会删除与该书相关的所有记录，包括（进度，明细，做工统计），确认删除 %1？")).arg(strName);
-	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
-	if (nType == QMessageBox::Ok)
-	{
-		SendToDelBook(strBookID);
-	}
-}
-
 void CBookMngDlg::SetListCtrlValue()
 {
 	ui.tableWidget->clearContents();
@@ -185,7 +161,7 @@ void CBookMngDlg::SetListCtrlValue()
 		//令数
 		str = QString::number(m_vet[i].fLs,'f',2);
 		ui.tableWidget->setItem(i,10,new QTableWidgetItem(str));
-		
+		//印张类型
 		if (m_vet[i].type != BOOK_TYPE_MAX)
 		{
 			ui.tableWidget->setItem(i,11,new QTableWidgetItem(BookType[m_vet[i].type]));
@@ -348,7 +324,8 @@ void CBookMngDlg::GetBook(Json::Value root)
 		stu.type=(BOOK_TYPE)one[CMD_BOOKMSG[BOOKMSG_B_TYPE]].asInt();
 		stu.zyType=(ZHEYEPAY_TYPE)one[CMD_BOOKMSG[BOOKMSG_ZY_TYPE]].asInt();
 		stu.rkType=(BOOK_RK)one[CMD_BOOKMSG[BOOKMSG_RK_TYPE]].asInt();
-		stu.strMsg=one[CMD_BOOKMSG[BOOKMSG_MSG]].asCString();
+		const char* cstr3 = one[CMD_BOOKMSG[BOOKMSG_MSG]].asCString();
+		stu.strMsg=CH(cstr3);
 		//按时间排序
 		if(m_vet.size() == 0)
 			m_vet.push_back(stu);
@@ -388,6 +365,35 @@ void CBookMngDlg::FindBook(int pageDex)
 	SendToGetBook(strKeyWord,m_rkType,m_date_Type,(pageDex-1)*20,20);
 }
 
+void CBookMngDlg::st_BtnEdit()
+{
+	QObject *pObject = this->sender();
+	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
+	int nRow = btn->property("button").toInt();
+	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
+	CAddBookDlg dlg(this,false,nRow);
+	int nType = dlg.exec();
+	g_Globle.SetCallback(BookMngCallback,this);
+	if(nType == QDialog::Accepted)
+		BtnFind();
+}
+
+void CBookMngDlg::st_BtnDel()
+{
+	QObject *pObject = this->sender();
+	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
+	int nRow = btn->property("button").toInt();
+	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
+	QString strName = ui.tableWidget->item(nRow,2)->text();
+
+	QString str = QString(CH("该操作将会删除与该书相关的所有记录，包括（进度，明细，做工统计），确认删除 %1？")).arg(strName);
+	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
+	if (nType == QMessageBox::Ok)
+	{
+		SendToDelBook(strBookID);
+	}
+}
+
 void CBookMngDlg::BtnFind()
 {
 	m_dex = 1;
@@ -403,7 +409,11 @@ void CBookMngDlg::BtnFind()
 }
 void CBookMngDlg::BtnAdd()
 {
-	
+	CAddBookDlg dlg;
+	int nType = dlg.exec();
+	g_Globle.SetCallback(BookMngCallback,this);
+	if(nType == QDialog::Accepted)
+		BtnFind();
 }
 void CBookMngDlg::BtnGo()
 {
