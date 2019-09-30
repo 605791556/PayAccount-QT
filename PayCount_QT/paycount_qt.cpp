@@ -4,6 +4,7 @@
 #include "CSetPwdDlg.h"
 #include "CUserMngDlg.h"
 #include "CBookMngDlg.h"
+#include "CProMngDlg.h"
 
 void PayAccountCallback(void* p,string strData)
 {
@@ -246,7 +247,8 @@ void PayCount_QT::BtnBook()
 }
 void PayCount_QT::BtnProject()
 {
-
+	CProMngDlg dlg;
+	dlg.exec();
 }
 void PayCount_QT::BtnPay()
 {

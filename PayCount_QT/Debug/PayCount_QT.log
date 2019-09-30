@@ -1,5 +1,62 @@
-﻿生成启动时间为 2019/9/29 16:34:15。
+﻿生成启动时间为 2019/9/30 10:49:00。
+     1>项目“D:\PayAccount-QT\PayCount_QT\PayCount_QT.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“Debug\PayCount_QT.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       CustomBuild:
+         所有输出均为最新。
+       ClCompile:
+         d:\VS2010\VC\bin\CL.exe /c /I.\GeneratedFiles /I. /IC:\Qt\Qt5.4.0\5.4\msvc2010_opengl\include /I.\GeneratedFiles\Debug /IC:\Qt\Qt5.4.0\5.4\msvc2010_opengl\include\QtCore /IC:\Qt\Qt5.4.0\5.4\msvc2010_opengl\include\QtGui /IC:\Qt\Qt5.4.0\5.4\msvc2010_opengl\include\QtWidgets /I"D:\PayAccount-QT\PayCount_QT\HP-Socket\Common\Src" /I"D:\PayAccount-QT\PayCount_QT\HP-Socket\Src" /I"D:\PayAccount-QT\PayCount_QT\HP-Socket\Global" /I"D:\PayAccount-QT\PayCount_QT\jsonCpp\include" /Zi /nologo /W1 /WX- /Od /Oy- /D UNICODE /D WIN32 /D WIN64 /D QT_DLL /D QT_CORE_LIB /D QT_GUI_LIB /D QT_WIDGETS_LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CProMngDlg.cpp
+         CProMngDlg.cpp
+     1>CProMngDlg.cpp(137): warning C4482: 使用了非标准扩展: 限定名中使用了枚举“Qt::AlignmentFlag”
+         所有输出均为最新。
+       Link:
+         d:\VS2010\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\PayAccount-QT\Win32\Debug\\PayCount_QT.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Qt\Qt5.4.0\5.4\msvc2010_opengl\lib /LIBPATH:"D:\PayAccount-QT\PayCount_QT\HP-Socket\lib" /LIBPATH:"D:\PayAccount-QT\PayCount_QT\jsonCpp\lib" qtmaind.lib Qt5Cored.lib Qt5Guid.lib Qt5Widgetsd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\PayCount_QT.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\PayAccount-QT\Win32\Debug\PayCount_QT.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\PayAccount-QT\Win32\Debug\PayCount_QT.lib" /MACHINE:X86 Debug\CAddBookDlg.obj
+         Debug\CAddStaffDlg.obj
+         Debug\CAddUserDlg.obj
+         Debug\CBookMngDlg.obj
+         Debug\CDayPayDlg.obj
+         Debug\cgloble.obj
+         Debug\CLockDlg.obj
+         Debug\CLogin.obj
+         Debug\common.obj
+         Debug\CProMngDlg.obj
+         Debug\CSetDlg.obj
+         Debug\CSetPwdDlg.obj
+         Debug\CTabMonthDlg.obj
+         Debug\CTabWorkDayDlg.obj
+         Debug\CStaffMngDlg.obj
+         Debug\CUserMngDlg.obj
+         Debug\moc_CAddBookDlg.obj
+         Debug\moc_CAddStaffDlg.obj
+         Debug\moc_CAddUserDlg.obj
+         Debug\moc_CBookMngDlg.obj
+         Debug\moc_CDayPayDlg.obj
+         Debug\moc_cgloble.obj
+         Debug\moc_CLockDlg.obj
+         Debug\moc_CLogin.obj
+         Debug\moc_CProMngDlg.obj
+         Debug\moc_CSetDlg.obj
+         Debug\moc_CSetPwdDlg.obj
+         Debug\moc_CStaffMngDlg.obj
+         Debug\moc_CTabMonthDlg.obj
+         Debug\moc_CTabWorkDayDlg.obj
+         Debug\moc_CUserMngDlg.obj
+         Debug\moc_myThread.obj
+         Debug\moc_paycount_qt.obj
+         Debug\qrc_paycount_qt.obj
+         Debug\helper.obj
+         Debug\main.obj
+         Debug\myThread.obj
+         Debug\paycount_qt.obj
+     1>json_vc71_libmtd.lib(json_value.obj) : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/INCREMENTAL:NO”规范)
+         PayCount_QT.vcxproj -> D:\PayAccount-QT\Win32\Debug\PayCount_QT.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\PayAccount-QT\Win32\Debug\\PayCount_QT.exe;#1" /manifest Debug\PayCount_QT.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         正在删除文件“Debug\PayCount_QT.unsuccessfulbuild”。
+         正在对“Debug\PayCount_QT.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“D:\PayAccount-QT\PayCount_QT\PayCount_QT.vcxproj”(build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:00.00
+已用时间 00:00:03.56
