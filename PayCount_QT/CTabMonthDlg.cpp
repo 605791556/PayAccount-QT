@@ -5,6 +5,105 @@ CTabMonthDlg* gTabMonthDlg = NULL;
 void CalBakThread(void* pdata);
 void MonthCheckCallback(void* p,string strData);
 
+void MonthCheckCallback(void* p,string strData)
+{
+	CTabMonthDlg* pThis=(CTabMonthDlg*) p;
+	if ( pThis==NULL)
+		return;
+	else
+	{
+		string* pStrData = new string;
+		*pStrData = strData;
+		emit pThis->sg_CalBak(pStrData);
+	}
+}
+
+void CTabMonthDlg::st_CalBak(void* pdata)
+{
+	QtConcurrent::run(CalBakThread,pdata);
+}
+
+void CalBakThread(void* pdata)
+{
+	string* pStrData = (string*)pdata;
+	Json::Reader r;
+	Json::Value root;
+	r.parse(*pStrData,root);
+	delete pStrData;
+
+	EM_SOCK_CMD cmd = (EM_SOCK_CMD)root[CONNECT_CMD].asInt();
+	EM_CMD_RET ret = (EM_CMD_RET)root[CMD_RetType[EM_CMD_RETYPE_RESULT]].asInt();
+
+	switch (cmd)
+	{
+	case SOCK_CMD_GET_SAMPLE_STAFF:
+		{
+			if (ret == NET_CMD_FAIL)
+				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_FAIL);
+			else
+			{
+				gTabMonthDlg->GetStaff(root);
+				if(!gTabMonthDlg->SendToGetMonthPay())
+					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,false);
+				else
+					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,true);
+			}
+		}
+		break;
+	case SOCK_CMD_GET_MPAY:
+		{
+			if (ret == NET_CMD_FAIL)
+			{
+				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_MPAY,NET_CMD_FAIL);
+			}
+			else
+			{
+				QString strPay = gTabMonthDlg->GetMonthPay(root);
+				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_MPAY,NET_CMD_SUC,true,strPay);
+			}
+		}
+		break;
+
+	}
+}
+
+void CTabMonthDlg::st_ThCal(EM_SOCK_CMD cmd,EM_CMD_RET ret,bool rst,QString strPay)
+{
+	switch (cmd)
+	{
+	case SOCK_CMD_GET_SAMPLE_STAFF:
+		{
+			if (ret == NET_CMD_FAIL)
+				QMessageBox::information(this, CH("错误"), CH("获取职工信息失败！"));
+			else
+			{
+				if (!rst)
+					QMessageBox::information(this, CH("提示"), CH("发送网络请求失败，请检查网络是否正常！"));
+				else
+					SetCtrlVisible(false);
+			}
+
+		}
+		break;
+	case SOCK_CMD_GET_MPAY:
+		{
+			if (ret == NET_CMD_FAIL)
+			{
+				SetCtrlVisible(true);
+				QMessageBox::information(this, CH("错误"), CH("获取数据失败！"));
+			}
+			else
+			{
+				ui.label_pay->setText(strPay);
+				SetCtrlVisible(true);
+				SetListValue();
+			}
+		}
+		break;
+
+	}
+}
+
 CTabMonthDlg::CTabMonthDlg(QWidget *parent)
 	: QWidget(parent)
 {
@@ -30,6 +129,7 @@ CTabMonthDlg::CTabMonthDlg(QWidget *parent)
 	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
 	ui.label_load->setMovie(m_pMovie);
 	ui.label_load->setVisible(false);
+	pageIn();
 }
 
 CTabMonthDlg::~CTabMonthDlg()
@@ -403,107 +503,6 @@ void CTabMonthDlg::st_KeyWordChanged(const QString & strKeyWord)
 
 void CTabMonthDlg::BtnUpdate()
 {
+	g_Globle.SetCallback(MonthCheckCallback,this);
 	SendToGetStaff();
-}
-
-void MonthCheckCallback(void* p,string strData)
-{
-	CTabMonthDlg* pThis=(CTabMonthDlg*) p;
-
-	if ( pThis==NULL)
-	{
-		return;
-	}
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
-void CTabMonthDlg::st_CalBak(void* pdata)
-{
-	QtConcurrent::run(CalBakThread,pdata);
-}
-
-void CalBakThread(void* pdata)
-{
-	string* pStrData = (string*)pdata;
-	Json::Reader r;
-	Json::Value root;
-	r.parse(*pStrData,root);
-	delete pStrData;
-
-	EM_SOCK_CMD cmd = (EM_SOCK_CMD)root[CONNECT_CMD].asInt();
-	EM_CMD_RET ret = (EM_CMD_RET)root[CMD_RetType[EM_CMD_RETYPE_RESULT]].asInt();
-
-	switch (cmd)
-	{
-	case SOCK_CMD_GET_SAMPLE_STAFF:
-		{
-			if (ret == NET_CMD_FAIL)
-				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_FAIL);
-			else
-			{
-				gTabMonthDlg->GetStaff(root);
-				if(!gTabMonthDlg->SendToGetMonthPay())
-					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,false);
-				else
-					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,true);
-			}
-		}
-		break;
-	case SOCK_CMD_GET_MPAY:
-		{
-			if (ret == NET_CMD_FAIL)
-			{
-				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_MPAY,NET_CMD_FAIL);
-			}
-			else
-			{
-				QString strPay = gTabMonthDlg->GetMonthPay(root);
-				emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_MPAY,NET_CMD_SUC,true,strPay);
-			}
-		}
-		break;
-
-	}
-}
-
-void CTabMonthDlg::st_ThCal(EM_SOCK_CMD cmd,EM_CMD_RET ret,bool rst,QString strPay)
-{
-	switch (cmd)
-	{
-	case SOCK_CMD_GET_SAMPLE_STAFF:
-		{
-			if (ret == NET_CMD_FAIL)
-				QMessageBox::information(this, CH("错误"), CH("获取职工信息失败！"));
-			else
-			{
-				 if (!rst)
-					 QMessageBox::information(this, CH("提示"), CH("发送网络请求失败，请检查网络是否正常！"));
-				 else
-					 SetCtrlVisible(false);
-			}
-
-		}
-		break;
-	case SOCK_CMD_GET_MPAY:
-		{
-			if (ret == NET_CMD_FAIL)
-			{
-				SetCtrlVisible(true);
-				QMessageBox::information(this, CH("错误"), CH("获取数据失败！"));
-			}
-			else
-			{
-				ui.label_pay->setText(strPay);
-				SetCtrlVisible(true);
-				SetListValue();
-			}
-		}
-		break;
-
-	}
 }

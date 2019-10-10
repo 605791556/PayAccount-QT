@@ -45,6 +45,15 @@
     <Filter Include="thread">
       <UniqueIdentifier>{1a49c0db-e21d-4a67-afc0-50a35373285a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Form Files\单价设置">
+      <UniqueIdentifier>{05502a17-a69f-4e6d-bb43-5c0be1fc1090}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\单价设置">
+      <UniqueIdentifier>{98efc1ff-843a-40be-accd-086f6e242b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\单价设置">
+      <UniqueIdentifier>{a93a3dd3-5f55-44ec-8f3b-bd92a372576b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -212,6 +221,78 @@
     <ClCompile Include="GeneratedFiles\Release\moc_CProMngDlg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="CAddProDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CAddProDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CAddProDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CPaySetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CPaySetDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CPaySetDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabJdSetDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabJdSetDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabZySetDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabZySetDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabDySetDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabDySetDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabOtherSetDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabOtherSetDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabZySetDlg.cpp">
+      <Filter>Source Files\单价设置</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabOtherSetDlg.cpp">
+      <Filter>Source Files\单价设置</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabJdSetDlg.cpp">
+      <Filter>Source Files\单价设置</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabDySetDlg.cpp">
+      <Filter>Source Files\单价设置</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabDetailDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabDetailDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabDetailDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabProcessDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabProcessDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabProcessDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="paycount_qt.h">
@@ -313,6 +394,54 @@
     <CustomBuild Include="CProMngDlg.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="CAddProDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddProDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CPaySetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CPaySetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabZySetDlg.ui">
+      <Filter>Form Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabOtherSetDlg.ui">
+      <Filter>Form Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabJdSetDlg.ui">
+      <Filter>Form Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDySetDlg.ui">
+      <Filter>Form Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabZySetDlg.h">
+      <Filter>Header Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabOtherSetDlg.h">
+      <Filter>Header Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabJdSetDlg.h">
+      <Filter>Header Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDySetDlg.h">
+      <Filter>Header Files\单价设置</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDetailDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDetailDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabProcessDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabProcessDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_paycount_qt.h">
@@ -367,6 +496,30 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CProMngDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CAddProDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CPaySetDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabJdSetDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabZySetDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabDySetDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabOtherSetDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabDetailDlg.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_CTabProcessDlg.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

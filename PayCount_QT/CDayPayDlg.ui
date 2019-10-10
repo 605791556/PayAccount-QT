@@ -431,7 +431,7 @@
    <sender>BTN_CLOSE</sender>
    <signal>clicked()</signal>
    <receiver>CDayPayDlg</receiver>
-   <slot>accept()</slot>
+   <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>1009</x>

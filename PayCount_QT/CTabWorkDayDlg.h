@@ -51,6 +51,7 @@ public:
 	void GetOnePayList(Json::Value root);
 
 public:
+	bool                m_bDateInit;
 	vector<int>         m_vItem;//高亮选中行
 	vector<STAFF_STU>   m_vet;
 	vector<WORKMONEY>   m_vWorkCal;

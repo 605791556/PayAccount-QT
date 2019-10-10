@@ -1,4 +1,5 @@
 #include "CProMngDlg.h"
+#include "CAddProDlg.h"
 
 void ProMngCallback(void* p,string strData)
 {
@@ -70,6 +71,8 @@ CProMngDlg::CProMngDlg(QWidget *parent)
 	CGloble::SetButtonStyle(ui.BTN_SAVE_DEX,":/PayCount_QT/pic/login_btn.png",3);
 
 	connect(this,&CProMngDlg::sg_CalBak,this,&CProMngDlg::st_CalBak);
+	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
+	connect(ui.BTN_SAVE_DEX,SIGNAL(clicked()),this,SLOT(BtnSaveDex()));
 	g_Globle.SetCallback(ProMngCallback,this);
 	InitListCtrl();
 	SendToGetProject();
@@ -282,6 +285,13 @@ void CProMngDlg::st_BtnEdit()
 	QObject *pObject = this->sender();
 	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
 	int nRow = btn->property("button").toInt();
+	CAddProDlg dlg(this,false,nRow);
+	int ret = dlg.exec();
+	g_Globle.SetCallback(ProMngCallback,this);
+	if (ret == QDialog::Accepted)
+	{
+		SendToGetProject();
+	}
 
 }
 void CProMngDlg::st_BtnDel()
@@ -312,10 +322,44 @@ void CProMngDlg::st_BtnDel()
 
 void CProMngDlg::BtnSaveDex()
 {
+	Json::Value root;
+	root[CONNECT_CMD]=SOCK_CMD_SAVE_PRONDEX;
+	int nCount = ui.tableWidget->rowCount();
+	if(nCount == 0)
+	{
+		QMessageBox::information(this, CH("提示"), CH("无保存项！"));
+		return;
+	}
 
+	for (int i=0;i<nCount;i++)
+	{
+		int nProID = m_vet[i].nID;
+		QLineEdit* edit = (QLineEdit*)ui.tableWidget->cellWidget(i,4);
+		if (edit)
+		{
+			int ndex = edit->text().toInt();
+			Json::Value one;
+			one[CMD_PROMSG[EM_PROMSG_ID]] = nProID;
+			one[CMD_PROMSG[EM_PROMSG_NDEX]] = ndex;
+			root[CMD_RetType[EM_CMD_RETYPE_VALUE]].append(one);
+		}
+	}
+
+	Json::FastWriter writer;  
+	string temp = writer.write(root);
+	if(g_Globle.SendTo(temp) != 0)
+	{
+		QMessageBox::information(this, CH("错误"), CH("发送网络请求失败，请检查网络是否正常！"));
+	}
 }
 
 void CProMngDlg::BtnAdd()
 {
-
+	CAddProDlg dlg;
+	int ret  = dlg.exec();
+	g_Globle.SetCallback(ProMngCallback,this);
+	if (ret == QDialog::Accepted)
+	{
+		SendToGetProject();
+	}
 }

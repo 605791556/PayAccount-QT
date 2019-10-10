@@ -57,6 +57,7 @@ CTabWorkDayDlg::CTabWorkDayDlg(QWidget *parent)
 	: QWidget(parent)
 {
 	m_pViewModel = nullptr;
+	m_bDateInit = false;
 
 	ui.setupUi(this);
 	connect(ui.dateEdit,&QDateEdit::userDateChanged,this,&CTabWorkDayDlg::st_DateChanged);
@@ -91,6 +92,7 @@ void CTabWorkDayDlg::InitDateCtrl()
 {
 	QDate date = QDate::currentDate();
 	ui.dateEdit->setDate(date);
+	m_bDateInit = true;
 }
 
 void CTabWorkDayDlg::InitListCtrl()
@@ -207,6 +209,8 @@ void CTabWorkDayDlg::SetListValue()
 
 void CTabWorkDayDlg::st_DateChanged(const QDate &date)
 {
+	if(!m_bDateInit)
+		return;
 	g_Globle.SetCallback(WorkCalCallback,this);
 	SendToGetOnePayList();
 }
@@ -239,9 +243,12 @@ void CTabWorkDayDlg::st_KeyWordChanged(const QString & strKeyWord)
 void CTabWorkDayDlg::st_RowDoubleClicked(const QModelIndex & mdIndex)
 {
 	CDayPayDlg dlg(mdIndex,this);
-	dlg.exec();
+	int ret = dlg.exec();
 	g_Globle.SetCallback(WorkCalCallback,this);
-	SendToGetOnePayList();
+	if (ret == QDialog::Accepted)
+	{
+		SendToGetOnePayList();
+	}
 }
 
 void CTabWorkDayDlg::st_BtnUpdate()

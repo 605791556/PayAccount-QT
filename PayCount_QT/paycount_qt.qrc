@@ -24,5 +24,6 @@
         <file>pic/edit.png</file>
         <file>pic/no_pic.png</file>
         <file>pic/key.png</file>
+        <file>pic/cbg2.png</file>
     </qresource>
 </RCC>

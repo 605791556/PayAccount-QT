@@ -560,22 +560,6 @@ QTabWidget::tab-bar
  </resources>
  <connections>
   <connection>
-   <sender>BTN_CLOSE</sender>
-   <signal>clicked()</signal>
-   <receiver>PayCount_QTClass</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>582</x>
-     <y>12</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>299</x>
-     <y>199</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>BTN_MIN</sender>
    <signal>clicked()</signal>
    <receiver>PayCount_QTClass</receiver>

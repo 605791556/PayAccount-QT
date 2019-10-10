@@ -6,6 +6,8 @@
 #include "cgloble.h"
 #include "CTabMonthDlg.h"
 #include "CTabWorkDayDlg.h"
+#include "CTabDetailDlg.h"
+#include "CTabProcessDlg.h"
 
 enum EM_PAGE_TYPE
 {
@@ -32,8 +34,10 @@ private:
 	bool    m_bmax;//true:当前窗口最大化
 	bool    m_bInitTab;
 
-	CTabMonthDlg* m_pTabMonthDlg;
+	CTabMonthDlg*   m_pTabMonthDlg;
 	CTabWorkDayDlg* m_pTabWorkDlg;
+	CTabDetailDlg*  m_pTabDetailDlg;
+	CTabProcessDlg* m_pTabProcessDlg;
 
 protected:
 	//加载背景图片
@@ -64,6 +68,7 @@ public slots:
 	void BtnPay();
 	void BtnLog();
 	void BtnLock();
+	void BtnClose();
 };
 
 #endif // PAYCOUNT_QT_H

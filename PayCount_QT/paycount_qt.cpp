@@ -5,6 +5,7 @@
 #include "CUserMngDlg.h"
 #include "CBookMngDlg.h"
 #include "CProMngDlg.h"
+#include "CPaySetDlg.h"
 
 void PayAccountCallback(void* p,string strData)
 {
@@ -86,15 +87,17 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	connect(ui.BTN_PAY, SIGNAL(clicked()), this, SLOT(BtnPay()));
 	connect(ui.BTN_LOG, SIGNAL(clicked()), this, SLOT(BtnLog()));
 	connect(ui.BTN_LOCK, SIGNAL(clicked()), this, SLOT(BtnLock()));
+	connect(ui.BTN_CLOSE, SIGNAL(clicked()), this, SLOT(BtnClose()));
 
-	m_pTabMonthDlg = new CTabMonthDlg;
-	m_pTabWorkDlg = new CTabWorkDayDlg;
-
+	m_pTabMonthDlg   = new CTabMonthDlg;
+	m_pTabWorkDlg    = new CTabWorkDayDlg;
+	m_pTabDetailDlg  = new CTabDetailDlg;
+	m_pTabProcessDlg = new CTabProcessDlg;
 	//初始化tabctrl
 	InitTabCtrl();
 
 	m_nx = m_ny = 0;
-	m_bmax = false;
+	m_bmax = true;
 
 	QString str = QString(CH("欢迎登录：%1 (%2)")).arg(g_Globle.m_strUserName).arg(TypeName[g_Globle.m_nType]);
 	ui.label_2->setText(str);
@@ -102,29 +105,29 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	str = QString("%1 %2").arg(g_Globle.m_strTitle).arg(g_Globle.m_strVersion);
 	ui.label->setText(str);
 	ui.label->setStyleSheet("color: white");
+
+	showMaximized();
 }
 
 PayCount_QT::~PayCount_QT()
 {
 	delete m_pTabMonthDlg;
 	delete m_pTabWorkDlg;
+	delete m_pTabDetailDlg;
+	delete m_pTabProcessDlg;
 }
 
 void PayCount_QT::InitTabCtrl()
 {
 	ui.tabWidget->clear();
-
-	QWidget *tabSports=new QWidget(this);
-	QWidget *tabMusic=new QWidget(this);
-
 	ui.tabWidget->setTabPosition(QTabWidget::North);
 
-	ui.tabWidget->insertTab(EM_PAGE_JD,tabSports,CH("进度"));
-	ui.tabWidget->insertTab(EM_PAGE_MX,tabMusic,CH("明细"));
+	ui.tabWidget->insertTab(EM_PAGE_JD,m_pTabProcessDlg,CH("进度"));
+	ui.tabWidget->insertTab(EM_PAGE_MX,m_pTabDetailDlg,CH("明细"));
 	ui.tabWidget->insertTab(EM_PAGE_ZGTJ,m_pTabWorkDlg,CH("做工统计"));
 	ui.tabWidget->insertTab(EM_PAGE_YHS,m_pTabMonthDlg,CH("月核算"));
-
 	ui.tabWidget->setTabShape(QTabWidget::Rounded);//设置选项卡的形状
+	ui.tabWidget->setCurrentIndex(EM_PAGE_YHS);
 	m_bInitTab = true;
 }
 
@@ -136,6 +139,10 @@ void PayCount_QT::st_tabChanged(int index)
 		m_pTabMonthDlg->pageIn();
 	else if (index == EM_PAGE_ZGTJ)
 		m_pTabWorkDlg->pageIn();
+	else if (index == EM_PAGE_MX)
+		m_pTabDetailDlg->pageIn();
+	else if (index == EM_PAGE_JD)
+		m_pTabProcessDlg->pageIn();
 }
 
 void PayCount_QT::paintEvent(QPaintEvent *)
@@ -192,6 +199,12 @@ void PayCount_QT::mouseDoubleClickEvent(QMouseEvent *event)
 			m_bmax = !m_bmax;
 		}
 	}
+}
+
+void PayCount_QT::BtnClose()
+{
+	m_bInitTab = false;
+	close();
 }
 
 void PayCount_QT::BtnMax()
@@ -252,7 +265,8 @@ void PayCount_QT::BtnProject()
 }
 void PayCount_QT::BtnPay()
 {
-
+	CPaySetDlg dlg;
+	dlg.exec();
 }
 void PayCount_QT::BtnLog()
 {

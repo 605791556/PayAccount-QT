@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CPaySetDlg</class>
+ <widget class="QDialog" name="CPaySetDlg">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>835</width>
+    <height>592</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>单价设置</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <family>微软雅黑</family>
+         <pointsize>10</pointsize>
+         <weight>50</weight>
+         <italic>false</italic>
+         <bold>false</bold>
+         <stylestrategy>PreferDefault</stylestrategy>
+        </font>
+       </property>
+       <property name="text">
+        <string>单价设置</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BTN_CLOSE">
+       <property name="minimumSize">
+        <size>
+         <width>26</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>26</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="styleSheet">
+        <string notr="true">
+QTabBar::tab
+{
+	color:#3c3e1e;
+	background:transparent;
+    background-color: #d5cf81;	
+	font-family:&quot;微软雅黑&quot;;
+	font-size:12px;	
+	padding-left:1px;
+	padding-right:1px;
+	width:100px;
+	height:25px;
+	margin-left:2px;
+	margin-right:1px;
+} 
+QTabBar::tab:selected
+{
+	color:#FAFAD2;
+	background:transparent;
+    background-color: #BDB76B;
+	font-family:&quot;微软雅黑&quot;;
+	font-size:12px;	
+	border-bottom:2px solid #BDB76B;
+}
+QTabBar::tab:hover
+{
+	color:#3c3e1e;
+	background:transparent;
+    background-color: #e0d876;
+	font-family:&quot;微软雅黑&quot;;
+	font-size:12px;	
+}
+QTabWidget::tab-bar
+ {
+    alignment: left;  
+	top:0px;
+	left:0px;	
+}
+QTabWidget::pane
+{
+    border:none;
+} </string>
+       </property>
+       <widget class="QWidget" name="tab">
+        <attribute name="title">
+         <string>Tab 1</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="tab_2">
+        <attribute name="title">
+         <string>Tab 2</string>
+        </attribute>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>BTN_CLOSE</sender>
+   <signal>clicked()</signal>
+   <receiver>CPaySetDlg</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>807</x>
+     <y>12</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>240</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -318,6 +318,7 @@ public:
 		ps_type = PRO_STAFF_TYPE_MAX;
 	}
 };
+Q_DECLARE_METATYPE(PROJECT_STU);
 
 struct STU_DAI_PAY
 {

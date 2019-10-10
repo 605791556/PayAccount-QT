@@ -70,6 +70,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="EDIT_NEWPWD">
    <property name="geometry">
@@ -80,6 +83,9 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
   </widget>
   <widget class="QLineEdit" name="EDIT_NEWPWD2">
    <property name="geometry">
@@ -89,6 +95,9 @@
      <width>141</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="BTN_SAVE">

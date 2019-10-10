@@ -23,7 +23,7 @@ public:
 
 signals:
 	void sg_CalBak(void* pdata);
-	public slots:
+public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnEdit();
 	void st_BtnDel();
