@@ -56,6 +56,23 @@ CTabZySetDlg::CTabZySetDlg(QWidget *parent)
 	ui.setupUi(this);
 	connect(this,&CTabZySetDlg::sg_CalBak,this,&CTabZySetDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
+	ui.EDIT_SG_Q4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_D3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_2->setValidator(g_Globle.dbVtor);
+
+	ui.EDIT_S_Q4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_D3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_2->setValidator(g_Globle.dbVtor);
+
+	ui.EDIT_G_Q4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_4->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_D3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_3->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_2->setValidator(g_Globle.dbVtor);
 }
 
 CTabZySetDlg::~CTabZySetDlg()
@@ -71,7 +88,6 @@ void CTabZySetDlg::pageIn()
 
 void CTabZySetDlg::SendToGetZheyePay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_ZHEYEPAY;
 	Json::FastWriter writer;  

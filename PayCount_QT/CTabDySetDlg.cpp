@@ -56,6 +56,9 @@ CTabDySetDlg::CTabDySetDlg(QWidget *parent)
 	ui.setupUi(this);
 	connect(this,&CTabDySetDlg::sg_CalBak,this,&CTabDySetDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
+
+	ui.EDIT_W_DOWN->setValidator(g_Globle.dbVtor);
+	ui.EDIT_W_UP->setValidator(g_Globle.dbVtor);
 }
 
 CTabDySetDlg::~CTabDySetDlg()
@@ -71,7 +74,6 @@ void CTabDySetDlg::pageIn()
 
 void CTabDySetDlg::SendToGetDyPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DYPAY;
 	Json::FastWriter writer;  

@@ -139,7 +139,6 @@ void CTabDetailDlg::SendToGetProject()
 
 void CTabDetailDlg::SendToGetDetails()
 {
-	USES_CONVERSION;
 	int ndex = ui.cbx_book->currentIndex();
 	int nSize = m_vPro.size();
 	if (ndex>=0 && nSize>0)

@@ -522,5 +522,14 @@
     <ClInclude Include="GeneratedFiles\ui_CTabProcessDlg.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="PayCount_QT.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\icon2.ico" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@
 
 void UserAddCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CAddUserDlg* pThis=(CAddUserDlg*) p;
 
 	if ( pThis==NULL)
@@ -72,7 +71,6 @@ CAddUserDlg::~CAddUserDlg()
 
 void CAddUserDlg::SendToJudgeUser(QString strName)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_USER;
 	root[CMD_JUDGEUSER[EM_JUDGE_USER_NAME]]=strName.toStdString();
@@ -96,7 +94,6 @@ void CAddUserDlg::SendToAddUser()
 	else if(nCk2)
 		type = TYPE_MNG;
 
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_ADD_USER;
 	root[CMD_ADDUSER[EM_ADD_USER_NAME]]=strName.toStdString();

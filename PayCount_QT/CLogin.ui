@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>123456</string>
+    <string/>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
@@ -129,7 +129,7 @@
     <bool>true</bool>
    </property>
    <property name="currentText">
-    <string>admin</string>
+    <string/>
    </property>
    <property name="frame">
     <bool>true</bool>

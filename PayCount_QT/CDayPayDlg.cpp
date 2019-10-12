@@ -132,6 +132,11 @@ CDayPayDlg::CDayPayDlg(const QModelIndex & mdIndex,QWidget* tabWkDlg,QWidget *pa
 	connect(ui.edit_delpay,SIGNAL(textChanged(const QString &)),this,SLOT(st_SetAllPayCtrl()));
 	connect(ui.BTN_MAX, SIGNAL(clicked()), this, SLOT(st_BtnMax()));
 
+	
+	ui.edit_payday->setValidator(g_Globle.dbVtor);
+	ui.edit_day->setValidator(g_Globle.dbVtor);
+	ui.edit_delpay->setValidator(g_Globle.dbVtor);
+
 	CGloble::SetButtonStyle(ui.BTN_MAX,":/PayCount_QT/pic/max.png",3);
 	CGloble::SetButtonStyle(ui.BTN_CLOSE,":/PayCount_QT/pic/close.png",3);
 	CGloble::SetButtonStyle(ui.BTN_SAVE,":/PayCount_QT/pic/login_btn.png",3);
@@ -263,6 +268,7 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,int num
 	}
 	//ÊýÁ¿
 	QLineEdit* edit = new QLineEdit;
+	edit->setValidator(g_Globle.dbVtor);
 	edit->setProperty("edit",row);
 	connect(edit,SIGNAL(textChanged(const QString &)),this,SLOT(st_numberEditChanged(const QString &)));
 	edit->setStyleSheet("border-width:0;border-style:outset");
@@ -577,7 +583,6 @@ void CDayPayDlg::st_BtnSave()
 
 void CDayPayDlg::SendToGetDPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DPAY;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]] = m_strStaffID.toStdString();
@@ -588,7 +593,6 @@ void CDayPayDlg::SendToGetDPay()
 
 void CDayPayDlg::SendToGetBook()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_BOOK;
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = BOOK_RK_NO;
@@ -599,7 +603,6 @@ void CDayPayDlg::SendToGetBook()
 
 void CDayPayDlg::SendToGetProject()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]]=PRO_STAFF_TYPE_MAX;
@@ -613,7 +616,6 @@ void CDayPayDlg::SendToGetProject()
 
 void CDayPayDlg::SendToGetDayPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
@@ -625,7 +627,6 @@ void CDayPayDlg::SendToGetDayPay()
 
 void CDayPayDlg::SendToDelDayPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
@@ -637,7 +638,6 @@ void CDayPayDlg::SendToDelDayPay()
 
 void CDayPayDlg::SendToGetOnePay(int proID,QString strBookID,int nItem)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PAY;
 	root[GETPAYMSG[EM_GET_PAY_STAFFID]]=m_strStaffID.toStdString();
@@ -651,7 +651,6 @@ void CDayPayDlg::SendToGetOnePay(int proID,QString strBookID,int nItem)
 
 void CDayPayDlg::SendToSaveDayPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_SAVE_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
@@ -812,7 +811,6 @@ void CDayPayDlg::GetDayPay(Json::Value root)
 
 void CDayPayDlg::GetOnePay(Json::Value root)
 {
-	USES_CONVERSION;
 	int nItem = root[GETPAYMSG[EM_GET_PAY_NITEM]].asInt();
 	QString strPay = root[GETPAYMSG[EM_GET_PAY_PAY]].asCString();
 	ui.tableWidget->setItem(nItem,2,new QTableWidgetItem(strPay));

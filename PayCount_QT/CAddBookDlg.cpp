@@ -83,6 +83,15 @@ CAddBookDlg::CAddBookDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	connect(this,&CAddBookDlg::sg_CalBak,this,&CAddBookDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 
+	ui.EDIT_YZ->setValidator(g_Globle.dbVtor);
+	ui.EDIT_LS->setValidator(g_Globle.dbVtor);
+	ui.EDIT_BC1->setValidator(g_Globle.itVtor);
+	ui.EDIT_BC2->setValidator(g_Globle.itVtor);
+	ui.EDIT_CC1->setValidator(g_Globle.itVtor);
+	ui.EDIT_CC2->setValidator(g_Globle.itVtor);
+	ui.EDIT_KB->setValidator(g_Globle.itVtor);
+	ui.EDIT_YS->setValidator(g_Globle.itVtor);
+	ui.EDIT_BC->setValidator(g_Globle.itVtor);
 	InitDlg(stfMng,bAdd);
 	g_Globle.SetCallback(AddBookCallback,this);
 }

@@ -3,7 +3,6 @@
 
 void UserMngCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CUserMngDlg* pThis=(CUserMngDlg*) p;
 
 	if ( pThis==NULL)

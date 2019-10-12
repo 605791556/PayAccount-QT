@@ -2,7 +2,6 @@
 
 void MdfPwdCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CSetPwdDlg* pThis=(CSetPwdDlg*) p;
 
 	if ( pThis==NULL)

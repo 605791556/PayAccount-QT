@@ -136,6 +136,7 @@ void CProMngDlg::SetListValue()
 		//ÅÅÁÐË³Ðò
 		str = QString("%1").arg(m_vet[i].ndex);
 		QLineEdit* line = new QLineEdit(str,this);
+		line->setValidator(g_Globle.itVtor);
 		line->setFrame(false);
 		line->setAlignment(Qt::AlignmentFlag::AlignHCenter);
 		ui.tableWidget->setCellWidget(i,4,line);
@@ -183,7 +184,6 @@ void CProMngDlg::resizeEvent(QResizeEvent *event)
 
 void CProMngDlg::SendToGetProject()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]]=PRO_STAFF_TYPE_MAX;
@@ -239,7 +239,6 @@ void CProMngDlg::GetProject(Json::Value root)
 
 void CProMngDlg::SendToDelProject(int nProID)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_PROJECT;
 	root[CMD_DELPROJECT[EM_DEL_PROJECT_ID]]=nProID;
@@ -253,7 +252,6 @@ void CProMngDlg::SendToDelProject(int nProID)
 
 void CProMngDlg::SendToSaveProNdex()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_SAVE_PRONDEX;
 

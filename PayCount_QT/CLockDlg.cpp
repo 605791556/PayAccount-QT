@@ -3,7 +3,6 @@
 
 void LockCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CLockDlg* pThis=(CLockDlg*) p;
 
 	if ( pThis==NULL)
@@ -103,7 +102,6 @@ void CLockDlg::BtnOk()
 	QString strPwd = ui.EDIT_PWD->text();
 	if (!strPwd.isEmpty())
 	{
-		USES_CONVERSION;
 		Json::Value root;
 		root[CONNECT_CMD]=SOCK_CMD_CHECKPWD;
 		root[CMD_CHECKPWD[EM_CHECKPWD_NAME]]=g_Globle.m_strUserName.toStdString();

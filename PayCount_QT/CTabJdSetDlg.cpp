@@ -57,6 +57,27 @@ CTabJdSetDlg::CTabJdSetDlg(QWidget *parent)
 	connect(this,&CTabJdSetDlg::sg_CalBak,this,&CTabJdSetDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 
+	ui.EDIT_SG_W->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_2->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_2_5->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_5_9->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_10->setValidator(g_Globle.dbVtor);
+	ui.EDIT_SG_18->setValidator(g_Globle.dbVtor);
+
+	ui.EDIT_S_W->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_2->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_2_5->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_5_9->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_10->setValidator(g_Globle.dbVtor);
+	ui.EDIT_S_18->setValidator(g_Globle.dbVtor);
+
+	ui.EDIT_G_W->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_2->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_2_5->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_5_9->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_10->setValidator(g_Globle.dbVtor);
+	ui.EDIT_G_18->setValidator(g_Globle.dbVtor);
+
 	g_Globle.SetCallback(JdSetCallback,this);
 	SendToGetDaiPay();
 }
@@ -74,7 +95,6 @@ void CTabJdSetDlg::pageIn()
 
 void CTabJdSetDlg::SendToGetDaiPay()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DAIPAY;
 	Json::FastWriter writer;  

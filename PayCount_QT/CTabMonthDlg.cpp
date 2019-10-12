@@ -287,7 +287,6 @@ int findDay(QString strDate)
 
 void CTabMonthDlg::SendToGetStaff()
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_STAFF;
 	Json::FastWriter writer;  

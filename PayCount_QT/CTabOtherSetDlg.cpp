@@ -103,6 +103,8 @@ CTabOtherSetDlg::CTabOtherSetDlg(QWidget *parent)
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 	connect(ui.comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(st_ComboxChanged(int)));
 	connect(ui.checkBox,SIGNAL(stateChanged(int)),this,SLOT(st_checkChanged(int)));
+	
+	ui.EDIT_PAY->setValidator(g_Globle.dbVtor);
 	InitListCtrl();
 	ui.comboBox->setMaxVisibleItems(40);
 }
@@ -184,6 +186,7 @@ void CTabOtherSetDlg::SetListValue(bool bZero)
 			strPay = stu.strPay;
 			
 		QLineEdit* line = new QLineEdit(strPay,ui.tableWidget);
+		line->setValidator(g_Globle.dbVtor);
 		line->setFrame(false);
 		line->setAlignment(Qt::AlignmentFlag::AlignHCenter);
 		ui.tableWidget->setCellWidget(i,2,line);

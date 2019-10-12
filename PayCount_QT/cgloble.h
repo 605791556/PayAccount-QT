@@ -421,6 +421,9 @@ public:
 	NET_STATE         m_state;//服务器连接状态
 	FUN_CALLBACK      m_pCallBack;
 	void*             m_pHand;
+	QDoubleValidator* dbVtor; //浮点数
+	QIntValidator*    itVtor; //数字
+	QValidator*       nzVtor;//数字+字母
 signals:
 	void sgl_ConnectState(NET_STATE);
 };

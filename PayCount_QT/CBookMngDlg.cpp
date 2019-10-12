@@ -3,7 +3,6 @@
 
 void BookMngCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CBookMngDlg* pThis=(CBookMngDlg*) p;
 
 	if ( pThis==NULL)

@@ -24,6 +24,10 @@ CGloble::CGloble(QObject *parent)
 	m_pCallBack = NULL;
 	m_pHand = NULL;
 	m_bAsyncConn = FALSE;
+	dbVtor = new QDoubleValidator;
+	itVtor = new QIntValidator;
+	QRegExp regx("[a-zA-Z0-9]+$");
+	nzVtor = new QRegExpValidator(regx);
 }
 
 CGloble::~CGloble()
@@ -42,6 +46,8 @@ CGloble::~CGloble()
 	m_Client->Stop();
 	if(m_hExit)   
 		CloseHandle(m_hExit);
+
+	delete dbVtor;
 }
 
 bool CGloble::InitGloble()
@@ -200,7 +206,6 @@ void CGloble::SetCallback(FUN_CALLBACK callback,void* param)
 string CGloble::GetAppDataPath()
 {
 	USES_CONVERSION;
-
 	TCHAR szPath[MAX_PATH];
 	memset(szPath,0,MAX_PATH);
 	string strPath;

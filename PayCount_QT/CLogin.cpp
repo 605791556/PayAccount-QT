@@ -160,7 +160,6 @@ void CLogin::GetUser(Json::Value root)
 			}
 		}
 	}
-	ui.comboBox->setCurrentText("admin");
 }
 
 void CLogin::st_comboChanged(int index)
@@ -198,7 +197,6 @@ void CLogin::GetLogin(Json::Value root)
 
 void LoginCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	CLogin* pThis=(CLogin*) p;
 
 	if ( pThis==NULL || !pThis->isWindow())

@@ -222,7 +222,6 @@ void CStaffMngDlg::resizeEvent(QResizeEvent *event)
 
 void CStaffMngDlg::SendToGetStaff(QString strKeyWord,int nStart,int nNum)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_STAFF;
 	string strkey = strKeyWord.toLocal8Bit();
@@ -236,7 +235,6 @@ void CStaffMngDlg::SendToGetStaff(QString strKeyWord,int nStart,int nNum)
 
 void CStaffMngDlg::SendToDelStaff(QString strStaffID)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_STAFF;
 	root[CMD_DELSTAFF[EM_DEL_STAFF_ID]]=strStaffID.toStdString();

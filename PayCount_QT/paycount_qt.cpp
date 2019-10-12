@@ -9,7 +9,6 @@
 
 void PayAccountCallback(void* p,string strData)
 {
-	USES_CONVERSION;
 	PayCount_QT* pThis=(PayCount_QT*) p;
 
 	if ( pThis==NULL)
@@ -160,6 +159,7 @@ void PayCount_QT::resizeEvent(QResizeEvent *event)
 	ui.BTN_MAX->setGeometry(width-52,0,26,26);
 	ui.BTN_CLOSE->setGeometry(width-26,0,26,26);
 	ui.tabWidget->setGeometry(0,100,width+2,height-123);
+	ui.label->move(width-ui.label->width()-5,height-22);
 	ui.label_2->move(width-ui.label_2->width()-5,45);
 	ui.label_3->move(ui.label_3->x(),height-22);
 	ui.label_4->move(ui.label_4->x(),height-22);

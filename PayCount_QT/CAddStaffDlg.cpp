@@ -78,6 +78,12 @@ CAddStaffDlg::CAddStaffDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 	InitDlg(stfMng,bAdd);
 
+	ui.EDIT_AGE->setValidator(g_Globle.itVtor);
+	ui.EDIT_IDCARD->setValidator(g_Globle.nzVtor);
+	ui.EDIT_TEL->setValidator(g_Globle.itVtor);
+	ui.EDIT_DEX->setValidator(g_Globle.itVtor);
+	ui.EDIT_DAYPAY->setValidator(g_Globle.dbVtor);
+
 	g_Globle.SetCallback(AddStaffCallback,this);
 }
 
@@ -139,7 +145,6 @@ void CAddStaffDlg::InitDlg(QWidget* stfMng,bool bAdd)
 
 void CAddStaffDlg::SendToJudgeStaff(QString strIdcard)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_STAFF;
 	root[CMD_JUDGESTAFF[EM_JUDGE_STAFF_IDCARD]]=strIdcard.toStdString();
@@ -164,7 +169,6 @@ void CAddStaffDlg::SendToAddStaff()
 	//Éú³ÉÎ¨Ò»ID
 	QString  strStaffID = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
 
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_ADD_STAFF;
 	string sstrname = strName.toLocal8Bit();
@@ -186,7 +190,6 @@ void CAddStaffDlg::SendToAddStaff()
 
 void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,int age,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay)
 {
-	USES_CONVERSION;
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_MDF_STAFF;
 	string sstrname = strName.toLocal8Bit();
