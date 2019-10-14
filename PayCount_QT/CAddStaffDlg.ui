@@ -44,6 +44,11 @@
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>类型：</string>
        </property>
@@ -54,6 +59,11 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>年龄：</string>
        </property>
@@ -89,16 +99,39 @@
       </spacer>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="EDIT_NAME"/>
+      <widget class="QLineEdit" name="EDIT_NAME">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QComboBox" name="COMBO_TYPE"/>
+      <widget class="QComboBox" name="COMBO_TYPE">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="EDIT_IDCARD"/>
+      <widget class="QLineEdit" name="EDIT_IDCARD">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="7" column="0">
       <widget class="QLabel" name="label_8">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>日工资：</string>
        </property>
@@ -108,13 +141,30 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="EDIT_TEL"/>
+      <widget class="QLineEdit" name="EDIT_TEL">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="6" column="1">
-      <widget class="QLineEdit" name="EDIT_DEX"/>
+      <widget class="QLineEdit" name="EDIT_DEX">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="6" column="0">
       <widget class="QLabel" name="label_7">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>排序值：</string>
        </property>
@@ -125,6 +175,11 @@
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>身份证号：</string>
        </property>
@@ -135,6 +190,11 @@
      </item>
      <item row="4" column="0">
       <widget class="QLabel" name="label_5">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>联系方式：</string>
        </property>
@@ -144,10 +204,21 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="EDIT_AGE"/>
+      <widget class="QLineEdit" name="EDIT_AGE">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_2">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>性别：</string>
        </property>
@@ -183,7 +254,13 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="COMBO_SEX"/>
+      <widget class="QComboBox" name="COMBO_SEX">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item row="4" column="2">
       <spacer name="verticalSpacer_5">
@@ -213,6 +290,11 @@
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>姓名：</string>
        </property>
@@ -224,10 +306,21 @@
      <item row="7" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLineEdit" name="EDIT_DAYPAY"/>
+        <widget class="QLineEdit" name="EDIT_DAYPAY">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>/天</string>
          </property>
@@ -254,6 +347,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_SAVE">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>添加</string>
        </property>

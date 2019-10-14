@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>421</width>
+    <width>445</width>
     <height>265</height>
    </rect>
   </property>
@@ -16,11 +16,16 @@
   <widget class="QLineEdit" name="EDIT_IP">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>100</x>
      <y>10</y>
      <width>211</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="placeholderText">
     <string>服务器地址</string>
@@ -29,11 +34,16 @@
   <widget class="QLineEdit" name="EDIT_PORT">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>100</x>
      <y>60</y>
      <width>133</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="placeholderText">
     <string>端口号</string>
@@ -42,11 +52,16 @@
   <widget class="QLineEdit" name="EDIT_NAME">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>100</x>
      <y>110</y>
      <width>133</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="placeholderText">
     <string>名称 （如：xx厂）</string>
@@ -61,6 +76,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>保 存</string>
    </property>
@@ -74,6 +94,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>取 消</string>
    </property>
@@ -81,11 +106,16 @@
   <widget class="QLineEdit" name="EDIT_TITLE">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>100</x>
      <y>160</y>
      <width>211</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="placeholderText">
     <string>软件名称（如：xxxxx系统）</string>
@@ -96,9 +126,14 @@
     <rect>
      <x>10</x>
      <y>12</y>
-     <width>71</width>
+     <width>91</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>服务器地址：</string>
@@ -113,6 +148,11 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>端口号：</string>
    </property>
@@ -126,6 +166,11 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>名字：</string>
    </property>
@@ -135,9 +180,14 @@
     <rect>
      <x>10</x>
      <y>165</y>
-     <width>54</width>
+     <width>81</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>软件名称：</string>
@@ -152,6 +202,11 @@
      <height>25</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>（如：xx厂）</string>
    </property>
@@ -161,9 +216,14 @@
     <rect>
      <x>310</x>
      <y>162</y>
-     <width>101</width>
+     <width>121</width>
      <height>25</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>（如：XXX系统）</string>

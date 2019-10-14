@@ -22,6 +22,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>保存</string>
    </property>
@@ -34,6 +39,11 @@
      <width>54</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>项目：</string>
@@ -51,6 +61,11 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
@@ -60,6 +75,11 @@
      <width>81</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>适用全书</string>
@@ -73,6 +93,11 @@
      <width>54</width>
      <height>22</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>单价：</string>
@@ -90,6 +115,11 @@
      <height>22</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QTableWidget" name="tableWidget">
    <property name="geometry">
@@ -99,6 +129,11 @@
      <width>411</width>
      <height>421</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </widget>
  </widget>

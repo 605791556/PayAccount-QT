@@ -16,11 +16,16 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>13</x>
      <y>20</y>
-     <width>54</width>
-     <height>12</height>
+     <width>71</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>账号：</string>
@@ -32,11 +37,16 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>13</x>
      <y>60</y>
-     <width>54</width>
-     <height>12</height>
+     <width>71</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>密码：</string>
@@ -48,11 +58,16 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>13</x>
+     <x>3</x>
      <y>100</y>
-     <width>71</width>
+     <width>81</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>确认密码：</string>
@@ -64,11 +79,16 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>140</y>
-     <width>54</width>
-     <height>12</height>
+     <x>13</x>
+     <y>135</y>
+     <width>71</width>
+     <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>权限：</string>
@@ -86,6 +106,11 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QLineEdit" name="EDIT_PWD">
    <property name="geometry">
@@ -95,6 +120,11 @@
      <width>161</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </widget>
   <widget class="QLineEdit" name="EDIT_PWD2">
@@ -106,6 +136,11 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QRadioButton" name="RDO_COMMON">
    <property name="geometry">
@@ -115,6 +150,11 @@
      <width>81</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>普通用户</string>
@@ -129,6 +169,11 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>管理员</string>
    </property>
@@ -142,6 +187,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>添加</string>
    </property>
@@ -154,6 +204,11 @@
      <width>371</width>
      <height>71</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;提示：普通用户只能录入进度，而管理员则具有&lt;/p&gt;&lt;p&gt;修改数据的权限，请注意权限分配。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>

@@ -178,6 +178,11 @@
       <height>461</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
     <property name="autoFillBackground">
      <bool>false</bool>
     </property>
@@ -189,7 +194,7 @@ QTabBar::tab
 	background:transparent;
     background-color: #eeefd7;	
 	font-family:&quot;微软雅黑&quot;;
-	font-size:12px;	
+	font-size:15px;	
 	padding-left:1px;
 	padding-right:1px;
 	width:100px;
@@ -203,7 +208,7 @@ QTabBar::tab:selected
 	background:transparent;
     background-color: #B5B5B5;
 	font-family:&quot;微软雅黑&quot;;
-	font-size:12px;	
+	font-size:15px;	
 	border-bottom:1px solid #E8E8E8;
 }
 QTabBar::tab:hover
@@ -212,7 +217,7 @@ QTabBar::tab:hover
 	background:transparent;
     background-color: #CFCFCF;	
 	font-family:&quot;微软雅黑&quot;;
-	font-size:12px;	
+	font-size:15px;	
 }
 QTabWidget::tab-bar
  {

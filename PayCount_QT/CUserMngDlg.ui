@@ -19,8 +19,13 @@
      <x>350</x>
      <y>10</y>
      <width>75</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>添加</string>
@@ -34,6 +39,11 @@
      <width>421</width>
      <height>211</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </widget>
  </widget>

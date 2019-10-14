@@ -103,13 +103,12 @@ void CTabWorkDayDlg::InitListCtrl()
 		ui.tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
 		ui.tableView ->setEditTriggers(QAbstractItemView::NoEditTriggers);//不可编辑
 		ui.tableView->horizontalHeader()->setHighlightSections(false);
-		//ui.tableView->verticalHeader()->setVisible(false); //设置垂直头不可见
 		ui.tableView->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
-		ui.tableView->setStyleSheet("selection-background-color:lightblue;"); //设置选中背景色
+		//ui.tableView->setStyleSheet("selection-background-color:lightblue;"); //设置选中背景色
 		ui.tableView->setFocusPolicy(Qt::NoFocus); //去除选中虚线框
 		ui.tableView->setFrameShape(QFrame::NoFrame); //设置边框
 		ui.tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-		ui.tableView->setFont(QFont("Helvetica"));
+		//ui.tableView->setFont(QFont("Helvetica"));
 
 		//设置水平、垂直滚动栏样式
 		ui.tableView->horizontalScrollBar()->setStyleSheet("QScrollBar{background:transparent; height:10px;}"

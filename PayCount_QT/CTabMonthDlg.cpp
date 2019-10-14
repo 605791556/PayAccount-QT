@@ -184,10 +184,10 @@ void CTabMonthDlg::InitListCtrl()
 		ui.tableView->horizontalHeader()->setHighlightSections(false);
 		ui.tableView->verticalHeader()->setVisible(false); //设置垂直头不可见
 		ui.tableView->horizontalHeader()->setStretchLastSection(true); //设置充满表宽度
-		ui.tableView->setStyleSheet("selection-background-color:lightblue;"); //设置选中背景色
+		//ui.tableView->setStyleSheet("selection-background-color:lightblue;"); //设置选中背景色
 		ui.tableView->setFocusPolicy(Qt::NoFocus); //去除选中虚线框
 		ui.tableView->setFrameShape(QFrame::NoFrame); //设置边框
-		ui.tableView->setFont(QFont("Helvetica"));
+		//ui.tableView->setFont(QFont("Helvetica"));
 		ui.tableView->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); //设置表头背景色
 
 
@@ -226,12 +226,10 @@ void CTabMonthDlg::InitListCtrl()
 				else if(i == 1)
 					listHeader<<CH("总额");
 				else
-				{
-					//QString str = QString::number(i+1-2) + CH("月");
 					listHeader<<QString::number(i+1-2);
-				}
 
-				ui.tableView->setColumnWidth(i,65);
+
+				//ui.tableView->setColumnWidth(i,65);
 			}
 			m_pViewModel->setHorizontalHeaderLabels(listHeader);
 		}

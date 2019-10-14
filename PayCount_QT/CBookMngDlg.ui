@@ -30,6 +30,11 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>关键词：</string>
        </property>
@@ -51,6 +56,11 @@
          <width>120</width>
          <height>25</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
        </property>
       </widget>
      </item>
@@ -84,6 +94,11 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>入库：</string>
        </property>
@@ -108,7 +123,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
       </widget>
@@ -143,6 +158,11 @@
          <height>16777215</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>下单日期：</string>
        </property>
@@ -167,7 +187,7 @@
        </property>
        <property name="font">
         <font>
-         <pointsize>10</pointsize>
+         <pointsize>11</pointsize>
         </font>
        </property>
       </widget>
@@ -190,6 +210,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_FIND">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>查询</string>
        </property>
@@ -197,6 +222,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_ADD">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>添加</string>
        </property>
@@ -220,7 +250,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QTableWidget" name="tableWidget"/>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -228,6 +264,11 @@
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
       <widget class="QLabel" name="label_all">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>共0条记录</string>
        </property>
@@ -248,6 +289,11 @@
      </item>
      <item>
       <widget class="QLabel" name="label_dex">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>共0页 第0页</string>
        </property>
@@ -283,6 +329,11 @@
          <height>34</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>Go</string>
        </property>
@@ -290,6 +341,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_LAST">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>上一页</string>
        </property>
@@ -297,6 +353,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_NEXT">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>下一页</string>
        </property>

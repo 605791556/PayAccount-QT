@@ -22,6 +22,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -37,9 +42,14 @@
     <rect>
      <x>130</x>
      <y>260</y>
-     <width>71</width>
+     <width>121</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>记住账号</string>
@@ -73,6 +83,11 @@
      <height>34</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>登    录</string>
    </property>
@@ -85,6 +100,11 @@
      <width>181</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>正在连接服务器，请稍等...</string>
@@ -124,6 +144,11 @@
      <width>210</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="editable">
     <bool>true</bool>

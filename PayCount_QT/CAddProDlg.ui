@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
+    <width>276</width>
     <height>221</height>
    </rect>
   </property>
@@ -22,6 +22,11 @@
      <height>12</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>名称：</string>
    </property>
@@ -32,11 +37,16 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>0</x>
+     <x>-10</x>
      <y>60</y>
-     <width>71</width>
+     <width>91</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>范围类型：</string>
@@ -50,9 +60,14 @@
     <rect>
      <x>0</x>
      <y>100</y>
-     <width>71</width>
+     <width>81</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>工人填入：</string>
@@ -66,7 +81,7 @@
     <rect>
      <x>80</x>
      <y>15</y>
-     <width>151</width>
+     <width>171</width>
      <height>25</height>
     </rect>
    </property>
@@ -82,15 +97,25 @@
      <height>25</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QRadioButton" name="RDO_ZYS">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>100</x>
      <y>62</y>
      <width>89</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>总印数</string>
@@ -99,11 +124,16 @@
   <widget class="QRadioButton" name="RDO_ZLS">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>190</x>
      <y>62</y>
-     <width>89</width>
+     <width>81</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>总令数</string>
@@ -112,11 +142,16 @@
   <widget class="QRadioButton" name="RDO_YES">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>100</x>
      <y>102</y>
      <width>89</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>是</string>
@@ -125,11 +160,16 @@
   <widget class="QRadioButton" name="RDO_NO">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>190</x>
      <y>102</y>
      <width>89</width>
      <height>16</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>否</string>
@@ -138,11 +178,16 @@
   <widget class="QPushButton" name="BTN_SAVE">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>90</x>
      <y>180</y>
      <width>75</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>保存</string>

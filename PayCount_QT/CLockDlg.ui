@@ -39,6 +39,11 @@
        </item>
        <item>
         <widget class="QLabel" name="label">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="layoutDirection">
           <enum>Qt::LeftToRight</enum>
          </property>
@@ -65,7 +70,7 @@
           </size>
          </property>
          <property name="text">
-          <string>TextLabel</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -93,6 +98,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="BTN_OK">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>确定</string>
          </property>
@@ -100,6 +110,11 @@
        </item>
        <item>
         <widget class="QPushButton" name="BTN_CANCEL">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
           <string>取消</string>
          </property>

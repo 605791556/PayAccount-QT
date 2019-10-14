@@ -239,11 +239,11 @@ void CDayPayDlg::InitListCtrl()
 		if(i == 0)
 			ui.tableWidget->setColumnWidth(i,210);
 		else if(i == 1)
-		    ui.tableWidget->setColumnWidth(i,250);
+		    ui.tableWidget->setColumnWidth(i,300);
 		else if(i == 5)
 			ui.tableWidget->setColumnWidth(i,60);
 		else
-			ui.tableWidget->setColumnWidth(i,(1000-532)/3);
+			ui.tableWidget->setColumnWidth(i,(1000-582)/3);
 	}
 }
 
@@ -268,6 +268,10 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,int num
 	}
 	//ÊýÁ¿
 	QLineEdit* edit = new QLineEdit;
+	QFont list_font;
+	list_font.setPointSize(11);
+
+	edit->setFont(list_font);
 	edit->setValidator(g_Globle.dbVtor);
 	edit->setProperty("edit",row);
 	connect(edit,SIGNAL(textChanged(const QString &)),this,SLOT(st_numberEditChanged(const QString &)));
@@ -282,9 +286,11 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,int num
 	}
 	//½ð¶î
 	QLineEdit* edit2 = new QLineEdit;
+	edit2->setFont(list_font);
 	connect(edit2,SIGNAL(textChanged(const QString &)),this,SLOT(st_SetAllPayCtrl()));
 	edit2->setFocusPolicy(Qt::NoFocus);
 	edit2->setStyleSheet("border-width:0;border-style:outset");
+	edit2->setAlignment(Qt::AlignHCenter);
 	ui.tableWidget->setCellWidget(row,4,edit2);
 	if (!money.isEmpty())
 		edit2->setText(money);
@@ -293,7 +299,15 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,int num
 	CGloble::SetButtonStyle(btn,":/PayCount_QT/pic/yc2.png",3);
 	btn->setProperty("button",row);
 	connect(btn,&QPushButton::clicked,this,&CDayPayDlg::st_BtnDel);
-	ui.tableWidget->setCellWidget(row,5,btn);
+
+	QWidget *widget = new QWidget(this);
+	QHBoxLayout *hLayout = new QHBoxLayout(this);
+	hLayout->addWidget( btn);
+	hLayout->setMargin(0);
+	hLayout->setAlignment(widget, Qt::AlignCenter);
+	hLayout->setContentsMargins(10, 0, 20, 0);
+	widget->setLayout(hLayout);
+	ui.tableWidget->setCellWidget(row,5,widget);
 }
 
 void CDayPayDlg::DeleteTableCtrl()

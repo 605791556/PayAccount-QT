@@ -31,6 +31,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_ADD">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>添加</string>
        </property>
@@ -38,6 +43,11 @@
      </item>
      <item>
       <widget class="QPushButton" name="BTN_SAVE_DEX">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
        <property name="text">
         <string>保存排列顺序</string>
        </property>
@@ -48,7 +58,13 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QTableWidget" name="tableWidget"/>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">

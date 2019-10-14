@@ -37,6 +37,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -55,6 +60,11 @@
         <width>16777215</width>
         <height>20</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="frame">
        <bool>false</bool>
@@ -75,6 +85,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -93,6 +108,11 @@
         <width>16777215</width>
         <height>20</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="frame">
        <bool>false</bool>
@@ -113,6 +133,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -132,6 +157,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -146,6 +176,11 @@
     </item>
     <item row="3" column="0">
      <widget class="QLabel" name="label_4">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>工人：</string>
       </property>
@@ -156,6 +191,11 @@
     </item>
     <item row="0" column="2">
      <widget class="QLabel" name="label_6">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>四折页</string>
       </property>
@@ -166,6 +206,11 @@
     </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_3">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>师傅：</string>
       </property>
@@ -176,6 +221,11 @@
     </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>师傅+工人：</string>
       </property>
@@ -197,6 +247,11 @@
         <width>16777215</width>
         <height>40</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>全开四折页</string>
@@ -220,6 +275,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -227,6 +287,11 @@
     </item>
     <item row="0" column="4">
      <widget class="QLabel" name="label_8">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>三折页</string>
       </property>
@@ -249,6 +314,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -256,6 +326,11 @@
     </item>
     <item row="0" column="5">
      <widget class="QLabel" name="label_9">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>二折页</string>
       </property>
@@ -278,6 +353,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -285,6 +365,11 @@
     </item>
     <item row="0" column="3">
      <widget class="QLabel" name="label_7">
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="text">
        <string>大三折页</string>
       </property>
@@ -307,6 +392,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -325,6 +415,11 @@
         <width>16777215</width>
         <height>20</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="frame">
        <bool>false</bool>
@@ -345,6 +440,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -363,6 +463,11 @@
         <width>16777215</width>
         <height>20</height>
        </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
       </property>
       <property name="frame">
        <bool>false</bool>
@@ -383,6 +488,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -402,6 +512,11 @@
         <height>20</height>
        </size>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
       <property name="frame">
        <bool>false</bool>
       </property>
@@ -417,6 +532,11 @@
      <width>91</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>保存</string>
