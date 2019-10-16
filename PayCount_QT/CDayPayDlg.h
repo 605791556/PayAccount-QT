@@ -47,7 +47,7 @@ public:
 	void SetListCtrlValue();
 	QComboBox* CreateProCombox(int oldIndex = -1);
 	QComboBox* CreateBookCombox(int oldIndex = -1);
-	void AddTableRow(int oldProIndex = -1,int oldBkIndex = -1,QString dpay = "",int number = 0,QString money = "");
+	void AddTableRow(int oldProIndex = -1,int oldBkIndex = -1,QString dpay = "",double number = 0,QString money = "");
 	void DeleteTableCtrl();
 
 	void SendToGetDPay();//获取该职工日薪

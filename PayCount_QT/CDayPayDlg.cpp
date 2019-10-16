@@ -247,7 +247,7 @@ void CDayPayDlg::InitListCtrl()
 	}
 }
 
-void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,int number,QString money)
+void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,double number,QString money)
 {
 	int row = ui.tableWidget->rowCount();
 	ui.tableWidget->setRowCount(row+1);
