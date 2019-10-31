@@ -21,7 +21,7 @@ struct WORKMONEY
 	}
 };
 
-class CTabWorkDayDlg : public QWidget
+class CTabWorkDayDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -30,9 +30,6 @@ public:
 	~CTabWorkDayDlg();
 
 	Ui::CTabWorkDayDlg ui;
-
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 	void st_CalBak(void* pdata);

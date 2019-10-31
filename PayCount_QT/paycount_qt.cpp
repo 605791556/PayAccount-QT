@@ -229,6 +229,7 @@ void PayCount_QT::BtnInit()
 			{
 				g_Globle.SetCallback(PayAccountCallback,this);
 				Json::Value root;
+				root[CMD_DLG]=EM_DLG_PAYCOUNT;
 				root[CONNECT_CMD]=SOCK_CMD_INIT;
 				Json::FastWriter writer;  
 				string temp = writer.write(root);

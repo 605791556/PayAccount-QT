@@ -1,20 +1,6 @@
 #include "CTabWorkDayDlg.h"
 #include "CDayPayDlg.h"
 
-void WorkCalCallback(void* p,string strData)
-{
-	CTabWorkDayDlg* pThis=(CTabWorkDayDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabWorkDayDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -54,10 +40,11 @@ void CTabWorkDayDlg::st_CalBak(void* pdata)
 }
 
 CTabWorkDayDlg::CTabWorkDayDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	m_pViewModel = nullptr;
 	m_bDateInit = false;
+	g_Globle.m_DlgMap[EM_DLG_TAB_WORKDAY] = this;
 
 	ui.setupUi(this);
 	connect(ui.dateEdit,&QDateEdit::userDateChanged,this,&CTabWorkDayDlg::st_DateChanged);
@@ -84,7 +71,6 @@ CTabWorkDayDlg::~CTabWorkDayDlg()
 
 void CTabWorkDayDlg::pageIn()
 {
-	g_Globle.SetCallback(WorkCalCallback,this);
 	SendToGetStaff();
 }
 
@@ -210,7 +196,6 @@ void CTabWorkDayDlg::st_DateChanged(const QDate &date)
 {
 	if(!m_bDateInit)
 		return;
-	g_Globle.SetCallback(WorkCalCallback,this);
 	SendToGetOnePayList();
 }
 
@@ -243,7 +228,6 @@ void CTabWorkDayDlg::st_RowDoubleClicked(const QModelIndex & mdIndex)
 {
 	CDayPayDlg dlg(mdIndex,this);
 	int ret = dlg.exec();
-	g_Globle.SetCallback(WorkCalCallback,this);
 	if (ret == QDialog::Accepted)
 	{
 		SendToGetOnePayList();
@@ -258,6 +242,7 @@ void CTabWorkDayDlg::st_BtnUpdate()
 void CTabWorkDayDlg::SendToGetStaff()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_WORKDAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_STAFF;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -304,6 +289,7 @@ void CTabWorkDayDlg::SendToGetOnePayList()
 	if (nSize>0)
 	{
 		Json::Value root;
+		root[CMD_DLG]=EM_DLG_TAB_WORKDAY;
 		root[CONNECT_CMD]=SOCK_CMD_GET_DAYPAY_LIST;
 		root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]]=strDate.toStdString();
 		for (int i = 0; i < nSize;i++)

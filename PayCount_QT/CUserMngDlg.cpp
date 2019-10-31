@@ -1,20 +1,6 @@
 #include "CUserMngDlg.h"
 #include "CAddUserDlg.h"
 
-void UserMngCallback(void* p,string strData)
-{
-	CUserMngDlg* pThis=(CUserMngDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CUserMngDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -51,12 +37,12 @@ void CUserMngDlg::st_CalBak(void* pdata)
 }
 
 CUserMngDlg::CUserMngDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CUserMngDlg::sg_CalBak,this,&CUserMngDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
-	g_Globle.SetCallback(UserMngCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_MNGUSER] = this;
 	InitListCtrl();
 	SendToFindUser();
 }
@@ -103,6 +89,7 @@ void CUserMngDlg::InitListCtrl()
 void CUserMngDlg::SendToFindUser()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGUSER;
 	root[CONNECT_CMD]=SOCK_CMD_GET_USER;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -112,6 +99,7 @@ void CUserMngDlg::SendToFindUser()
 void CUserMngDlg::SendToDelUser(QString strName)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGUSER;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_USER;
 	root[CMD_DELUSER[EM_DEL_USER_NAME]]=strName.toStdString();
 	Json::FastWriter writer;  
@@ -175,7 +163,6 @@ void CUserMngDlg::BtnAdd()
 {
 	CAddUserDlg dlg;
 	int ret = dlg.exec();
-	g_Globle.SetCallback(UserMngCallback,this);
 	if(ret == QDialog::Accepted)
 		SendToFindUser();
 }

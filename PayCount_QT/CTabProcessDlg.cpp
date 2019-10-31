@@ -1,19 +1,5 @@
 #include "CTabProcessDlg.h"
 
-void ProcessCallback(void* p,string strData)
-{
-	CTabProcessDlg* pThis=(CTabProcessDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabProcessDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -60,7 +46,7 @@ void CTabProcessDlg::st_CalBak(void* pdata)
 }
 
 CTabProcessDlg::CTabProcessDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabProcessDlg::sg_CalBak,this,&CTabProcessDlg::st_CalBak);
@@ -76,6 +62,8 @@ CTabProcessDlg::CTabProcessDlg(QWidget *parent)
 	}
 	ui.cbx_rk->setCurrentIndex(1);
 	ui.cbx_book->setMaxVisibleItems(40);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_PROCESS] = this;
 }
 
 CTabProcessDlg::~CTabProcessDlg()
@@ -139,7 +127,6 @@ void CTabProcessDlg::SetListCtrlValue()
 
 void CTabProcessDlg::pageIn()
 {
-	g_Globle.SetCallback(ProcessCallback,this);
 	SendToGetBook();
 }
 
@@ -285,6 +272,7 @@ void CTabProcessDlg::SendToGetBook()
 	int n = 0;
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_PROCESS;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_BOOK;
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = em_rk;
 	Json::FastWriter writer;  
@@ -295,6 +283,7 @@ void CTabProcessDlg::SendToGetBook()
 void CTabProcessDlg::SendToGetPro()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_PROCESS;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]] = PRO_STAFF_TYPE_YES;
 	Json::FastWriter writer;  
@@ -313,6 +302,7 @@ void CTabProcessDlg::SendToGetProgress(QString strBookID)
 		one[CMD_GETPROGRESS[EM_GETPROGRESS_INDEX]] = i+2;
 		root[CMD_RetType[EM_CMD_RETYPE_VALUE]].append(one);
 	}
+	root[CMD_DLG]=EM_DLG_TAB_PROCESS;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROGRESS;
 	root[CMD_GETPROGRESS[EM_GETPROGRESS_BOOKID]] = strBookID.toStdString();
 

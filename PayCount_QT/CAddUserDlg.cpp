@@ -1,19 +1,5 @@
 #include "CAddUserDlg.h"
 
-void UserAddCallback(void* p,string strData)
-{
-	CAddUserDlg* pThis=(CAddUserDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CAddUserDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -56,12 +42,12 @@ void CAddUserDlg::st_CalBak(void* pdata)
 }
 
 CAddUserDlg::CAddUserDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CAddUserDlg::sg_CalBak,this,&CAddUserDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(st_BtnAdd()));
-	g_Globle.SetCallback(UserAddCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_ADDUSER] = this;
 }
 
 CAddUserDlg::~CAddUserDlg()
@@ -72,6 +58,7 @@ CAddUserDlg::~CAddUserDlg()
 void CAddUserDlg::SendToJudgeUser(QString strName)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDUSER;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_USER;
 	root[CMD_JUDGEUSER[EM_JUDGE_USER_NAME]]=strName.toStdString();
 	Json::FastWriter writer;  
@@ -95,6 +82,7 @@ void CAddUserDlg::SendToAddUser()
 		type = TYPE_MNG;
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDUSER;
 	root[CONNECT_CMD]=SOCK_CMD_ADD_USER;
 	root[CMD_ADDUSER[EM_ADD_USER_NAME]]=strName.toStdString();
 	root[CMD_ADDUSER[EM_ADD_USER_PWD]]=strPwd.toStdString();

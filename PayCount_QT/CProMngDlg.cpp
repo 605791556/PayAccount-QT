@@ -1,20 +1,6 @@
 #include "CProMngDlg.h"
 #include "CAddProDlg.h"
 
-void ProMngCallback(void* p,string strData)
-{
-	CProMngDlg* pThis=(CProMngDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CProMngDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -64,7 +50,7 @@ void CProMngDlg::st_CalBak(void* pdata)
 }
 
 CProMngDlg::CProMngDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	CGloble::SetButtonStyle(ui.BTN_ADD,":/PayCount_QT/pic/ok.png",3);
@@ -73,7 +59,7 @@ CProMngDlg::CProMngDlg(QWidget *parent)
 	connect(this,&CProMngDlg::sg_CalBak,this,&CProMngDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
 	connect(ui.BTN_SAVE_DEX,SIGNAL(clicked()),this,SLOT(BtnSaveDex()));
-	g_Globle.SetCallback(ProMngCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_MNGPRO] = this;
 	InitListCtrl();
 	SendToGetProject();
 }
@@ -185,6 +171,7 @@ void CProMngDlg::resizeEvent(QResizeEvent *event)
 void CProMngDlg::SendToGetProject()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGPRO;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]]=PRO_STAFF_TYPE_MAX;
 	Json::FastWriter writer;  
@@ -240,6 +227,7 @@ void CProMngDlg::GetProject(Json::Value root)
 void CProMngDlg::SendToDelProject(int nProID)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGPRO;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_PROJECT;
 	root[CMD_DELPROJECT[EM_DEL_PROJECT_ID]]=nProID;
 	Json::FastWriter writer;  
@@ -253,6 +241,7 @@ void CProMngDlg::SendToDelProject(int nProID)
 void CProMngDlg::SendToSaveProNdex()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGPRO;
 	root[CONNECT_CMD]=SOCK_CMD_SAVE_PRONDEX;
 
 	int nSize = ui.tableWidget->rowCount();
@@ -285,7 +274,6 @@ void CProMngDlg::st_BtnEdit()
 	int nRow = btn->property("button").toInt();
 	CAddProDlg dlg(this,false,nRow);
 	int ret = dlg.exec();
-	g_Globle.SetCallback(ProMngCallback,this);
 	if (ret == QDialog::Accepted)
 	{
 		SendToGetProject();
@@ -355,7 +343,6 @@ void CProMngDlg::BtnAdd()
 {
 	CAddProDlg dlg;
 	int ret  = dlg.exec();
-	g_Globle.SetCallback(ProMngCallback,this);
 	if (ret == QDialog::Accepted)
 	{
 		SendToGetProject();

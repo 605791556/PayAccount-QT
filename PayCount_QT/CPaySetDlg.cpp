@@ -5,7 +5,7 @@
 #include "CTabOtherSetDlg.h"
 
 CPaySetDlg::CPaySetDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_bInitTab = false;
 	ui.setupUi(this);

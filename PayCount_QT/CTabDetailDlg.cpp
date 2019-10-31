@@ -1,19 +1,5 @@
 #include "CTabDetailDlg.h"
 
-void DetailCallback(void* p,string strData)
-{
-	CTabDetailDlg* pThis=(CTabDetailDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabDetailDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -64,7 +50,7 @@ void CTabDetailDlg::st_CalBak(void* pdata)
 }
 
 CTabDetailDlg::CTabDetailDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabDetailDlg::sg_CalBak,this,&CTabDetailDlg::st_CalBak);
@@ -80,6 +66,8 @@ CTabDetailDlg::CTabDetailDlg(QWidget *parent)
 	}
 	ui.cbx_rk->setCurrentIndex(1);
 	ui.cbx_book->setMaxVisibleItems(40);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_DETAIL] = this;
 }
 
 CTabDetailDlg::~CTabDetailDlg()
@@ -89,7 +77,6 @@ CTabDetailDlg::~CTabDetailDlg()
 
 void CTabDetailDlg::pageIn()
 {
-	g_Globle.SetCallback(DetailCallback,this);
 	SendToGetBook();
 }
 
@@ -120,6 +107,7 @@ void CTabDetailDlg::SendToGetBook()
 		em_rk = BOOK_RK(ndex -1);
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_DETAIL;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_BOOK;
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = em_rk;
 	Json::FastWriter writer;  
@@ -130,6 +118,7 @@ void CTabDetailDlg::SendToGetBook()
 void CTabDetailDlg::SendToGetProject()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_DETAIL;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]] = PRO_STAFF_TYPE_MAX;
 	Json::FastWriter writer;  
@@ -147,6 +136,7 @@ void CTabDetailDlg::SendToGetDetails()
 		QString strBookID = vt.value<QString>();
 
 		Json::Value root;
+		root[CMD_DLG]=EM_DLG_TAB_DETAIL;
 		root[CONNECT_CMD]=SOCK_CMD_GET_DETAILS;
 		root[CMD_GETDETAILS[EM_GET_DETAILS_BOOKID]] = strBookID.toStdString();
 		for (int i=0;i<nSize;i++)

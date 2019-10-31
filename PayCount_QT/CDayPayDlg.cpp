@@ -105,7 +105,7 @@ void CDayPayDlg::st_CalBak(void* pdata)
 }
 
 CDayPayDlg::CDayPayDlg(const QModelIndex & mdIndex,QWidget* tabWkDlg,QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	
@@ -121,8 +121,7 @@ CDayPayDlg::CDayPayDlg(const QModelIndex & mdIndex,QWidget* tabWkDlg,QWidget *pa
 	InitTitle(mdIndex,tabWkDlg);
 	//初始化列表
 	InitListCtrl();
-	//设置回调
-	g_Globle.SetCallback(DayCheckCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_DAYPAY] = this;
 
 	connect(this,&CDayPayDlg::sg_CalBak,this,&CDayPayDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(st_BtnAdd()));
@@ -598,6 +597,7 @@ void CDayPayDlg::st_BtnSave()
 void CDayPayDlg::SendToGetDPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DPAY;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]] = m_strStaffID.toStdString();
 	Json::FastWriter writer;  
@@ -608,6 +608,7 @@ void CDayPayDlg::SendToGetDPay()
 void CDayPayDlg::SendToGetBook()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_BOOK;
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = BOOK_RK_NO;
 	Json::FastWriter writer;  
@@ -618,6 +619,7 @@ void CDayPayDlg::SendToGetBook()
 void CDayPayDlg::SendToGetProject()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]]=PRO_STAFF_TYPE_MAX;
 	Json::FastWriter writer;  
@@ -631,6 +633,7 @@ void CDayPayDlg::SendToGetProject()
 void CDayPayDlg::SendToGetDayPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]]=m_strDate.toStdString();
@@ -642,6 +645,7 @@ void CDayPayDlg::SendToGetDayPay()
 void CDayPayDlg::SendToDelDayPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]]=m_strDate.toStdString();
@@ -653,6 +657,7 @@ void CDayPayDlg::SendToDelDayPay()
 void CDayPayDlg::SendToGetOnePay(int proID,QString strBookID,int nItem)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PAY;
 	root[GETPAYMSG[EM_GET_PAY_STAFFID]]=m_strStaffID.toStdString();
 	root[GETPAYMSG[EM_GET_PAY_PROID]]=proID;
@@ -666,6 +671,7 @@ void CDayPayDlg::SendToGetOnePay(int proID,QString strBookID,int nItem)
 void CDayPayDlg::SendToSaveDayPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_DAYPAY;
 	root[CONNECT_CMD]=SOCK_CMD_SAVE_DAYPAY;
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_strStaffID.toStdString();
 	root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]]=m_strDate.toStdString();

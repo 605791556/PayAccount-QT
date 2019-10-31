@@ -5,7 +5,7 @@
 #include "ui_CLockDlg.h"
 #include "cgloble.h"
 
-class CLockDlg : public QDialog
+class CLockDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -20,8 +20,6 @@ private:
 	void paintEvent(QPaintEvent *);
 	void InitDlg(QWidget* MainDlg);
 
-signals:
-	void sg_CalBak(void* pdata);
 public slots:
 	void BtnOk();
 	void BtnCancel();

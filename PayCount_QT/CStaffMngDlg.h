@@ -7,7 +7,7 @@
 
 #define  LISTCOLUMN 9
 
-class CStaffMngDlg : public QDialog
+class CStaffMngDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -18,8 +18,6 @@ public:
 	Ui::CStaffMngDlg ui;
 	void resizeEvent(QResizeEvent *);
 
-signals:
-	void sg_CalBak(void* pdata);
 public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnEdit();

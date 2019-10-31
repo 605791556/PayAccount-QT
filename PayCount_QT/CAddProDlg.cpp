@@ -1,20 +1,6 @@
 #include "CAddProDlg.h"
 #include "CProMngDlg.h"
 
-void AddProCallback(void* p,string strData)
-{
-	CAddProDlg* pThis=(CAddProDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CAddProDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -72,7 +58,7 @@ void CAddProDlg::st_CalBak(void* pdata)
 }
 
 CAddProDlg::CAddProDlg(QWidget* proMng,bool bAdd,int row,QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_bAdd = bAdd;
 	m_row  = row;
@@ -82,7 +68,7 @@ CAddProDlg::CAddProDlg(QWidget* proMng,bool bAdd,int row,QWidget *parent)
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 	InitDlg(proMng,bAdd);
 
-	g_Globle.SetCallback(AddProCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_ADDPRO] = this;
 }
 
 CAddProDlg::~CAddProDlg()
@@ -126,6 +112,7 @@ void CAddProDlg::InitDlg(QWidget* proMng,bool bAdd)
 void CAddProDlg::SendToJudgePro(QString strProName)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDPRO;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_PROJECT;
 	string sstrname = strProName.toLocal8Bit();
 	root[CMD_JUDGEBOOK[EM_JUDGE_PROJECT_NAME]]=sstrname;
@@ -154,6 +141,7 @@ void CAddProDlg::SendToAddOrMdfProject(EM_SOCK_CMD type)
 		pf_type = PRO_STAFF_TYPE_NO;
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDPRO;
 	root[CONNECT_CMD]=type;
 	string sstrname = strName.toLocal8Bit();
 	root[CMD_PROMSG[EM_PROMSG_NAME]]=sstrname;

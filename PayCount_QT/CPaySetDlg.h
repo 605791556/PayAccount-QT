@@ -19,7 +19,7 @@ enum EM_SPAGE_TYPE
 	EM_SPAGE_TYPE_MAX
 };
 
-class CPaySetDlg : public QDialog
+class CPaySetDlg : public CDlgFather
 {
 	Q_OBJECT
 

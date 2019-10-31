@@ -54,6 +54,7 @@ protected:
 
 signals:
 	void sg_CalBak(void* pdata);
+
 public slots:
 	void BtnMax();
 	void ConnectState(NET_STATE state);

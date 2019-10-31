@@ -5,7 +5,7 @@
 #include "ui_CTabProcessDlg.h"
 #include "cgloble.h"
 
-class CTabProcessDlg : public QWidget
+class CTabProcessDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -15,9 +15,6 @@ public:
 
 private:
 	Ui::CTabProcessDlg ui;
-
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 	void st_CalBak(void* pdata);

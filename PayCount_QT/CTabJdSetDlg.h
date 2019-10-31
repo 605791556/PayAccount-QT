@@ -5,7 +5,7 @@
 #include "ui_CTabJdSetDlg.h"
 #include "cgloble.h"
 
-class CTabJdSetDlg : public QWidget
+class CTabJdSetDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -15,9 +15,6 @@ public:
 
 private:
 	Ui::CTabJdSetDlg ui;
-
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 	void st_CalBak(void* pdata);

@@ -7,7 +7,7 @@
 #include "ui_CTabMonthDlg.h"
 
 
-class CTabMonthDlg : public QWidget
+class CTabMonthDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -28,7 +28,6 @@ public:
 	bool m_bInitCombox;
 
 signals:
-	void sg_CalBak(void* pdata);
 	void sg_ThCal(EM_SOCK_CMD cmd,EM_CMD_RET ret,bool rst = true,QString strPay = "");
 
 public slots:

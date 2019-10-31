@@ -1,19 +1,5 @@
 #include "CSetPwdDlg.h"
 
-void MdfPwdCallback(void* p,string strData)
-{
-	CSetPwdDlg* pThis=(CSetPwdDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CSetPwdDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -43,12 +29,12 @@ void CSetPwdDlg::st_CalBak(void* pdata)
 }
 
 CSetPwdDlg::CSetPwdDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CSetPwdDlg::sg_CalBak,this,&CSetPwdDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(BtnSave()));
-	g_Globle.SetCallback(MdfPwdCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_SETPWD] = this;
 }
 
 CSetPwdDlg::~CSetPwdDlg()
@@ -59,6 +45,7 @@ CSetPwdDlg::~CSetPwdDlg()
 void CSetPwdDlg::SendToMdfPwd(QString strName,QString strPwd)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_SETPWD;
 	root[CONNECT_CMD]=SOCK_CMD_MDFPWD;
 	root[CMD_MDFPWD[EM_MDFPWD_NAME]]=strName.toStdString();
 	root[CMD_MDFPWD[EM_MDFPWD_PWD]]=strPwd.toStdString();

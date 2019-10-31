@@ -12,7 +12,7 @@ struct PRO_DETAIL
 	vector<STU_DETAIL> vDetails;
 };
 
-class CTabDetailDlg : public QWidget
+class CTabDetailDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -22,9 +22,6 @@ public:
 
 private:
 	Ui::CTabDetailDlg ui;
-
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 	void st_CalBak(void* pdata);

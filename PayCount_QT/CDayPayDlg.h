@@ -5,7 +5,7 @@
 #include "ui_CDayPayDlg.h"
 #include "cgloble.h"
 
-class CDayPayDlg : public QDialog
+class CDayPayDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -29,8 +29,6 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *);
 	//双击改变窗口大小
 	void mouseDoubleClickEvent(QMouseEvent *);
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 		void st_CalBak(void* pdata);

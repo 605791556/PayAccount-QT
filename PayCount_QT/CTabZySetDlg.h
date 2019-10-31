@@ -5,7 +5,7 @@
 #include "ui_CTabZySetDlg.h"
 #include "cgloble.h"
 
-class CTabZySetDlg : public QWidget
+class CTabZySetDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -15,9 +15,6 @@ public:
 
 private:
 	Ui::CTabZySetDlg ui;
-
-signals:
-	void sg_CalBak(void* pdata);
 
 public slots:
 	void st_CalBak(void* pdata);

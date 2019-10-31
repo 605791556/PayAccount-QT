@@ -5,7 +5,7 @@
 #include "ui_CAddStaffDlg.h"
 #include "cgloble.h"
 
-class CAddStaffDlg : public QDialog
+class CAddStaffDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -20,8 +20,7 @@ public:
 	int  m_row;//当为修改时，代表行索引
 	QString strOldIdcard;//修改职工，该职工修改前的身份证号
 	QString m_strStaffID;
-signals:
-	void sg_CalBak(void* pdata);
+
 public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnSave();

@@ -1,20 +1,6 @@
 #include "CStaffMngDlg.h"
 #include "CAddStaffDlg.h"
 
-void StaffMngCallback(void* p,string strData)
-{
-	CStaffMngDlg* pThis=(CStaffMngDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CStaffMngDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -53,7 +39,7 @@ void CStaffMngDlg::st_CalBak(void* pdata)
 }
 
 CStaffMngDlg::CStaffMngDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_nPage=1;
 	m_dex=1;
@@ -72,7 +58,7 @@ CStaffMngDlg::CStaffMngDlg(QWidget *parent)
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
 
-	g_Globle.SetCallback(StaffMngCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_MNGSTAFF] = this;
 	InitListCtrl();
 	SendToGetStaff("",(m_dex-1)*20,20);
 }
@@ -223,6 +209,7 @@ void CStaffMngDlg::resizeEvent(QResizeEvent *event)
 void CStaffMngDlg::SendToGetStaff(QString strKeyWord,int nStart,int nNum)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_GET_STAFF;
 	string strkey = strKeyWord.toLocal8Bit();
 	root[CMD_GETSTAFF[EM_GET_STAFF_KEYWORD]]=strkey;
@@ -236,6 +223,7 @@ void CStaffMngDlg::SendToGetStaff(QString strKeyWord,int nStart,int nNum)
 void CStaffMngDlg::SendToDelStaff(QString strStaffID)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_STAFF;
 	root[CMD_DELSTAFF[EM_DEL_STAFF_ID]]=strStaffID.toStdString();
 	Json::FastWriter writer;  
@@ -285,7 +273,6 @@ void CStaffMngDlg::st_BtnEdit()
 
 	CAddStaffDlg dlg(this,false,nRow);
 	int nType = dlg.exec();
-	g_Globle.SetCallback(StaffMngCallback,this);
 	if(nType == QDialog::Accepted)
 		BtnFind();
 	
@@ -319,8 +306,6 @@ void CStaffMngDlg::BtnAdd()
 {
 	CAddStaffDlg dlg;
 	int nType = dlg.exec();
-
-	g_Globle.SetCallback(StaffMngCallback,this);
 	if(nType == QDialog::Accepted)
 		BtnFind();
 }

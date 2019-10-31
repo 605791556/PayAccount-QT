@@ -1,20 +1,6 @@
 #include "CAddBookDlg.h"
 #include "CBookMngDlg.h"
 
-void AddBookCallback(void* p,string strData)
-{
-	CAddBookDlg* pThis=(CAddBookDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CAddBookDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -73,7 +59,7 @@ void CAddBookDlg::st_CalBak(void* pdata)
 }
 
 CAddBookDlg::CAddBookDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_bAdd = bAdd;
 	m_row  = row;
@@ -93,7 +79,7 @@ CAddBookDlg::CAddBookDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	ui.EDIT_YS->setValidator(g_Globle.itVtor);
 	ui.EDIT_BC->setValidator(g_Globle.itVtor);
 	InitDlg(stfMng,bAdd);
-	g_Globle.SetCallback(AddBookCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_ADDBOOK] = this;
 }
 
 CAddBookDlg::~CAddBookDlg()
@@ -242,6 +228,7 @@ void CAddBookDlg::st_BtnSave()
 void CAddBookDlg::SendToJudgeBook(QString strName)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDBOOK;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_BOOK;
 	string sstrname = strName.toLocal8Bit();
 	root[CMD_JUDGEBOOK[EM_JUDGE_BOOK_NAME]]=sstrname;
@@ -253,6 +240,7 @@ void CAddBookDlg::SendToJudgeBook(QString strName)
 void CAddBookDlg::SendToAddOrMdfBook(EM_SOCK_CMD type)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDBOOK;
 	root[CONNECT_CMD]=type;
 	root[CMD_BOOKMSG[BOOKMSG_ID]]=m_bookstu.strBookID.toStdString();
 	string strname = m_bookstu.strname.toLocal8Bit();

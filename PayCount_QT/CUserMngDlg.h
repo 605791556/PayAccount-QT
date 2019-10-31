@@ -7,7 +7,7 @@
 
 #define  LISTCOLUMN 5
 
-class CUserMngDlg : public QDialog
+class CUserMngDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -21,8 +21,6 @@ private:
 public:
 	vector<USER_STU> m_vet;
 
-signals:
-	void sg_CalBak(void* pdata);
 public slots:
 	void st_CalBak(void* pdata);
 	void BtnAdd();

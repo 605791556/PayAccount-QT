@@ -5,7 +5,7 @@
 #include "ui_CAddBookDlg.h"
 #include "cgloble.h"
 
-class CAddBookDlg : public QDialog
+class CAddBookDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -22,8 +22,8 @@ public:
 	QString m_strBookID;
 	BOOK_STU m_bookstu;
 
-signals:
-	void sg_CalBak(void* pdata);
+//signals:
+//	void sg_CalBak(void* pdata);
 public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnSave();

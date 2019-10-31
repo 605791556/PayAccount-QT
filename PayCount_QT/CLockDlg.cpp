@@ -1,20 +1,6 @@
 #include "CLockDlg.h"
 #include "paycount_qt.h"
 
-void LockCallback(void* p,string strData)
-{
-	CLockDlg* pThis=(CLockDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CLockDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -44,7 +30,7 @@ void CLockDlg::st_CalBak(void* pdata)
 }
 
 CLockDlg::CLockDlg(QWidget* MainDlg,bool bLock,QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 
@@ -76,7 +62,7 @@ CLockDlg::CLockDlg(QWidget* MainDlg,bool bLock,QWidget *parent)
 	}
 
 	InitDlg(MainDlg);
-	g_Globle.SetCallback(LockCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_LOCK] = this;
 }
 
 CLockDlg::~CLockDlg()
@@ -103,6 +89,7 @@ void CLockDlg::BtnOk()
 	if (!strPwd.isEmpty())
 	{
 		Json::Value root;
+		root[CMD_DLG]=EM_DLG_LOCK;
 		root[CONNECT_CMD]=SOCK_CMD_CHECKPWD;
 		root[CMD_CHECKPWD[EM_CHECKPWD_NAME]]=g_Globle.m_strUserName.toStdString();
 		root[CMD_CHECKPWD[EM_CHECKPWD_PWD]]=strPwd.toStdString();

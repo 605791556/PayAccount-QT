@@ -1,4 +1,5 @@
 #include "cgloble.h"
+#include "DlgFather.h"
 
 #pragma comment(lib,"HPSocket_U.lib")
 
@@ -113,9 +114,24 @@ void CGloble::DoRun(string strData)
 {
 	try
 	{
-		if (m_pCallBack && m_pHand)
+		Json::Reader r;
+		Json::Value root;
+		r.parse(strData,root);
+
+		EM_DLG em_dlg = (EM_DLG)root[CMD_DLG].asInt();
+		if (em_dlg > EM_DLG_NO)
 		{
-			m_pCallBack(m_pHand,strData);
+			if (em_dlg == EM_DLG_PAYCOUNT)
+			{
+				if (m_pCallBack && m_pHand)
+					m_pCallBack(m_pHand,strData);
+			}
+			else
+			{
+				CDlgFather* dlg = m_DlgMap[em_dlg];
+				if (dlg)
+					dlg->DlgDoRun(strData);
+			}
 		}
 	}
 	catch (...)

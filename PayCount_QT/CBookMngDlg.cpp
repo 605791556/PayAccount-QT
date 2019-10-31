@@ -1,19 +1,19 @@
 #include "CBookMngDlg.h"
 #include "CAddBookDlg.h"
 
-void BookMngCallback(void* p,string strData)
-{
-	CBookMngDlg* pThis=(CBookMngDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
+//void BookMngCallback(void* p,string strData)
+//{
+//	CBookMngDlg* pThis=(CBookMngDlg*) p;
+//
+//	if ( pThis==NULL)
+//		return;
+//	else
+//	{
+//		string* pStrData = new string;
+//		*pStrData = strData;
+//		emit pThis->sg_CalBak(pStrData);
+//	}
+//}
 
 void CBookMngDlg::st_CalBak(void* pdata)
 {
@@ -53,7 +53,7 @@ void CBookMngDlg::st_CalBak(void* pdata)
 }
 
 CBookMngDlg::CBookMngDlg(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_nPage=1;
 	m_dex=1;
@@ -72,7 +72,9 @@ CBookMngDlg::CBookMngDlg(QWidget *parent)
 	connect(ui.BTN_GO,SIGNAL(clicked()),this,SLOT(BtnGo()));
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
-	g_Globle.SetCallback(BookMngCallback,this);
+	
+	g_Globle.m_DlgMap[EM_DLG_MNGBOOK] = this;
+
 	InitListCtrl();
 	InitCombox();
 	SendToGetBook("",m_rkType,m_date_Type,(m_dex-1)*20,20);
@@ -267,6 +269,7 @@ void CBookMngDlg::resizeEvent(QResizeEvent *event)
 void CBookMngDlg::SendToGetBook(QString strKeyWord,BOOK_RK rkType,EM_DATE_TYPE date_Type,int nStart,int nNum)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGBOOK;
 	root[CONNECT_CMD]=SOCK_CMD_GET_BOOK;
 	string strkey = strKeyWord.toLocal8Bit();
 	root[CMD_GETBOOK[GETBOOK_KEYWORD]] = strkey; 
@@ -282,6 +285,7 @@ void CBookMngDlg::SendToGetBook(QString strKeyWord,BOOK_RK rkType,EM_DATE_TYPE d
 void CBookMngDlg::SendToDelBook(QString strBookID)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGBOOK;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_BOOK;
 	root[CMD_DELBOOK[GETBOOK_KEYWORD]] = strBookID.toStdString(); 
 	Json::FastWriter writer;  
@@ -372,7 +376,7 @@ void CBookMngDlg::st_BtnEdit()
 	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
 	CAddBookDlg dlg(this,false,nRow);
 	int nType = dlg.exec();
-	g_Globle.SetCallback(BookMngCallback,this);
+	//g_Globle.SetCallback(BookMngCallback,this);
 	if(nType == QDialog::Accepted)
 		BtnFind();
 }
@@ -410,7 +414,7 @@ void CBookMngDlg::BtnAdd()
 {
 	CAddBookDlg dlg;
 	int nType = dlg.exec();
-	g_Globle.SetCallback(BookMngCallback,this);
+	//g_Globle.SetCallback(BookMngCallback,this);
 	if(nType == QDialog::Accepted)
 		BtnFind();
 }

@@ -5,7 +5,7 @@
 #include "ui_CLogin.h"
 #include "cgloble.h"
 
-class CLogin : public QDialog
+class CLogin : public CDlgFather
 {
 	Q_OBJECT
 
@@ -32,8 +32,9 @@ private:
 	void GetUser(Json::Value root);
 	void SendToLogin(QString strName,QString strPass,int show_pass);
 	void GetLogin(Json::Value root);
-signals:
-	void sg_CalBak(void* pdata);
+
+//signals:
+//	virtual void sg_CalBak(void* pdata);
 
 public slots:
 	void BtnSet();

@@ -5,7 +5,7 @@
 #include "ui_CSetPwdDlg.h"
 #include "cgloble.h"
 
-class CSetPwdDlg : public QDialog
+class CSetPwdDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -16,8 +16,6 @@ public:
 private:
 	Ui::CSetPwdDlg ui;
 
-signals:
-	void sg_CalBak(void* pdata);
 public slots:
 	void st_CalBak(void* pdata);
 	void BtnSave();

@@ -3,20 +3,6 @@
 CTabMonthDlg* gTabMonthDlg = NULL;
 
 void CalBakThread(void* pdata);
-void MonthCheckCallback(void* p,string strData);
-
-void MonthCheckCallback(void* p,string strData)
-{
-	CTabMonthDlg* pThis=(CTabMonthDlg*) p;
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
 
 void CTabMonthDlg::st_CalBak(void* pdata)
 {
@@ -105,7 +91,7 @@ void CTabMonthDlg::st_ThCal(EM_SOCK_CMD cmd,EM_CMD_RET ret,bool rst,QString strP
 }
 
 CTabMonthDlg::CTabMonthDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	qRegisterMetaType<EM_CMD_RET>("EM_CMD_RET");
 	qRegisterMetaType<EM_SOCK_CMD>("EM_SOCK_CMD");
@@ -129,6 +115,8 @@ CTabMonthDlg::CTabMonthDlg(QWidget *parent)
 	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
 	ui.label_load->setMovie(m_pMovie);
 	ui.label_load->setVisible(false);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_MONTH] = this;
 	pageIn();
 }
 
@@ -142,7 +130,6 @@ CTabMonthDlg::~CTabMonthDlg()
 
 void CTabMonthDlg::pageIn()
 {
-	g_Globle.SetCallback(MonthCheckCallback,this);
 	SendToGetStaff();
 }
 
@@ -286,6 +273,7 @@ int findDay(QString strDate)
 void CTabMonthDlg::SendToGetStaff()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_MONTH;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_STAFF;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -325,6 +313,7 @@ bool CTabMonthDlg::SendToGetMonthPay()
 	m_pViewModel->removeRows(0,m_pViewModel->rowCount());//Çå¿Õ
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_MONTH;
 	root[CONNECT_CMD]=SOCK_CMD_GET_MPAY;
 
 	QString strYear, strMonth,strDate,strTmp;
@@ -500,6 +489,5 @@ void CTabMonthDlg::st_KeyWordChanged(const QString & strKeyWord)
 
 void CTabMonthDlg::BtnUpdate()
 {
-	g_Globle.SetCallback(MonthCheckCallback,this);
 	SendToGetStaff();
 }

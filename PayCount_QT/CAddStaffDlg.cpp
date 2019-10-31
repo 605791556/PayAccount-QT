@@ -1,20 +1,6 @@
 #include "CAddStaffDlg.h"
 #include "CStaffMngDlg.h"
 
-void AddStaffCallback(void* p,string strData)
-{
-	CAddStaffDlg* pThis=(CAddStaffDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CAddStaffDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -68,7 +54,7 @@ void CAddStaffDlg::st_CalBak(void* pdata)
 }
 
 CAddStaffDlg::CAddStaffDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	m_bAdd = bAdd;
 	m_row  = row;
@@ -84,7 +70,7 @@ CAddStaffDlg::CAddStaffDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	ui.EDIT_DEX->setValidator(g_Globle.itVtor);
 	ui.EDIT_DAYPAY->setValidator(g_Globle.dbVtor);
 
-	g_Globle.SetCallback(AddStaffCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_ADDSTAFF] = this;
 }
 
 CAddStaffDlg::~CAddStaffDlg()
@@ -146,6 +132,7 @@ void CAddStaffDlg::InitDlg(QWidget* stfMng,bool bAdd)
 void CAddStaffDlg::SendToJudgeStaff(QString strIdcard)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_STAFF;
 	root[CMD_JUDGESTAFF[EM_JUDGE_STAFF_IDCARD]]=strIdcard.toStdString();
 	Json::FastWriter writer;  
@@ -170,6 +157,7 @@ void CAddStaffDlg::SendToAddStaff()
 	QString  strStaffID = QDateTime::currentDateTime().toString("yyyyMMddhhmmss");
 
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_ADD_STAFF;
 	string sstrname = strName.toLocal8Bit();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=sstrname;
@@ -191,6 +179,7 @@ void CAddStaffDlg::SendToAddStaff()
 void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,int age,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_ADDSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_MDF_STAFF;
 	string sstrname = strName.toLocal8Bit();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=sstrname;

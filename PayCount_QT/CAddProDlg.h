@@ -5,7 +5,7 @@
 #include "ui_CAddProDlg.h"
 #include "cgloble.h"
 
-class CAddProDlg : public QDialog
+class CAddProDlg : public CDlgFather
 {
 	Q_OBJECT
 
@@ -23,8 +23,6 @@ public:
 	int  m_row;//当为修改时，代表行索引
 	int  m_proID;
 
-signals:
-	void sg_CalBak(void* pdata);
 public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnSave();

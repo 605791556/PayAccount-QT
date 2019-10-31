@@ -1,9 +1,8 @@
 #include "CLogin.h"
 #include "CSetDlg.h"
 
-void LoginCallback(void* p,string strData);
 CLogin::CLogin(QWidget *parent)
-	: QDialog(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(ui.BTN_SET,SIGNAL(clicked()),this,SLOT(BtnSet()));
@@ -26,8 +25,8 @@ CLogin::CLogin(QWidget *parent)
 	CGloble::SetButtonStyle(ui.BTN_SET,":/PayCount_QT/pic/set.png",3);
 	CGloble::SetButtonStyle(ui.BTN_LOGIN,":/PayCount_QT/pic/login_btn.png",3);
 
-	//ÉèÖÃ»Øµ÷
-	g_Globle.SetCallback(LoginCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_LOGIN] = this;
+
 	if (g_Globle.InitGloble())
 	{
 		QString strTitle = g_Globle.m_strTitle + g_Globle.m_strVersion;
@@ -37,6 +36,7 @@ CLogin::CLogin(QWidget *parent)
 		{
 			ui.label_msg->setText("");
 			Json::Value root;
+			root[CMD_DLG]=EM_DLG_LOGIN;
 			root[CONNECT_CMD]=SOCK_CMD_GET_USER;
 			Json::FastWriter writer;  
 			string temp = writer.write(root);
@@ -119,6 +119,7 @@ void CLogin::SendToLogin(QString strName,QString strPass,int show_pass)
 {
 	Json::Value root;
 	{
+		root[CMD_DLG]=EM_DLG_LOGIN;
 		root[CONNECT_CMD]=SOCK_CMD_LOGIN;
 		root[CMD_LOGIN[EM_LOGIN_NAME]] = strName.toStdString();
 		root[CMD_LOGIN[EM_LOGIN_PASS]]= strPass.toStdString();
@@ -195,21 +196,12 @@ void CLogin::GetLogin(Json::Value root)
 	}
 }
 
-void LoginCallback(void* p,string strData)
-{
-	CLogin* pThis=(CLogin*) p;
-
-	if ( pThis==NULL || !pThis->isWindow())
-	{
-		return;
-	}
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
+//void CLogin::DlgDoRun(string strData)
+//{
+//	string* pStrData = new string;
+//	*pStrData = strData;
+//	emit sg_CalBak(pStrData);
+//}
 
 void CLogin::st_CalBak(void* pdata)
 {

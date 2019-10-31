@@ -4,6 +4,7 @@
 #define NOMINMAX
 
 #include "HPSocket.h"
+#include "DlgFather.h"
 #include <qt_windows.h>
 #include <QObject>
 #include <qpushbutton.h>
@@ -26,10 +27,10 @@
 #include "common.h"
 #include <json/json.h>
 #include <json/config.h>
-#include <string>
 #include <vector>
 #include "GeneralHelper.h"
 #include "helper.h"
+#include <map>
 
 #ifdef _DEBUG
 #pragma comment(lib,"json_vc71_libmtd.lib")
@@ -399,6 +400,8 @@ public:
 	void DoRun(string strData);
 	int GetDays(int year,int month);
 public:
+	map<EM_DLG,CDlgFather*> m_DlgMap;
+
 	QString    m_strIP;
 	int        m_nPort;
 	QString    m_strName;

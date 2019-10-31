@@ -1,19 +1,5 @@
 #include "CTabJdSetDlg.h"
 
-void JdSetCallback(void* p,string strData)
-{
-	CTabJdSetDlg* pThis=(CTabJdSetDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabJdSetDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -51,7 +37,7 @@ void CTabJdSetDlg::st_CalBak(void* pdata)
 }
 
 CTabJdSetDlg::CTabJdSetDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabJdSetDlg::sg_CalBak,this,&CTabJdSetDlg::st_CalBak);
@@ -78,7 +64,7 @@ CTabJdSetDlg::CTabJdSetDlg(QWidget *parent)
 	ui.EDIT_G_10->setValidator(g_Globle.dbVtor);
 	ui.EDIT_G_18->setValidator(g_Globle.dbVtor);
 
-	g_Globle.SetCallback(JdSetCallback,this);
+	g_Globle.m_DlgMap[EM_DLG_TAB_JDSET] = this;
 	SendToGetDaiPay();
 }
 
@@ -89,13 +75,13 @@ CTabJdSetDlg::~CTabJdSetDlg()
 
 void CTabJdSetDlg::pageIn()
 {
-	g_Globle.SetCallback(JdSetCallback,this);
 	SendToGetDaiPay();
 }
 
 void CTabJdSetDlg::SendToGetDaiPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_JDSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DAIPAY;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -157,6 +143,7 @@ void CTabJdSetDlg::GetDaiPay(Json::Value root)
 void CTabJdSetDlg::SendToSaveDaiPay(STU_DAI_PAY stu)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_JDSET;
 	root[CONNECT_CMD]=SOCK_CMD_SET_DAIPAY;
 
 	root[CMD_DAIPAY[EM_DAI_PAY_A_W]]=stu.strA_w.toStdString();

@@ -1,19 +1,5 @@
 #include "CTabOtherSetDlg.h"
 
-void OtherSetCallback(void* p,string strData)
-{
-	CTabOtherSetDlg* pThis=(CTabOtherSetDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabOtherSetDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -95,7 +81,7 @@ void CTabOtherSetDlg::st_CalBak(void* pdata)
 }
 
 CTabOtherSetDlg::CTabOtherSetDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	m_bInitCombox = false;
 	ui.setupUi(this);
@@ -107,6 +93,8 @@ CTabOtherSetDlg::CTabOtherSetDlg(QWidget *parent)
 	ui.EDIT_PAY->setValidator(g_Globle.dbVtor);
 	InitListCtrl();
 	ui.comboBox->setMaxVisibleItems(40);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_OTHERSET] = this;
 }
 
 CTabOtherSetDlg::~CTabOtherSetDlg()
@@ -238,13 +226,13 @@ void CTabOtherSetDlg::st_checkChanged(int state)
 
 void CTabOtherSetDlg::pageIn()
 {
-	g_Globle.SetCallback(OtherSetCallback,this);
 	SendToGetProject();
 }
 
 void CTabOtherSetDlg::SendToGetProject()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_OTHERSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
 	root[CMD_GETPRO[EM_GETPRO_BWRITE]] = PRO_STAFF_TYPE_MAX;
 	Json::FastWriter writer;  
@@ -255,6 +243,7 @@ void CTabOtherSetDlg::SendToGetProject()
 void CTabOtherSetDlg::SendToGetBook()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_OTHERSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_BOOK;
 	root[CMD_GETBOOK[GETBOOK_KEYWORD]] = ""; 
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = BOOK_RK_NO;
@@ -268,6 +257,7 @@ void CTabOtherSetDlg::SendToGetBook()
 void CTabOtherSetDlg::SendToGetOtherPay(int nID)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_OTHERSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_OTHERPAY;
 	root[CMD_OTHERPAY[EM_OTHER_PAY_PROID]] = nID;
 	Json::FastWriter writer;  
@@ -278,6 +268,7 @@ void CTabOtherSetDlg::SendToGetOtherPay(int nID)
 void CTabOtherSetDlg::SendToSetOtherPay(int proID, vector<OTHER_PRO_PAY> vec)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_OTHERSET;
 	root[CONNECT_CMD]=SOCK_CMD_SET_OTHERPAY;
 	for (int i=0;i<vec.size();i++)
 	{
@@ -295,6 +286,7 @@ void CTabOtherSetDlg::SendToSetOtherPay(int proID, vector<OTHER_PRO_PAY> vec)
 void CTabOtherSetDlg::SendToSetOtherAllBookPay(int proID,QString strPay)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_OTHERSET;
 	root[CONNECT_CMD]=SOCK_CMD_SET_OTHERALLBOOKPAY;
 	root[CMD_PROMSG[EM_PROMSG_ID]] = proID;
 	root[CMD_PROMSG[EM_PROMSG_PAY]] = strPay.toStdString();

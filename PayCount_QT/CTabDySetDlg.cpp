@@ -1,19 +1,5 @@
 #include "CTabDySetDlg.h"
 
-void DySetCallback(void* p,string strData)
-{
-	CTabDySetDlg* pThis=(CTabDySetDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabDySetDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -51,7 +37,7 @@ void CTabDySetDlg::st_CalBak(void* pdata)
 }
 
 CTabDySetDlg::CTabDySetDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabDySetDlg::sg_CalBak,this,&CTabDySetDlg::st_CalBak);
@@ -59,6 +45,8 @@ CTabDySetDlg::CTabDySetDlg(QWidget *parent)
 
 	ui.EDIT_W_DOWN->setValidator(g_Globle.dbVtor);
 	ui.EDIT_W_UP->setValidator(g_Globle.dbVtor);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_DYSET] = this;
 }
 
 CTabDySetDlg::~CTabDySetDlg()
@@ -68,13 +56,13 @@ CTabDySetDlg::~CTabDySetDlg()
 
 void CTabDySetDlg::pageIn()
 {
-	g_Globle.SetCallback(DySetCallback,this);
 	SendToGetDyPay();
 }
 
 void CTabDySetDlg::SendToGetDyPay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_DYSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_DYPAY;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -87,6 +75,7 @@ void CTabDySetDlg::SendToGetDyPay()
 void CTabDySetDlg::SendToSaveDyPay(QString strDown,QString strUp)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_DYSET;
 	root[CONNECT_CMD]=SOCK_CMD_SET_DYPAY;
 
 	root[CMD_DYPAY[EM_DY_PAY_DOWN]]= strDown.toStdString();

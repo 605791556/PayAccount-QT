@@ -1,19 +1,5 @@
 #include "CTabZySetDlg.h"
 
-void ZySetCallback(void* p,string strData)
-{
-	CTabZySetDlg* pThis=(CTabZySetDlg*) p;
-
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CTabZySetDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -51,7 +37,7 @@ void CTabZySetDlg::st_CalBak(void* pdata)
 }
 
 CTabZySetDlg::CTabZySetDlg(QWidget *parent)
-	: QWidget(parent)
+	: CDlgFather(parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabZySetDlg::sg_CalBak,this,&CTabZySetDlg::st_CalBak);
@@ -73,6 +59,8 @@ CTabZySetDlg::CTabZySetDlg(QWidget *parent)
 	ui.EDIT_G_D3->setValidator(g_Globle.dbVtor);
 	ui.EDIT_G_3->setValidator(g_Globle.dbVtor);
 	ui.EDIT_G_2->setValidator(g_Globle.dbVtor);
+
+	g_Globle.m_DlgMap[EM_DLG_TAB_ZYSET] = this;
 }
 
 CTabZySetDlg::~CTabZySetDlg()
@@ -82,13 +70,13 @@ CTabZySetDlg::~CTabZySetDlg()
 
 void CTabZySetDlg::pageIn()
 {
-	g_Globle.SetCallback(ZySetCallback,this);
 	SendToGetZheyePay();
 }
 
 void CTabZySetDlg::SendToGetZheyePay()
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_ZYSET;
 	root[CONNECT_CMD]=SOCK_CMD_GET_ZHEYEPAY;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
@@ -101,6 +89,7 @@ void CTabZySetDlg::SendToGetZheyePay()
 void CTabZySetDlg::SendToSaveZheyePay(STU_ZHEYE_PAY stu)
 {
 	Json::Value root;
+	root[CMD_DLG]=EM_DLG_TAB_ZYSET;
 	root[CONNECT_CMD]=SOCK_CMD_SET_ZHEYEPAY;
 
 	root[CMD_ZHEYEPAY[EM_ZHEYE_PAY_AQ4]]=stu.strAQ4.toStdString();
