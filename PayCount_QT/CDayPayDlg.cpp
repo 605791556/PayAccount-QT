@@ -358,8 +358,10 @@ void CDayPayDlg::st_numberEditChanged(const QString & strNumber)
 	//获取行索引
 	int nRow = edit->property("edit").toInt();
 	//获取单价
-	
-	double fdpay = ui.tableWidget->item(nRow,2)->text().toDouble();
+	double fdpay = 0;
+	QTableWidgetItem* item = ui.tableWidget->item(nRow,2);
+	if (item)
+		fdpay = item->text().toDouble();
 	double fmoney = fdpay * strNumber.toDouble();
 	QString str = QString::number(fmoney,'f',2);
 	//设置金额
