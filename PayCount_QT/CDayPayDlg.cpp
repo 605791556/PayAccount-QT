@@ -358,6 +358,7 @@ void CDayPayDlg::st_numberEditChanged(const QString & strNumber)
 	//获取行索引
 	int nRow = edit->property("edit").toInt();
 	//获取单价
+	
 	double fdpay = ui.tableWidget->item(nRow,2)->text().toDouble();
 	double fmoney = fdpay * strNumber.toDouble();
 	QString str = QString::number(fmoney,'f',2);
@@ -572,7 +573,7 @@ void CDayPayDlg::st_BtnSave()
 			cal.strBookName = bkCombox->currentText();
 			//单价
 			QTableWidgetItem* itm = ui.tableWidget->item(i,2);
-			if (!itm)
+			if (!itm || itm->text().isEmpty())
 			{
 				QMessageBox::information(this, CH("提示"), CH("单价缺损！"));
 				return;
