@@ -25,6 +25,7 @@ void CStaffMngDlg::st_CalBak(void* pdata)
 		}
 		break;
 	case SOCK_CMD_DEL_STAFF:
+	case SOCK_CMD_PLDEL_STAFF:
 		{
 			if (ret == NET_CMD_FAIL)
 				QMessageBox::information(this, CH("错误"), CH("删除失败！"));
@@ -50,6 +51,7 @@ CStaffMngDlg::CStaffMngDlg(QWidget *parent)
 	CGloble::SetButtonStyle(ui.BTN_ADD,":/PayCount_QT/pic/ok.png",3);
 	CGloble::SetButtonStyle(ui.BTN_LAST,":/PayCount_QT/pic/ok.png",3);
 	CGloble::SetButtonStyle(ui.BTN_NEXT,":/PayCount_QT/pic/ok.png",3);
+	CGloble::SetButtonStyle(ui.BTN_PL_DEL,":/PayCount_QT/pic/ok.png",3);
 
 	connect(this,&CStaffMngDlg::sg_CalBak,this,&CStaffMngDlg::st_CalBak);
 	connect(ui.BTN_FIND,SIGNAL(clicked()),this,SLOT(BtnFind()));
@@ -57,8 +59,11 @@ CStaffMngDlg::CStaffMngDlg(QWidget *parent)
 	connect(ui.BTN_GO,SIGNAL(clicked()),this,SLOT(BtnGo()));
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
+	connect(ui.BTN_PL_DEL,SIGNAL(clicked()),this,SLOT(st_BtnPlDel()));
 
 	g_Globle.m_DlgMap[EM_DLG_MNGSTAFF] = this;
+
+	showMaximized();
 	InitListCtrl();
 	SendToGetStaff("",(m_dex-1)*20,20);
 }
@@ -94,11 +99,11 @@ void CStaffMngDlg::InitListCtrl()
 		"QScrollBar::add-line{background:transparent;}");
 
 	QStringList headers; 
-	headers<<CH("序号")<<CH("姓名")<<CH("性别")<<CH("年龄")<<CH("入职时间")<<CH("联系方式")<<CH("类型")<<CH("日薪")<<CH("操作");
+	headers<<CH("")<<CH("序号")<<CH("姓名")<<CH("性别")<<CH("年龄")<<CH("入职时间")<<CH("联系方式")<<CH("类型")<<CH("日薪")<<CH("操作");
 	ui.tableWidget->setColumnCount(LISTCOLUMN); 
 	ui.tableWidget->setHorizontalHeaderLabels(headers);
 
-	ui.tableWidget->setColumnWidth(8,75);
+	ui.tableWidget->setColumnWidth(9,75);
 }
 
 void CStaffMngDlg::SetListCtrlValue()
@@ -110,29 +115,40 @@ void CStaffMngDlg::SetListCtrlValue()
 	int n = 1;
 	for (int i=0;i<nCount;i++)
 	{
+		//checkbox
+		QCheckBox* cbox = new QCheckBox();
+		cbox->setProperty("cbox",i);
+		QWidget *widget2 = new QWidget(ui.tableWidget);
+		QHBoxLayout *hLayout2 = new QHBoxLayout(ui.tableWidget);
+		hLayout2->addWidget(cbox);
+		hLayout2->setMargin(0);
+		hLayout2->setAlignment(widget2, Qt::AlignCenter);
+		hLayout2->setContentsMargins(5, 0, 0, 0);
+		widget2->setLayout(hLayout2);
+		ui.tableWidget->setCellWidget(i,0,widget2);
 		//序号
 		str = QString("%1").arg(n+(m_dex-1)*20);
-		ui.tableWidget->setItem(i,0,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,1,new QTableWidgetItem(str));
 		//姓名
-		ui.tableWidget->setItem(i,1,new QTableWidgetItem(m_vet[i].strname));
+		ui.tableWidget->setItem(i,2,new QTableWidgetItem(m_vet[i].strname));
 		//绑定ID
 	    QVariant vt;
 		vt.setValue<QString>(m_vet[i].strStaffID);
 		ui.tableWidget->item(i,1)->setData(1,vt);
 		//性别
-		ui.tableWidget->setItem(i,2,new QTableWidgetItem(m_vet[i].strSex));
+		ui.tableWidget->setItem(i,3,new QTableWidgetItem(m_vet[i].strSex));
 		//年龄
 		str = QString("%1").arg(m_vet[i].age);
-		ui.tableWidget->setItem(i,3,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,4,new QTableWidgetItem(str));
 		//入职时间
-		ui.tableWidget->setItem(i,4,new QTableWidgetItem(m_vet[i].strInTime));
+		ui.tableWidget->setItem(i,5,new QTableWidgetItem(m_vet[i].strInTime));
 		//联系方式
-		ui.tableWidget->setItem(i,5,new QTableWidgetItem(m_vet[i].strTel));
+		ui.tableWidget->setItem(i,6,new QTableWidgetItem(m_vet[i].strTel));
 		//类型
-		ui.tableWidget->setItem(i,6,new QTableWidgetItem(StaffType[m_vet[i].type]));
+		ui.tableWidget->setItem(i,7,new QTableWidgetItem(StaffType[m_vet[i].type]));
 		//日薪
 		str = QString::number(m_vet[i].fDaypay,'f',2);
-		ui.tableWidget->setItem(i,7,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,8,new QTableWidgetItem(str));
 		//编辑
 		QPushButton* btn = new QPushButton(this);
 		CGloble::SetButtonStyle(btn,":/PayCount_QT/pic/edit.png",3);
@@ -157,7 +173,7 @@ void CStaffMngDlg::SetListCtrlValue()
 		hLayout->setAlignment(widget, Qt::AlignCenter);
 		hLayout->setContentsMargins(10, 0, 20, 0);
 		widget->setLayout(hLayout);
-		ui.tableWidget->setCellWidget(i,8,widget);
+		ui.tableWidget->setCellWidget(i,9,widget);
 		n++;
 	}
 
@@ -195,14 +211,16 @@ void CStaffMngDlg::resizeEvent(QResizeEvent *event)
 	int w = ui.tableWidget->width();
 	for (int i=0;i<LISTCOLUMN;i++)
 	{
-		if(i==0|| i==2 || i==3)
-			ui.tableWidget->setColumnWidth(i,40);
-		else if(i==6)
+		if(i==1|| i==3 || i==4)
+			ui.tableWidget->setColumnWidth(i,48);
+		else if(i==0)
+			ui.tableWidget->setColumnWidth(i,25);
+		else if(i==7)
 			ui.tableWidget->setColumnWidth(i,75);
-		else if(i==8)
+		else if(i==9)
 			ui.tableWidget->setColumnWidth(i,75);
 		else
-			ui.tableWidget->setColumnWidth(i,(w-75*2-40*3)/(LISTCOLUMN-5));
+			ui.tableWidget->setColumnWidth(i,(w-75*2-48*3-25)/(LISTCOLUMN-6));
 	}
 }
 
@@ -226,6 +244,17 @@ void CStaffMngDlg::SendToDelStaff(QString strStaffID)
 	root[CMD_DLG]=EM_DLG_MNGSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_STAFF;
 	root[CMD_DELSTAFF[EM_DEL_STAFF_ID]]=strStaffID.toStdString();
+	Json::FastWriter writer;  
+	string temp = writer.write(root);
+	g_Globle.SendTo(temp);
+}
+
+void CStaffMngDlg::SendToPlDelStaff(string strListID)
+{
+	Json::Value root;
+	root[CMD_DLG]=EM_DLG_MNGSTAFF;
+	root[CONNECT_CMD]=SOCK_CMD_PLDEL_STAFF;
+	root[CMD_DELSTAFF[EM_DEL_STAFF_ID]]=strListID;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
 	g_Globle.SendTo(temp);
@@ -283,7 +312,7 @@ void CStaffMngDlg::st_BtnDel()
 	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
 	int nRow = btn->property("button").toInt();
 	QString strStaffID = ui.tableWidget->item(nRow,1)->data(1).toString();
-	QString strStaffName = ui.tableWidget->item(nRow,1)->text();
+	QString strStaffName = ui.tableWidget->item(nRow,2)->text();
 
 	QString str = QString(CH("删除职工将会删除该职工相关的所有工作记录，确认删除 %1？")).arg(strStaffName);
 	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
@@ -296,6 +325,35 @@ void CStaffMngDlg::st_BtnDel()
 		break;
 	}
 }
+
+void CStaffMngDlg::st_BtnPlDel()
+{
+	string strList;
+	int nCount = ui.tableWidget->rowCount();
+	for (int i=0;i<nCount;i++)
+	{
+		QWidget* wt = (QWidget*)ui.tableWidget->cellWidget(i,0);
+		QHBoxLayout* lyt = (QHBoxLayout*)wt->layout();
+		QLayoutItem* item = lyt->layout()->itemAt(0);
+		QCheckBox* box = qobject_cast<QCheckBox *>(item->widget());
+		int nRow = box->property("cbox").toInt();
+		if (box && box->isChecked())
+		{
+			QString strStaffID = ui.tableWidget->item(i,1)->data(1).toString();
+			strList += strStaffID.toStdString() + ";";
+		}
+	}
+	if (nCount > 0 && strList.empty())
+		QMessageBox::information(this, CH("提示"), CH("请先勾选需要删除的职工！"));	
+	else
+	{
+		QString str = QString(CH("该操作不会删除与之相关的记录，确认删除？"));
+		int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
+		if (nType == QMessageBox::Ok)
+			SendToPlDelStaff(strList);
+	}
+}
+
 void CStaffMngDlg::BtnFind()
 {
 	m_dex = 1;

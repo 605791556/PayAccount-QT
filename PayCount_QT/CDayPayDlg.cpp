@@ -410,12 +410,14 @@ QComboBox* CDayPayDlg::CreateProCombox(int oldIndex)
 	comBox->setMaxVisibleItems(25);
 	if (oldIndex < 0)
 	{
+		QString str;
 		int nCount = m_vProjects.size();
 		for (int i=0;i<nCount;i++)
 		{
 			QVariant var;
 			var.setValue(m_vProjects[i].nID);
-			comBox->addItem(m_vProjects[i].strName,var);
+			str = QString("%1.%2").arg(i+1).arg(m_vProjects[i].strName);
+			comBox->addItem(str,var);
 		}
 	}
 	else
@@ -429,6 +431,7 @@ QComboBox* CDayPayDlg::CreateProCombox(int oldIndex)
 
 QComboBox* CDayPayDlg::CreateBookCombox(int oldIndex)
 {
+	QString str;
 	QComboBox *comBox = new QComboBox();
 	comBox->setMaxVisibleItems(25);
 	if (oldIndex < 0)
@@ -438,7 +441,8 @@ QComboBox* CDayPayDlg::CreateBookCombox(int oldIndex)
 		{
 			QVariant var;
 			var.setValue(m_vBooks[i].strBookID);
-			comBox->addItem(m_vBooks[i].strname,var);
+			str = QString("%1.%2").arg(i+1).arg(m_vBooks[i].strname);
+			comBox->addItem(str,var);
 		}
 	}
 	else

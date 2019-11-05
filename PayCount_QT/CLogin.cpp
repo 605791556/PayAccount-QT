@@ -161,6 +161,10 @@ void CLogin::GetUser(Json::Value root)
 			}
 		}
 	}
+#ifdef _DEBUG
+	ui.comboBox->setEditText("admin");
+	ui.EDIT_PWD->setText("123456");
+#endif
 }
 
 void CLogin::st_comboChanged(int index)

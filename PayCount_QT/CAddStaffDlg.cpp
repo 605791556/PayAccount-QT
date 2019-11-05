@@ -94,35 +94,35 @@ void CAddStaffDlg::InitDlg(QWidget* stfMng,bool bAdd)
 		CStaffMngDlg* pDlg = (CStaffMngDlg*)stfMng;
 		m_strStaffID = pDlg->ui.tableWidget->item(m_row,1)->data(1).toString();
 
-		QString strname= pDlg->ui.tableWidget->item(m_row,1)->text();
+		QString strname= pDlg->ui.tableWidget->item(m_row,2)->text();
 		ui.EDIT_NAME->setText(strname);
-		QString strsex= pDlg->ui.tableWidget->item(m_row,2)->text();
+		QString strsex= pDlg->ui.tableWidget->item(m_row,3)->text();
 		if (strsex == "ÄÐ")
 			ui.COMBO_SEX->setCurrentIndex(0);
 		else
 			ui.COMBO_SEX->setCurrentIndex(1);
 
-		QString strage=pDlg->ui.tableWidget->item(m_row,3)->text();
+		QString strage=pDlg->ui.tableWidget->item(m_row,4)->text();
 		ui.EDIT_AGE->setText(strage);
 
 		QString idcard=pDlg->m_vet[m_row].strIdCard;
 		strOldIdcard=idcard;
 		ui.EDIT_IDCARD->setText(idcard);
 
-		QString strtell=pDlg->ui.tableWidget->item(m_row,5)->text();
+		QString strtell=pDlg->ui.tableWidget->item(m_row,6)->text();
 		ui.EDIT_TEL->setText(strtell);
 
 		QString strDex = QString("%1").arg(pDlg->m_vet[m_row].sort);
 		ui.EDIT_DEX->setText(strDex);
 
-		QString strType = pDlg->ui.tableWidget->item(m_row,6)->text();
+		QString strType = pDlg->ui.tableWidget->item(m_row,7)->text();
 		for (int i =0;i<STAFF_TYPE_MAX;i++)
 		{
 			if (strType == StaffType[i])
 				ui.COMBO_TYPE->setCurrentIndex(i);
 		}
 
-		QString strDaypay=pDlg->ui.tableWidget->item(m_row,7)->text();
+		QString strDaypay=pDlg->ui.tableWidget->item(m_row,8)->text();
 		ui.EDIT_DAYPAY->setText(strDaypay);
 
 		ui.BTN_SAVE->setText(CH("±£´æ"));

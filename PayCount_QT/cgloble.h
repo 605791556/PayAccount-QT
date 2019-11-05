@@ -22,6 +22,7 @@
 #include <QMetaType>
 #include <QStandardItemModel>
 #include <QComboBox>
+#include <QCheckBox>
 #include <QScrollBar>
 #include <QHBoxLayout>
 #include "common.h"

@@ -106,14 +106,14 @@ void CAddBookDlg::InitDlg(QWidget* stfMng,bool bAdd)
 		//bookID
 		m_strBookID = pDlg->ui.tableWidget->item(m_row,1)->data(1).toString();
 		//下单日期
-		QString strDate =  pDlg->ui.tableWidget->item(m_row,1)->text();
+		QString strDate =  pDlg->ui.tableWidget->item(m_row,2)->text();
 		QDate date2 = QDate::fromString(strDate,"yyyy/MM/dd");
 		ui.EDIT_DATE->setDate(date2);
 		//书名
-		QString strName =  pDlg->ui.tableWidget->item(m_row,2)->text();
+		QString strName =  pDlg->ui.tableWidget->item(m_row,3)->text();
 		ui.EDIT_NAME->setText(strName);
 		//出版社
-		QString strCbs =  pDlg->ui.tableWidget->item(m_row,3)->text();
+		QString strCbs =  pDlg->ui.tableWidget->item(m_row,4)->text();
 		ui.EDIT_CBS->setText(strCbs);
 		//版次
 		int nBc1 = pDlg->m_vet[m_row].nBc1;
@@ -130,19 +130,19 @@ void CAddBookDlg::InitDlg(QWidget* stfMng,bool bAdd)
 		str = QString("%1").arg(nCc2);
 		ui.EDIT_CC2->setText(str);
 		//开本
-		QString strKb =  pDlg->ui.tableWidget->item(m_row,6)->text();
+		QString strKb =  pDlg->ui.tableWidget->item(m_row,7)->text();
 		ui.EDIT_KB->setText(strKb);
 		//印张
-		QString strYz =  pDlg->ui.tableWidget->item(m_row,7)->text();
+		QString strYz =  pDlg->ui.tableWidget->item(m_row,8)->text();
 		ui.EDIT_YZ->setText(strYz);
 		//印数
-		QString strYs =  pDlg->ui.tableWidget->item(m_row,8)->text();
+		QString strYs =  pDlg->ui.tableWidget->item(m_row,9)->text();
 		ui.EDIT_YS->setText(strYs);
 		//包册
-		QString strBc =  pDlg->ui.tableWidget->item(m_row,9)->text();
+		QString strBc =  pDlg->ui.tableWidget->item(m_row,10)->text();
 		ui.EDIT_BC->setText(strBc);
 		//令数
-		QString strLs =  pDlg->ui.tableWidget->item(m_row,10)->text();
+		QString strLs =  pDlg->ui.tableWidget->item(m_row,11)->text();
 		ui.EDIT_LS->setText(strLs);
 
 		//印张类型

@@ -5,7 +5,7 @@
 #include "ui_CStaffMngDlg.h"
 #include "cgloble.h"
 
-#define  LISTCOLUMN 9
+#define  LISTCOLUMN 10
 
 class CStaffMngDlg : public CDlgFather
 {
@@ -22,6 +22,7 @@ public slots:
 	void st_CalBak(void* pdata);
 	void st_BtnEdit();
 	void st_BtnDel();
+	void st_BtnPlDel();
 	void BtnFind();
 	void BtnAdd();
 	void BtnGo();
@@ -38,6 +39,7 @@ public:
 	void InitListCtrl();
 	void SendToGetStaff(QString strKeyWord,int nStart,int nNum);
 	void SendToDelStaff(QString strStaffID);
+	void SendToPlDelStaff(string strListID);
 	void GetStaff(Json::Value root);
 	void SetListCtrlValue();
 };
