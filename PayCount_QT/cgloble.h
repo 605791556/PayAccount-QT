@@ -25,6 +25,7 @@
 #include <QCheckBox>
 #include <QScrollBar>
 #include <QHBoxLayout>
+#include <QButtonGroup>
 #include "common.h"
 #include <json/json.h>
 #include <json/config.h>
