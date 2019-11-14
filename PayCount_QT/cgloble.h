@@ -33,6 +33,14 @@
 #include "GeneralHelper.h"
 #include "helper.h"
 #include <map>
+#include <QtCharts/QtCharts>
+QT_CHARTS_USE_NAMESPACE
+
+#ifdef _DEBUG
+#pragma comment(lib,"Qt5Chartsd.lib")
+#else
+#pragma comment(lib,"Qt5Charts.lib")
+#endif 
 
 #ifdef _DEBUG
 #pragma comment(lib,"json_vc71_libmtd.lib")

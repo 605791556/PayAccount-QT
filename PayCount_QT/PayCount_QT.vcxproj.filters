@@ -1,78 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="CAddBookDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CAddProDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CAddStaffDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CAddUserDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CBookMngDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CDayPayDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CLockDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CLogin.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CPaySetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CProMngDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CSetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CSetPwdDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CStaffMngDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabDetailDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabDySetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabJdSetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabMonthDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabOtherSetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabProcessDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabWorkDayDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CTabZySetDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="CUserMngDlg.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="DlgFather.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="cgloble.cpp">
       <Filter>common</Filter>
     </ClCompile>
@@ -81,12 +9,6 @@
     </ClCompile>
     <ClCompile Include="HP-Socket\Global\helper.cpp">
       <Filter>helper</Filter>
-    </ClCompile>
-    <ClCompile Include="myThread.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="paycount_qt.cpp">
-      <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_CAddBookDlg.cpp">
       <Filter>moc_file</Filter>
@@ -169,6 +91,93 @@
     <ClCompile Include="GeneratedFiles\qrc_paycount_qt.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
+    <ClCompile Include="CAddBookDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddProDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddStaffDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CAddUserDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBookMngDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CDayPayDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLockDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLogin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CPaySetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CProMngDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CSetPwdDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CStaffMngDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabDetailDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabDySetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabJdSetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabMonthDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabOtherSetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabProcessDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabWorkDayDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabZySetDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CUserMngDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DlgFather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="myThread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="paycount_qt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_CTabChartDlg.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_CTabChartDlg.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CTabChartDlg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -180,241 +189,241 @@
     <ClInclude Include="HP-Socket\Common\Src\GeneralHelper.h">
       <Filter>helper</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CAddBookDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CAddProDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CAddStaffDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CAddUserDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CBookMngDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CDayPayDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CLockDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CLogin.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CPaySetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CProMngDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CSetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CSetPwdDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CStaffMngDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabDetailDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabDySetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabJdSetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabMonthDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabOtherSetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabProcessDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabWorkDayDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabZySetDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CUserMngDlg.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_paycount_qt.h">
-      <Filter>GeneratedFiles</Filter>
+      <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>header</Filter>
+    <ClInclude Include="GeneratedFiles\ui_CTabChartDlg.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="CAddBookDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddProDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddStaffDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddUserDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CBookMngDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CDayPayDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CLockDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CLogin.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CPaySetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CProMngDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CSetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CSetPwdDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CStaffMngDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabDetailDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabDySetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabJdSetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabMonthDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabOtherSetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabProcessDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CUserMngDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabZySetDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabWorkDayDlg.ui">
-      <Filter>ui</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddBookDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddProDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddStaffDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CAddUserDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CBookMngDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CDayPayDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CLockDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CLogin.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CPaySetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CProMngDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CSetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CSetPwdDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CStaffMngDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabDetailDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabDySetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabJdSetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabMonthDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabOtherSetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabProcessDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabWorkDayDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CTabZySetDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="CUserMngDlg.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="DlgFather.h">
-      <Filter>header</Filter>
-    </CustomBuild>
     <CustomBuild Include="cgloble.h">
       <Filter>common</Filter>
-    </CustomBuild>
-    <CustomBuild Include="paycount_qt.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="myThread.h">
-      <Filter>header</Filter>
-    </CustomBuild>
-    <CustomBuild Include="paycount_qt.ui">
-      <Filter>ui</Filter>
     </CustomBuild>
     <CustomBuild Include="paycount_qt.qrc">
       <Filter>Resource</Filter>
     </CustomBuild>
+    <CustomBuild Include="CAddBookDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddProDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddStaffDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddUserDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CBookMngDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CDayPayDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CLockDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CLogin.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CPaySetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CProMngDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CSetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CSetPwdDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CStaffMngDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDetailDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDySetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabJdSetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabMonthDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabOtherSetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabProcessDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabWorkDayDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabZySetDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CUserMngDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="paycount_qt.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddBookDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddProDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddStaffDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CAddUserDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CBookMngDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CDayPayDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CLockDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CLogin.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CPaySetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CProMngDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CSetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CSetPwdDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CStaffMngDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDetailDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabDySetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabJdSetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabMonthDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabOtherSetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabProcessDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabWorkDayDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabZySetDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CUserMngDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DlgFather.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="myThread.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="paycount_qt.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabChartDlg.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CTabChartDlg.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="ui">
-      <UniqueIdentifier>{deaf936a-d282-4797-9fb8-350cea18c1e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="header">
-      <UniqueIdentifier>{9a282aae-23b6-4b4b-a586-96bfd6f19f04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="source">
-      <UniqueIdentifier>{7bd715be-1f1e-48f1-a871-5fe71801fb8c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="common">
       <UniqueIdentifier>{f6005b7b-dee4-42d1-8fab-39783f8f6dac}</UniqueIdentifier>
     </Filter>
@@ -424,11 +433,38 @@
     <Filter Include="moc_file">
       <UniqueIdentifier>{a8020b37-096a-4d7f-bfd9-831bd7755644}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GeneratedFiles">
-      <UniqueIdentifier>{8fc9d3b1-15f4-4979-968c-ad7fccee6b20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{58993b14-8067-4b30-86bd-5457856ba074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files\Debug">
+      <UniqueIdentifier>{c70e4c65-94e7-4259-a0bb-49dba16c8ce1}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Generated Files\Release">
+      <UniqueIdentifier>{c1169847-1939-47aa-b2c7-54f01b7630ac}</UniqueIdentifier>
+      <Extensions>cpp;moc</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+      <ParseFiles>true</ParseFiles>
     </Filter>
   </ItemGroup>
   <ItemGroup>

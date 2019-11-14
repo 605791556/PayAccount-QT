@@ -8,6 +8,7 @@
 #include "CTabWorkDayDlg.h"
 #include "CTabDetailDlg.h"
 #include "CTabProcessDlg.h"
+#include "CTabChartDlg.h"
 
 enum EM_PAGE_TYPE
 {
@@ -15,6 +16,7 @@ enum EM_PAGE_TYPE
 	EM_PAGE_MX,//明细
 	EM_PAGE_ZGTJ,//做工统计
 	EM_PAGE_YHS,//月核算
+	EM_PAGE_TB,//图表
 	EM_PAGE_MAX
 };
 
@@ -38,6 +40,7 @@ private:
 	CTabWorkDayDlg* m_pTabWorkDlg;
 	CTabDetailDlg*  m_pTabDetailDlg;
 	CTabProcessDlg* m_pTabProcessDlg;
+	CTabChartDlg*   m_pTabChartDlg;
 
 protected:
 	//加载背景图片

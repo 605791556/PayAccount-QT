@@ -2,8 +2,8 @@
 #define CTABWORKDAYDLG_H
 
 #include <QWidget>
-#include "ui_CTabWorkDayDlg.h"
 #include "cgloble.h"
+#include "ui_CTabWorkDayDlg.h"
 
 struct WORKMONEY
 {

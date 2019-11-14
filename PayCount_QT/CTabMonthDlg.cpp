@@ -29,10 +29,10 @@ void CalBakThread(void* pdata)
 			else
 			{
 				gTabMonthDlg->GetStaff(root);
-				if(!gTabMonthDlg->SendToGetMonthPay())
-					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,false);
+				if (!gTabMonthDlg->SendToGetMonthPay())
+					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF, NET_CMD_SUC, false);
 				else
-					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF,NET_CMD_SUC,true);
+					emit gTabMonthDlg->sg_ThCal(SOCK_CMD_GET_SAMPLE_STAFF, NET_CMD_SUC, true);
 			}
 		}
 		break;
@@ -109,13 +109,13 @@ CTabMonthDlg::CTabMonthDlg(QWidget *parent)
 	connect(ui.CB_MONTH,SIGNAL(currentIndexChanged(const QString &)),this,SLOT(st_ComboxChanged(const QString &)));
 	connect(ui.EDIT_KEYWORD,SIGNAL(textChanged(const QString &)),this,SLOT(st_KeyWordChanged(const QString &)));
 	connect(this,&CTabMonthDlg::sg_ThCal,this,&CTabMonthDlg::st_ThCal);
+	
 	InitCtrlValue();
 	InitListCtrl();
 
 	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
 	ui.label_load->setMovie(m_pMovie);
 	ui.label_load->setVisible(false);
-
 	g_Globle.m_DlgMap[EM_DLG_TAB_MONTH] = this;
 	pageIn();
 }
@@ -239,6 +239,10 @@ void CTabMonthDlg::InitListCtrl()
 
 void CTabMonthDlg::SetListValue()
 {
+	//先清空数据
+	int n = m_pViewModel->rowCount();
+	m_pViewModel->removeRows(0, n);//清空
+
 	ui.tableView->setUpdatesEnabled(false);  //暂停界面刷新
 	int nRows = m_vStaffs.size();
 	for (int i=0;i<nRows;i++)
@@ -309,9 +313,6 @@ void CTabMonthDlg::GetStaff(Json::Value root)
 
 bool CTabMonthDlg::SendToGetMonthPay()
 {
-	//先清空数据
-	m_pViewModel->removeRows(0,m_pViewModel->rowCount());//清空
-
 	Json::Value root;
 	root[CMD_DLG]=EM_DLG_TAB_MONTH;
 	root[CONNECT_CMD]=SOCK_CMD_GET_MPAY;

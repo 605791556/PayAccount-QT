@@ -2,8 +2,8 @@
 #define CBOOKMNGDLG_H
 
 #include <QDialog>
-#include "ui_CBookMngDlg.h"
 #include "cgloble.h"
+#include "ui_CBookMngDlg.h"
 
 #define LISTCOLUMN 17
 

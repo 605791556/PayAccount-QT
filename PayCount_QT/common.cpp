@@ -317,3 +317,16 @@ const char GETPAYMSG[EM_GET_PAY_MAX][CMD_CHAR_MAX]=
 	"pay",
 	"nitem"
 };
+
+const char CHART_YEAR[EM_GET_CHART_YEAR_MAX][CMD_CHAR_MAX]=
+{
+	"year",
+	"value"
+};
+
+const char CHART_MONTH[EM_GET_CHART_MONTH_MAX][CMD_CHAR_MAX]=
+{
+	"year",
+	"month",
+	"value"
+};

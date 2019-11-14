@@ -92,6 +92,8 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	m_pTabWorkDlg    = new CTabWorkDayDlg;
 	m_pTabDetailDlg  = new CTabDetailDlg;
 	m_pTabProcessDlg = new CTabProcessDlg;
+	m_pTabChartDlg   = new CTabChartDlg;
+
 	//初始化tabctrl
 	InitTabCtrl();
 
@@ -114,6 +116,7 @@ PayCount_QT::~PayCount_QT()
 	delete m_pTabWorkDlg;
 	delete m_pTabDetailDlg;
 	delete m_pTabProcessDlg;
+	delete m_pTabChartDlg;
 }
 
 void PayCount_QT::InitTabCtrl()
@@ -121,10 +124,11 @@ void PayCount_QT::InitTabCtrl()
 	ui.tabWidget->clear();
 	ui.tabWidget->setTabPosition(QTabWidget::North);
 
-	ui.tabWidget->insertTab(EM_PAGE_JD,m_pTabProcessDlg,CH("进度"));
-	ui.tabWidget->insertTab(EM_PAGE_MX,m_pTabDetailDlg,CH("明细"));
-	ui.tabWidget->insertTab(EM_PAGE_ZGTJ,m_pTabWorkDlg,CH("做工统计"));
-	ui.tabWidget->insertTab(EM_PAGE_YHS,m_pTabMonthDlg,CH("月核算"));
+	ui.tabWidget->insertTab(EM_PAGE_JD,  m_pTabProcessDlg,CH("进度"));
+	ui.tabWidget->insertTab(EM_PAGE_MX,  m_pTabDetailDlg, CH("明细"));
+	ui.tabWidget->insertTab(EM_PAGE_ZGTJ,m_pTabWorkDlg,   CH("做工统计"));
+	ui.tabWidget->insertTab(EM_PAGE_YHS, m_pTabMonthDlg,  CH("月核算"));
+	ui.tabWidget->insertTab(EM_PAGE_TB,  m_pTabChartDlg,  CH("图表"));
 	ui.tabWidget->setTabShape(QTabWidget::Rounded);//设置选项卡的形状
 	ui.tabWidget->setCurrentIndex(EM_PAGE_YHS);
 	m_bInitTab = true;
@@ -142,6 +146,8 @@ void PayCount_QT::st_tabChanged(int index)
 		m_pTabDetailDlg->pageIn();
 	else if (index == EM_PAGE_JD)
 		m_pTabProcessDlg->pageIn();
+	else if (index == EM_PAGE_TB)
+		m_pTabChartDlg->pageIn();
 }
 
 void PayCount_QT::paintEvent(QPaintEvent *)
