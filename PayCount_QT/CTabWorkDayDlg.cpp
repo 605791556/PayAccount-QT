@@ -111,12 +111,12 @@ void CTabWorkDayDlg::InitListCtrl()
 		ui.tableView->setModel(m_pViewModel);
 	}
 	QStringList listHeader;
-	listHeader<<CH("姓名")<<CH("按天工资")<<CH("计件工资")<<CH("扣除")<<CH("共计");
+	listHeader<<CH("姓名")<<CH("按天工资")<<CH("计件工资")<<CH("扣除") << CH("补助") <<CH("共计");
 	m_pViewModel->setHorizontalHeaderLabels(listHeader);
-	ui.tableView->setColumnWidth(5,0);
-	for (int i=0;i<5;i++)
+	ui.tableView->setColumnWidth(6,0);
+	for (int i=0;i<6;i++)
 	{
-		ui.tableView->setColumnWidth(i,850/5);
+		ui.tableView->setColumnWidth(i,850/6);
 	}
 }
 
@@ -138,7 +138,7 @@ void CTabWorkDayDlg::SetListValue()
 			{
 				bFind = true;
 				double money = 0;
-				money = m_vWorkCal[i].day_money + m_vWorkCal[i].jj_money - m_vWorkCal[i].del_money;
+				money = m_vWorkCal[i].day_money + m_vWorkCal[i].jj_money - m_vWorkCal[i].del_money + m_vWorkCal[i].bz_money;
 
 				m_pViewModel->setItem(j,0,new QStandardItem(m_vWorkCal[i].strName));//姓名
 				m_pViewModel->item(j,0)->setAccessibleText(m_vWorkCal[i].strStaffID);
@@ -163,8 +163,15 @@ void CTabWorkDayDlg::SetListValue()
 
 				m_pViewModel->setItem(j,3,new QStandardItem(str));//扣除工资
 
+				if (m_vWorkCal[i].bz_money == 0)
+					str = "0";
+				else
+					str = QString::number(m_vWorkCal[i].bz_money, 'f', 2);
+
+				m_pViewModel->setItem(j, 4, new QStandardItem(str));//补助工资
+
 				str = QString::number(money,'f',2);
-				m_pViewModel->setItem(j,4,new QStandardItem(str));//共计
+				m_pViewModel->setItem(j,5,new QStandardItem(str));//共计
 
 				all_money += money;
 				break;
@@ -177,7 +184,8 @@ void CTabWorkDayDlg::SetListValue()
 			m_pViewModel->setItem(j,1,new QStandardItem("0"));//按天工资
 			m_pViewModel->setItem(j,2,new QStandardItem("0"));//计件工资
 			m_pViewModel->setItem(j,3,new QStandardItem("0"));//扣除工资
-			m_pViewModel->setItem(j,4,new QStandardItem("0"));//共计
+			m_pViewModel->setItem(j,4, new QStandardItem("0"));//补助工资
+			m_pViewModel->setItem(j,5,new QStandardItem("0"));//共计
 		}
 	}
 
@@ -307,6 +315,7 @@ void CTabWorkDayDlg::SendToGetOnePayList()
 
 void CTabWorkDayDlg::GetOnePayList(Json::Value root)
 {
+	QString strTmp;
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
 	m_vWorkCal.clear();
@@ -347,9 +356,19 @@ void CTabWorkDayDlg::GetOnePayList(Json::Value root)
 							{
 								cal.day_money += _ttof(strMoney);
 							}
+							else if (type == DAYPAY_TYPE_BZ)
+							{
+								cal.bz_money += _ttof(strMoney);
+							}
 							else if(type == DAYPAY_TYPE_JIJIAN)
 							{
-								cal.jj_money += _ttof(strMoney);
+								const char*  str = one[DAYPAYMSG[EM_DAYPAY_MSG_BOOKNAME]].asCString();
+								strTmp = CH(str);
+								int ndex = strTmp.indexOf(CH("补助"));
+								if (ndex >= 0)
+									cal.bz_money += _ttof(strMoney);
+								else
+									cal.jj_money += _ttof(strMoney);
 							}				
 						}
 						m_vWorkCal.push_back(cal);

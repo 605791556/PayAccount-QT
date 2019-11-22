@@ -294,7 +294,7 @@ void CProMngDlg::st_BtnDel()
 		return;
 	}
 
-	QString str = QString(CH("该操作将会删除与该项目所有相关的记录，包括（进度，明细，做工等），确认删除项目 '%1'？")).arg(strName);
+	QString str = QString(CH("该操作不会删除与该项目相关的记录，确认删除项目 '%1'？")).arg(strName);
 	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
 	switch(nType)
 	{

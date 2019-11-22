@@ -44,7 +44,7 @@ void CAddStaffDlg::st_CalBak(void* pdata)
 			{
 				bool bHad = root[CMD_JUDGESTAFF[EM_JUDGE_STAFF_BHAD]].asBool();
 				if(bHad)
-					QMessageBox::information(this, CH("错误"), CH("该身份证职工已存在！"));
+					QMessageBox::information(this, CH("提示"), CH("添加失败,该姓名职工已存在！"));
 				else
 					SendToAddStaff();	
 			}
@@ -129,12 +129,13 @@ void CAddStaffDlg::InitDlg(QWidget* stfMng,bool bAdd)
 	}
 }
 
-void CAddStaffDlg::SendToJudgeStaff(QString strIdcard)
+void CAddStaffDlg::SendToJudgeStaff(QString strName)
 {
 	Json::Value root;
 	root[CMD_DLG]=EM_DLG_ADDSTAFF;
 	root[CONNECT_CMD]=SOCK_CMD_JUDGE_STAFF;
-	root[CMD_JUDGESTAFF[EM_JUDGE_STAFF_IDCARD]]=strIdcard.toStdString();
+	string strname = strName.toLocal8Bit();
+	root[CMD_JUDGESTAFF[EM_JUDGE_STAFF_IDCARD]]= strname;//通过姓名判断职工是否已存在 2019.11.22
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
 	g_Globle.SendTo(temp);
@@ -218,11 +219,7 @@ void CAddStaffDlg::st_BtnSave()
 
 	if(m_bAdd)
 	{
-		if (strIDCARD.isEmpty())
-			SendToAddStaff();
-		else
-			SendToJudgeStaff(strIDCARD);
-		
+		SendToJudgeStaff(strName);
 	}
 	else
 	{

@@ -27,7 +27,7 @@ public slots:
 
 public:
 	void InitDlg(QWidget* stfMng,bool bAdd);
-	void SendToJudgeStaff(QString strIdcard);
+	void SendToJudgeStaff(QString strName);
 	void SendToAddStaff();
 	void SendToMdfStaff(QString strName,QString strSex,int age,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay);
 };

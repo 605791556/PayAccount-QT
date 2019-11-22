@@ -12,12 +12,14 @@ struct WORKMONEY
 	double  day_money;//按天工资
 	double  jj_money;//计件工资
 	double  del_money;//扣除工资
+	double  bz_money;//补助工资
 
 	WORKMONEY()
 	{
 		day_money = 0;
 		jj_money = 0;
 		del_money = 0;
+		bz_money = 0;
 	}
 };
 

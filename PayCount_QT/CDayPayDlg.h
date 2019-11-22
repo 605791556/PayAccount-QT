@@ -15,6 +15,8 @@ public:
 
 private:
 	Ui::CDayPayDlg ui;
+	void resizeEvent(QResizeEvent *);
+
 	QPixmap m_pixmapBg;
 	int     m_nx;//拖动窗口，鼠标刚按下时的x坐标
 	int     m_ny;//拖动窗口，鼠标刚按下时的y坐标
@@ -39,6 +41,7 @@ public slots:
 		void st_comboChanged(int);
 		void st_numberEditChanged(const QString &);
 		void st_SetAllPayCtrl();
+		void st_rdoBtn();
 public:
 	void InitTitle(const QModelIndex & mdIndex,QWidget* widget);
 	void InitListCtrl();
@@ -72,6 +75,8 @@ public:
 	vector<PROJECT_STU> m_vProjects;
 	vector<BOOK_STU> m_vBooks;
 	vector<DAYPAY> m_vSaves;//保存时调用
+
+	BZ_TYPE m_emBzType;
 };
 
 #endif // CDAYPAYDLG_H

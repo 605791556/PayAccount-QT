@@ -314,7 +314,7 @@ void CStaffMngDlg::st_BtnDel()
 	QString strStaffID = ui.tableWidget->item(nRow,1)->data(1).toString();
 	QString strStaffName = ui.tableWidget->item(nRow,2)->text();
 
-	QString str = QString(CH("删除职工将会删除该职工相关的所有工作记录，确认删除 %1？")).arg(strStaffName);
+	QString str = QString(CH("该操作不会删除与该职工相关的工作记录，确认删除 %1？")).arg(strStaffName);
 	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
 	switch(nType)
 	{

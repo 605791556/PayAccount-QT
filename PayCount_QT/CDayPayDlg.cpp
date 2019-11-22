@@ -1,19 +1,6 @@
 #include "CDayPayDlg.h"
 #include "CTabWorkDayDlg.h"
 
-void DayCheckCallback(void* p,string strData)
-{
-	CDayPayDlg* pThis=(CDayPayDlg*) p;
-	if ( pThis==NULL)
-		return;
-	else
-	{
-		string* pStrData = new string;
-		*pStrData = strData;
-		emit pThis->sg_CalBak(pStrData);
-	}
-}
-
 void CDayPayDlg::st_CalBak(void* pdata)
 {
 	string* pStrData = (string*)pdata;
@@ -129,12 +116,22 @@ CDayPayDlg::CDayPayDlg(const QModelIndex & mdIndex,QWidget* tabWkDlg,QWidget *pa
 	connect(ui.edit_payday,SIGNAL(textChanged(const QString &)),this,SLOT(st_SetAllPayCtrl()));
 	connect(ui.edit_day,SIGNAL(textChanged(const QString &)),this,SLOT(st_SetAllPayCtrl()));
 	connect(ui.edit_delpay,SIGNAL(textChanged(const QString &)),this,SLOT(st_SetAllPayCtrl()));
+	connect(ui.edit_bzpay, SIGNAL(textChanged(const QString &)), this, SLOT(st_SetAllPayCtrl()));
 	connect(ui.BTN_MAX, SIGNAL(clicked()), this, SLOT(st_BtnMax()));
 
 	
 	ui.edit_payday->setValidator(g_Globle.dbVtor);
 	ui.edit_day->setValidator(g_Globle.dbVtor);
 	ui.edit_delpay->setValidator(g_Globle.dbVtor);
+	ui.edit_bzpay->setValidator(g_Globle.dbVtor);
+
+	m_emBzType = BZ_TYPE_BZ;
+	ui.rdo_bz->setChecked(true);
+	ui.edit_other->setVisible(false);
+
+	connect(ui.rdo_bz, SIGNAL(clicked()), this, SLOT(st_rdoBtn()));
+	connect(ui.rdo_ccbz, SIGNAL(clicked()), this, SLOT(st_rdoBtn()));
+	connect(ui.rdo_other, SIGNAL(clicked()), this, SLOT(st_rdoBtn()));
 
 	CGloble::SetButtonStyle(ui.BTN_MAX,":/PayCount_QT/pic/max.png",3);
 	CGloble::SetButtonStyle(ui.BTN_CLOSE,":/PayCount_QT/pic/close.png",3);
@@ -235,14 +232,30 @@ void CDayPayDlg::InitListCtrl()
 	
 	for (int i=0;i<6;i++)
 	{
-		if(i == 0)
-			ui.tableWidget->setColumnWidth(i,210);
-		else if(i == 1)
-		    ui.tableWidget->setColumnWidth(i,300);
+		if (i == 0)
+			ui.tableWidget->setColumnWidth(i, 180);
+		else if(i >= 2 && i <= 4)
+			ui.tableWidget->setColumnWidth(i,140);
 		else if(i == 5)
 			ui.tableWidget->setColumnWidth(i,60);
 		else
-			ui.tableWidget->setColumnWidth(i,(1000-582)/3);
+			ui.tableWidget->setColumnWidth(i, (1000-140*3-60-180)/1);
+	}
+}
+
+void CDayPayDlg::resizeEvent(QResizeEvent *event)
+{
+	int w = ui.tableWidget->width();
+	for (int i = 0; i < 6; i++)
+	{
+		if (i == 0)
+			ui.tableWidget->setColumnWidth(i, 180);
+		else if (i >= 2 && i <= 4)
+			ui.tableWidget->setColumnWidth(i, 140);
+		else if (i == 5)
+			ui.tableWidget->setColumnWidth(i, 60);
+		else
+			ui.tableWidget->setColumnWidth(i, (w - 140 * 3 - 60 - 180) / 1);
 	}
 }
 
@@ -334,7 +347,7 @@ void CDayPayDlg::SetListCtrlValue()
 	{
 		if (m_vCal[i].type == DAYPAY_TYPE_JIJIAN)
 		{
-			AddTableRow(i,i,m_vCal[i].pay,m_vCal[i].number,m_vCal[i].money);
+			AddTableRow(i, i, m_vCal[i].pay, m_vCal[i].number, m_vCal[i].money);
 		}
 		else if (m_vCal[i].type == DAYPAY_TYPE_DAY)
 		{
@@ -345,6 +358,20 @@ void CDayPayDlg::SetListCtrlValue()
 		{
 			ui.edit_delpay->setText(m_vCal[i].money);
 			ui.edit_delmsg->setText(m_vCal[i].strMsg);
+		}
+		else if (m_vCal[i].type == DAYPAY_TYPE_BZ)
+		{
+			ui.edit_bzpay->setText(m_vCal[i].money);
+			if (m_vCal[i].em_bzType == BZ_TYPE_BZ)
+				ui.rdo_bz->setChecked(true);
+			else if (m_vCal[i].em_bzType == BZ_TYPE_CCBZ)
+				ui.rdo_ccbz->setChecked(true);
+			else if (m_vCal[i].em_bzType == BZ_TYPE_OTHER)
+			{
+				ui.rdo_other->setChecked(true);
+				ui.edit_other->setText(m_vCal[i].strMsg);
+				ui.edit_other->setVisible(true);
+			}
 		}
 	}
 }
@@ -378,6 +405,7 @@ void CDayPayDlg::st_SetAllPayCtrl()
 	double day_money = 0;
 	double jj_money = 0;
 	double del_money = 0;
+	double bz_money = 0;
 	double all_money = 0;
 	//按天
 	double f_payday = ui.edit_payday->text().toDouble();
@@ -389,6 +417,9 @@ void CDayPayDlg::st_SetAllPayCtrl()
 	//扣除
 	del_money = ui.edit_delpay->text().toDouble();
 	all_money -= del_money;
+	//补助
+	bz_money = ui.edit_bzpay->text().toDouble();
+	all_money += bz_money;
 	//计件
 	int nCount = ui.tableWidget->rowCount();
 	for (int i = 0; i < nCount; i++)
@@ -404,10 +435,29 @@ void CDayPayDlg::st_SetAllPayCtrl()
 	ui.label_all->setText(strMoney);
 }
 
+void CDayPayDlg::st_rdoBtn()
+{
+	if (ui.rdo_bz->isChecked())
+		m_emBzType = BZ_TYPE_BZ;
+	else if (ui.rdo_ccbz->isChecked())
+		m_emBzType = BZ_TYPE_CCBZ;
+	else if (ui.rdo_other->isChecked())
+	{
+		ui.edit_other->setVisible(true);
+		m_emBzType = BZ_TYPE_OTHER;
+		return;
+	}
+
+	ui.edit_other->setVisible(false);
+}
+
 QComboBox* CDayPayDlg::CreateProCombox(int oldIndex)
 {
-	QComboBox *comBox = new QComboBox();
+	QComboBox *comBox = new QComboBox(ui.tableWidget);
 	comBox->setMaxVisibleItems(25);
+	QFont ft;
+	ft.setPointSize(11);
+	comBox->setFont(ft);
 	if (oldIndex < 0)
 	{
 		QString str;
@@ -432,8 +482,12 @@ QComboBox* CDayPayDlg::CreateProCombox(int oldIndex)
 QComboBox* CDayPayDlg::CreateBookCombox(int oldIndex)
 {
 	QString str;
-	QComboBox *comBox = new QComboBox();
+	QComboBox *comBox = new QComboBox(ui.tableWidget);
 	comBox->setMaxVisibleItems(25);
+	
+	QFont ft;
+	ft.setPointSize(11);
+	comBox->setFont(ft);
 	if (oldIndex < 0)
 	{
 		int nCount = m_vBooks.size();
@@ -542,12 +596,24 @@ void CDayPayDlg::st_BtnSave()
 	//扣除
 	QString strDelMoney = ui.edit_delpay->text();
 	QString strDelMsg = ui.edit_delmsg->text();
-	if (strDelMoney.toDouble() != 0)
+	if (!strDelMoney.isEmpty())
 	{
 		DAYPAY cal;
 		cal.type = DAYPAY_TYPE_DEL;
 		cal.money = strDelMoney;
 		cal.strMsg = strDelMsg;
+		m_vSaves.push_back(cal);
+	}
+
+	//补助
+	QString strBzMoney = ui.edit_bzpay->text();
+	if (!strBzMoney.isEmpty())
+	{
+		DAYPAY cal;
+		cal.type = DAYPAY_TYPE_BZ;
+		cal.em_bzType = m_emBzType;
+		cal.money = strBzMoney;
+		cal.strMsg = ui.edit_other->text();
 		m_vSaves.push_back(cal);
 	}
 
@@ -597,6 +663,11 @@ void CDayPayDlg::st_BtnSave()
 			cal.money = money_edit->text();
 			m_vSaves.push_back(cal);
 		}
+	}
+	if (m_vSaves.size() == 0)
+	{
+		QMessageBox::information(this, CH("提示"), CH("数据不能为空！"));
+		return;
 	}
 	//先删除，再保存
 	SendToDelDayPay();
@@ -693,6 +764,12 @@ void CDayPayDlg::SendToSaveDayPay()
 			{
 				string strMsg = m_vSaves[i].strMsg.toLocal8Bit();
 				one[DAYPAYMSG[EM_DAYPAY_MSG_DELMSG]] = strMsg;//中文
+			}
+			else if (m_vSaves[i].type == DAYPAY_TYPE_BZ)//补助
+			{
+				one[DAYPAYMSG[EM_DAYPAY_MSG_BZTYPE]] = m_vSaves[i].em_bzType;
+				string strMsg = m_vSaves[i].strMsg.toLocal8Bit();
+				one[DAYPAYMSG[EM_DAYPAY_MSG_BZMSG]] = strMsg;
 			}
 			else if (m_vSaves[i].type == DAYPAY_TYPE_DAY)
 			{
@@ -809,6 +886,12 @@ void CDayPayDlg::GetDayPay(Json::Value root)
 				if (stu.type == DAYPAY_TYPE_DEL)
 				{
 					const char*  str = js[i][DAYPAYMSG[EM_DAYPAY_MSG_DELMSG]].asCString();
+					stu.strMsg = CH(str);
+				}
+				else if (stu.type == DAYPAY_TYPE_BZ)//补助
+				{
+					stu.em_bzType = (BZ_TYPE)js[i][DAYPAYMSG[EM_DAYPAY_MSG_BZTYPE]].asInt();
+					const char*  str = js[i][DAYPAYMSG[EM_DAYPAY_MSG_BZMSG]].asCString();
 					stu.strMsg = CH(str);
 				}
 				else if (stu.type == DAYPAY_TYPE_DAY)
