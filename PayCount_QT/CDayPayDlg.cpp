@@ -327,11 +327,12 @@ void CDayPayDlg::DeleteTableCtrl()
 	int nRows = ui.tableWidget->rowCount();
 	for (int i=0;i<nRows;i++)
 	{
-		QComboBox* proCombox = (QComboBox*)ui.tableWidget->cellWidget(i,0);
-		QComboBox* bkCombox = (QComboBox*)ui.tableWidget->cellWidget(i,1);
-		QLineEdit* number_edit = (QLineEdit*)ui.tableWidget->cellWidget(i,3);
-		QLineEdit* money_edit = (QLineEdit*)ui.tableWidget->cellWidget(i,4);
-		QPushButton* button = (QPushButton*)ui.tableWidget->cellWidget(i,2);
+		QComboBox*   proCombox   = (QComboBox*)ui.tableWidget->cellWidget(i,0);
+		QComboBox*   bkCombox    = (QComboBox*)ui.tableWidget->cellWidget(i,1);
+		QLineEdit*   number_edit = (QLineEdit*)ui.tableWidget->cellWidget(i,3);
+		QLineEdit*   money_edit  = (QLineEdit*)ui.tableWidget->cellWidget(i,4);
+		QPushButton* button      = (QPushButton*)ui.tableWidget->cellWidget(i,2);
+		
 		delete proCombox;
 		delete bkCombox;
 		delete number_edit;
