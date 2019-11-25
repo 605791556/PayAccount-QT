@@ -307,7 +307,7 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,double 
 	if (!money.isEmpty())
 		edit2->setText(money);
 	//删除
-	QPushButton* btn = new QPushButton;
+	QPushButton* btn = new QPushButton(this);
 	CGloble::SetButtonStyle(btn,":/PayCount_QT/pic/yc2.png",3);
 	btn->setProperty("button",row);
 	connect(btn,&QPushButton::clicked,this,&CDayPayDlg::st_BtnDel);
@@ -533,17 +533,23 @@ void CDayPayDlg::st_BtnDel()
 	QPushButton *pButton = qobject_cast<QPushButton *>(pObject);
 	//获取行索引
 	int row = pButton->property("button").toInt();
+
 	//删除前先修改控件属性（行索引）
 	int nRows = ui.tableWidget->rowCount();
 	for (int i = row+1;i<nRows;i++)
 	{
+		int new_row = i - 1;
+
 		//获取单元格中的控件
 		QComboBox* proCombox = (QComboBox*)ui.tableWidget->cellWidget(i,0);
 		QComboBox* bkCombox = (QComboBox*)ui.tableWidget->cellWidget(i,1);
-		QPushButton* button = (QPushButton*)ui.tableWidget->cellWidget(i,5);
-		proCombox->setProperty("combox",i-1);
-		bkCombox->setProperty("combox",i-1);
-		button->setProperty("button",i-1);
+		QWidget* wt = (QWidget*)ui.tableWidget->cellWidget(i, 5);
+		QHBoxLayout* lyt = (QHBoxLayout*)wt->layout();
+		QLayoutItem* item = lyt->layout()->itemAt(0);
+		QPushButton* button = qobject_cast<QPushButton *>(item->widget());
+		proCombox->setProperty("combox", new_row);
+		bkCombox->setProperty("combox", new_row);
+		button->setProperty("button", new_row);
 	}
 	//删除行，释放控件
 	QComboBox* proCombox = (QComboBox*)ui.tableWidget->cellWidget(row,0);
