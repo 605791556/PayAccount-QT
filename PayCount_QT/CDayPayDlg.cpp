@@ -400,7 +400,6 @@ void CDayPayDlg::st_numberEditChanged(const QString & strNumber)
 	}
 }
 
-
 void CDayPayDlg::st_SetAllPayCtrl()
 {
 	QString strMoney;
