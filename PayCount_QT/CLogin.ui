@@ -195,6 +195,19 @@
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label_v">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>83</y>
+     <width>54</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>

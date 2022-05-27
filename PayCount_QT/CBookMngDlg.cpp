@@ -1,5 +1,6 @@
 #include "CBookMngDlg.h"
 #include "CAddBookDlg.h"
+#include <QCheckBox>
 
 void BookMngCallback(void* p,string strData)
 {
@@ -39,6 +40,7 @@ void CBookMngDlg::st_CalBak(void* pdata)
 		}
 		break;
 	case SOCK_CMD_DEL_BOOK:
+	case SOCK_CMD_PLDEL_BOOK:
 		{
 			if (ret == NET_CMD_FAIL)
 				QMessageBox::information(this, CH("错误"), CH("删除失败！"));
@@ -49,6 +51,17 @@ void CBookMngDlg::st_CalBak(void* pdata)
 			}
 		}
 		break;
+	case SOCK_CMD_RK_BOOK:
+	{
+		if (ret == NET_CMD_FAIL)
+			QMessageBox::information(this, CH("错误"), CH("入库失败！"));
+		else
+		{
+			BtnFind();
+			QMessageBox::information(this, CH("提示"), CH("入库成功！"));
+		}
+	}
+	break;
 	}
 }
 
@@ -65,6 +78,8 @@ CBookMngDlg::CBookMngDlg(QWidget *parent)
 	CGloble::SetButtonStyle(ui.BTN_ADD,":/PayCount_QT/pic/ok.png",3);
 	CGloble::SetButtonStyle(ui.BTN_LAST,":/PayCount_QT/pic/ok.png",3);
 	CGloble::SetButtonStyle(ui.BTN_NEXT,":/PayCount_QT/pic/ok.png",3);
+	CGloble::SetButtonStyle(ui.BTN_PL_RK, ":/PayCount_QT/pic/ok.png", 3);
+	CGloble::SetButtonStyle(ui.BTN_PL_DEL, ":/PayCount_QT/pic/ok.png", 3);
 
 	connect(this,&CBookMngDlg::sg_CalBak,this,&CBookMngDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(BtnAdd()));
@@ -72,6 +87,9 @@ CBookMngDlg::CBookMngDlg(QWidget *parent)
 	connect(ui.BTN_GO,SIGNAL(clicked()),this,SLOT(BtnGo()));
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
+	connect(ui.BTN_PL_RK, SIGNAL(clicked()), this, SLOT(BtnPlRk()));
+	connect(ui.BTN_PL_DEL, SIGNAL(clicked()), this, SLOT(BtnPlDel()));
+	connect(ui.tableWidget, &QTableWidget::cellDoubleClicked, this, &CBookMngDlg::st_doubleClicked);
 	g_Globle.SetCallback(BookMngCallback,this);
 	InitListCtrl();
 	InitCombox();
@@ -109,11 +127,11 @@ void CBookMngDlg::InitListCtrl()
 		"QScrollBar::add-line{background:transparent;}");
 
 	QStringList headers; 
-	headers<<CH("序号")<<CH("下单日期")<<CH("书名")<<CH("出版社")<<CH("版次")<<CH("成品尺寸")<<CH("开本")<<CH("印张")<<CH("印数")<<CH("包册")<<CH("令数")<<CH("印张类型")<<CH("折页类型")<<CH("入库")<<CH("备注")<<CH("操作");
+	headers<< CH("选择")<<CH("序号")<<CH("下单日期")<<CH("书名")<<CH("出版社")<<CH("版次")<<CH("成品尺寸")<<CH("开本")<<CH("印张")<<CH("印数")<<CH("包册")<<CH("令数")<<CH("印张类型")<<CH("折页类型")<<CH("入库")<<CH("备注")<<CH("操作");
 	ui.tableWidget->setColumnCount(LISTCOLUMN); 
 	ui.tableWidget->setHorizontalHeaderLabels(headers);
 
-	ui.tableWidget->setColumnWidth(15,75);
+	ui.tableWidget->setColumnWidth(16,75);
 }
 
 void CBookMngDlg::SetListCtrlValue()
@@ -125,56 +143,63 @@ void CBookMngDlg::SetListCtrlValue()
 	int n = 1;
 	for (int i=0;i<nCount;i++)
 	{
+		//选择
+		{
+			QCheckBox* ck = new QCheckBox(this);
+			ck->setProperty("checkbox", i);
+			ck->setContentsMargins(10, 0, 5, 0);
+			ui.tableWidget->setCellWidget(i, 0, ck);
+		}
 		//序号
 		str = QString("%1").arg(n+(m_dex-1)*20);
-		ui.tableWidget->setItem(i,0,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,1,new QTableWidgetItem(str));
 		//下单日期
-		ui.tableWidget->setItem(i,1,new QTableWidgetItem(m_vet[i].strDate));
+		ui.tableWidget->setItem(i,2,new QTableWidgetItem(m_vet[i].strDate));
 		//绑定ID
 		QVariant vt;
 		vt.setValue<QString>(m_vet[i].strBookID);
 		ui.tableWidget->item(i,1)->setData(1,vt);
 		//书名
-		ui.tableWidget->setItem(i,2,new QTableWidgetItem(m_vet[i].strname));
+		ui.tableWidget->setItem(i,3,new QTableWidgetItem(m_vet[i].strname));
 		//出版社
 		str = QString("%1").arg(m_vet[i].strCbs);
-		ui.tableWidget->setItem(i,3,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,4,new QTableWidgetItem(str));
 		//版次
 		str = QString("%1-%2").arg(m_vet[i].nBc1).arg(m_vet[i].nBc2);
-		ui.tableWidget->setItem(i,4,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,5,new QTableWidgetItem(str));
 		//成品尺寸
 		str = QString("%1*%2").arg(m_vet[i].nSize1).arg(m_vet[i].nSize2);
-		ui.tableWidget->setItem(i,5,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,6,new QTableWidgetItem(str));
 		//开本
 		str = QString("%1").arg(m_vet[i].nKb);
-		ui.tableWidget->setItem(i,6,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,7,new QTableWidgetItem(str));
 		//印张
 		str = QString::number(m_vet[i].fYz,'f',2);
-		ui.tableWidget->setItem(i,7,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,8,new QTableWidgetItem(str));
 		//印数
 		str = QString("%1").arg(m_vet[i].nYs);
-		ui.tableWidget->setItem(i,8,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,9,new QTableWidgetItem(str));
 		//包册
 		str = QString("%1").arg(m_vet[i].nBc);
-		ui.tableWidget->setItem(i,9,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,10,new QTableWidgetItem(str));
 		//令数
 		str = QString::number(m_vet[i].fLs,'f',2);
-		ui.tableWidget->setItem(i,10,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,11,new QTableWidgetItem(str));
 		//印张类型
 		if (m_vet[i].type != BOOK_TYPE_MAX)
 		{
-			ui.tableWidget->setItem(i,11,new QTableWidgetItem(BookType[m_vet[i].type]));
+			ui.tableWidget->setItem(i,12,new QTableWidgetItem(BookType[m_vet[i].type]));
 		}
 		if (m_vet[i].zyType != ZHEYEPAY_TYPE_MAX)
 		{
-			ui.tableWidget->setItem(i,12,new QTableWidgetItem(ZyType[m_vet[i].zyType-1]));
+			ui.tableWidget->setItem(i,13,new QTableWidgetItem(ZyType[m_vet[i].zyType-1]));
 		}
 		if (m_vet[i].rkType != BOOK_RK_MAX)
 		{
-			ui.tableWidget->setItem(i,13,new QTableWidgetItem(rkType[m_vet[i].rkType]));
+			ui.tableWidget->setItem(i,14,new QTableWidgetItem(rkType[m_vet[i].rkType]));
 		}
 		//备注
-		ui.tableWidget->setItem(i,14,new QTableWidgetItem(m_vet[i].strMsg));
+		ui.tableWidget->setItem(i,15,new QTableWidgetItem(m_vet[i].strMsg));
 
 		//编辑
 		QPushButton* btn = new QPushButton(this);
@@ -200,7 +225,7 @@ void CBookMngDlg::SetListCtrlValue()
 		hLayout->setAlignment(widget, Qt::AlignCenter);
 		hLayout->setContentsMargins(10, 0, 20, 0);
 		widget->setLayout(hLayout);
-		ui.tableWidget->setCellWidget(i,15,widget);
+		ui.tableWidget->setCellWidget(i,16,widget);
 		n++;
 	}
 
@@ -253,13 +278,13 @@ void CBookMngDlg::resizeEvent(QResizeEvent *event)
 	int w = ui.tableWidget->width();
 	for (int i=0;i<LISTCOLUMN;i++)
 	{
-		if(i==0|| i==4 || i==6|| i==9||  i==13)
+		if(i == 0 || i==1|| i==5 || i==7|| i==10||  i==14)
 			ui.tableWidget->setColumnWidth(i,40);
-		else if(i==1)
-			ui.tableWidget->setColumnWidth(i,110);
 		else if(i==2)
+			ui.tableWidget->setColumnWidth(i,110);
+		else if(i==3)
 			ui.tableWidget->setColumnWidth(i,300);
-		else if(i==15)
+		else if(i==16)
 			ui.tableWidget->setColumnWidth(i,75);
 	}
 }
@@ -283,8 +308,28 @@ void CBookMngDlg::SendToDelBook(QString strBookID)
 {
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_DEL_BOOK;
-	root[CMD_DELBOOK[GETBOOK_KEYWORD]] = strBookID.toStdString(); 
+	root[CMD_DELBOOK[EM_DEL_BOOK_ID]] = strBookID.toStdString();
 	Json::FastWriter writer;  
+	string temp = writer.write(root);
+	g_Globle.SendTo(temp);
+}
+
+void CBookMngDlg::sendToPlDelBook(std::string strList)
+{
+	Json::Value root;
+	root[CONNECT_CMD] = SOCK_CMD_PLDEL_BOOK;
+	root[CMD_DELBOOK[EM_DEL_BOOK_ID]] = strList;
+	Json::FastWriter writer;
+	string temp = writer.write(root);
+	g_Globle.SendTo(temp);
+}
+
+void CBookMngDlg::sendToPlRk(std::string strList)
+{
+	Json::Value root;
+	root[CONNECT_CMD] = SOCK_CMD_RK_BOOK;
+	root[CMD_RKBOOK[EM_RK_BOOK_ID]] = strList;
+	Json::FastWriter writer;
 	string temp = writer.write(root);
 	g_Globle.SendTo(temp);
 }
@@ -364,6 +409,16 @@ void CBookMngDlg::FindBook(int pageDex)
 	SendToGetBook(strKeyWord,m_rkType,m_date_Type,(pageDex-1)*20,20);
 }
 
+void CBookMngDlg::st_doubleClicked(int row, int column)
+{
+	QString strBookID = ui.tableWidget->item(row, 1)->data(1).toString();
+	CAddBookDlg dlg(this, false, row);
+	int nType = dlg.exec();
+	g_Globle.SetCallback(BookMngCallback, this);
+	if (nType == QDialog::Accepted)
+		BtnFind();
+}
+
 void CBookMngDlg::st_BtnEdit()
 {
 	QObject *pObject = this->sender();
@@ -383,7 +438,7 @@ void CBookMngDlg::st_BtnDel()
 	QPushButton *btn = qobject_cast<QPushButton *>(pObject);
 	int nRow = btn->property("button").toInt();
 	QString strBookID = ui.tableWidget->item(nRow,1)->data(1).toString();
-	QString strName = ui.tableWidget->item(nRow,2)->text();
+	QString strName = ui.tableWidget->item(nRow,3)->text();
 
 	QString str = QString(CH("该操作将会删除与该书相关的所有记录，包括（进度，明细，做工统计），确认删除 %1？")).arg(strName);
 	int nType = QMessageBox::warning(this,CH("警告"),str,QMessageBox::Ok|QMessageBox::Cancel,QMessageBox::Ok);
@@ -439,5 +494,61 @@ void CBookMngDlg::BtnNext()
 	{
 		m_dex++;
 		FindBook(m_dex);
+	}
+}
+
+void CBookMngDlg::BtnPlRk()
+{
+	std::string strList;
+	int nCount = ui.tableWidget->rowCount();
+	for (int i = 0; i < nCount; i++)
+	{
+		QCheckBox* cbx = (QCheckBox*)ui.tableWidget->cellWidget(i, 0);
+		if (cbx)
+		{
+			if (cbx->checkState() == Qt::Checked)
+			{
+				QString strBookID = ui.tableWidget->item(i, 1)->data(1).toString();
+				strList += strBookID.toStdString() + ";";
+			}
+		}
+	}
+
+	if (!strList.empty())
+	{
+		QString str = QString(CH("确认要入库吗？"));
+		int nType = QMessageBox::warning(this, CH("提示"), str, QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+		if (nType == QMessageBox::Ok)
+		{
+			sendToPlRk(strList);
+		}
+	}
+}
+
+void CBookMngDlg::BtnPlDel()
+{
+	std::string strList;
+	int nCount = ui.tableWidget->rowCount();
+	for (int i=0;i<nCount;i++)
+	{
+		QCheckBox* cbx = (QCheckBox*)ui.tableWidget->cellWidget(i, 0);
+		if (cbx)
+		{
+			if (cbx->checkState() == Qt::Checked)
+			{
+				QString strBookID = ui.tableWidget->item(i, 1)->data(1).toString();
+				strList += strBookID.toStdString() + ";";
+			}
+		}
+	}
+
+	if (!strList.empty())
+	{
+		QString str = QString(CH("该操作将会删除与该书相关的所有记录，包括（进度，明细，做工统计），确认删除？"));
+		int nType = QMessageBox::warning(this, CH("警告"), str, QMessageBox::Ok | QMessageBox::Cancel, QMessageBox::Ok);
+		if (nType == QMessageBox::Ok)
+		{
+			sendToPlDelBook(strList);
+		}
 	}
 }

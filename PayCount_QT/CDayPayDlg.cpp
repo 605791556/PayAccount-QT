@@ -1,5 +1,6 @@
 #include "CDayPayDlg.h"
 #include "CTabWorkDayDlg.h"
+#include <QCompleter>
 
 void DayCheckCallback(void* p,string strData)
 {
@@ -253,11 +254,21 @@ void CDayPayDlg::AddTableRow(int oldProIndex,int oldBkIndex,QString dpay,double 
 	ui.tableWidget->setRowCount(row+1);
 	//ÏîÄ¿
 	QComboBox *proComBox = CreateProCombox(oldProIndex);
+	proComBox->setEditable(true);
+	QCompleter* pro_completer = new QCompleter(proComBox->model(), this);
+	pro_completer->setFilterMode(Qt::MatchContains);
+	proComBox->setCompleter(pro_completer);
+
 	proComBox->setProperty("combox",row);
 	connect(proComBox,SIGNAL(currentIndexChanged(int)),this,SLOT(st_comboChanged(int)));
 	ui.tableWidget->setCellWidget(row,0,proComBox);
 	//Í¼Êé
 	QComboBox *bookComBox = CreateBookCombox(oldBkIndex);
+	bookComBox->setEditable(true);
+	QCompleter* completer = new QCompleter(bookComBox->model(), this);
+	completer->setFilterMode(Qt::MatchContains);
+	bookComBox->setCompleter(completer);
+
 	bookComBox->setProperty("combox",row);
 	connect(bookComBox,SIGNAL(currentIndexChanged(int)),this,SLOT(st_comboChanged(int)));
 	ui.tableWidget->setCellWidget(row,1,bookComBox);

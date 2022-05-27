@@ -30,9 +30,12 @@ CLogin::CLogin(QWidget *parent)
 	g_Globle.SetCallback(LoginCallback,this);
 	if (g_Globle.InitGloble())
 	{
-		QString strTitle = g_Globle.m_strTitle + g_Globle.m_strVersion;
+		QString strTitle = g_Globle.m_strTitle;
+		QString strVersion = "v" + g_Globle.m_strVersion;
 		ui.label_title->setText(strTitle);
 		ui.label_title->setStyleSheet("color: white");
+		ui.label_v->setText(strVersion);
+		ui.label_v->setStyleSheet("color: white");
 		if (g_Globle.ConnectSer())
 		{
 			ui.label_msg->setText("");

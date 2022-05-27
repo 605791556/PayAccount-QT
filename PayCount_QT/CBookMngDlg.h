@@ -5,7 +5,7 @@
 #include "ui_CBookMngDlg.h"
 #include "cgloble.h"
 
-#define LISTCOLUMN 16
+#define LISTCOLUMN 17
 
 class CBookMngDlg : public QDialog
 {
@@ -29,6 +29,9 @@ public slots:
 	void BtnGo();
 	void BtnLast();
 	void BtnNext();
+	void BtnPlRk();
+	void BtnPlDel();
+	void st_doubleClicked(int row,int column);
 
 public:
 	void InitListCtrl();
@@ -36,6 +39,8 @@ public:
 	void InitCombox();
 	void SendToGetBook(QString strKeyWord,BOOK_RK rkType,EM_DATE_TYPE date_Type,int nStart,int nNum);
 	void SendToDelBook(QString strBookID);
+	void sendToPlDelBook(std::string strList);
+	void sendToPlRk(std::string strList);
 	void GetBook(Json::Value root);
 	//比较两个时间字符串的先后顺序strDate1<strDate2,返回值小于0,,相等返回0，否则大于0
 	int JudgeDateStringSize(QString strDate1,QString strDate2);

@@ -1,4 +1,5 @@
 #include "CTabDetailDlg.h"
+#include <QCompleter>
 
 void DetailCallback(void* p,string strData)
 {
@@ -46,7 +47,8 @@ void CTabDetailDlg::st_CalBak(void* pdata)
 			{
 				GetProject(root);
 				InitListCtrl();
-				SendToGetDetails();
+				if (SendToGetDetails())
+					SetCtrlVisible(false);
 			}
 		}
 		break;
@@ -58,6 +60,7 @@ void CTabDetailDlg::st_CalBak(void* pdata)
 			{
 				GetDetails(root);
 			}
+			SetCtrlVisible(true);
 		}
 		break;
 	}
@@ -68,6 +71,7 @@ CTabDetailDlg::CTabDetailDlg(QWidget *parent)
 {
 	ui.setupUi(this);
 	connect(this,&CTabDetailDlg::sg_CalBak,this,&CTabDetailDlg::st_CalBak);
+	connect(ui.BTN_UPDATE, SIGNAL(clicked()), this, SLOT(st_BtnUpdate()));
 	connect(ui.cbx_rk,SIGNAL(currentIndexChanged(int)),this,SLOT(st_rkCbxChanged(int)));
 	connect(ui.cbx_book,SIGNAL(currentIndexChanged(int)),this,SLOT(st_bookCbxChanged(int)));
 	CGloble::SetButtonStyle(ui.BTN_UPDATE,":/PayCount_QT/pic/ok.png",3);
@@ -80,17 +84,34 @@ CTabDetailDlg::CTabDetailDlg(QWidget *parent)
 	}
 	ui.cbx_rk->setCurrentIndex(1);
 	ui.cbx_book->setMaxVisibleItems(40);
+	ui.cbx_book->setEditable(true);
+	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
+	ui.label_load->setMovie(m_pMovie);
+	ui.label_load->setVisible(false);
 }
 
 CTabDetailDlg::~CTabDetailDlg()
 {
-
+	delete m_pMovie;
 }
 
 void CTabDetailDlg::pageIn()
 {
 	g_Globle.SetCallback(DetailCallback,this);
 	SendToGetBook();
+}
+
+void CTabDetailDlg::SetCtrlVisible(bool bLoadOk)
+{
+	ui.cbx_rk->setEnabled(bLoadOk);
+	ui.cbx_book->setEnabled(bLoadOk);
+	ui.BTN_UPDATE->setEnabled(bLoadOk);
+	ui.tableWidget->setVisible(bLoadOk);
+	ui.label_load->setVisible(!bLoadOk);
+	if (bLoadOk)
+		m_pMovie->stop();
+	else
+		m_pMovie->start();
 }
 
 void CTabDetailDlg::st_BtnUpdate()
@@ -107,7 +128,9 @@ void CTabDetailDlg::st_bookCbxChanged(int ndex)
 {
 	if(ndex>=0)
 		m_LastBookID = ui.cbx_book->itemData(ndex).value<QString>();
-	SendToGetDetails();
+
+	if (SendToGetDetails())
+		SetCtrlVisible(false);
 }
 
 void CTabDetailDlg::SendToGetBook()
@@ -137,7 +160,7 @@ void CTabDetailDlg::SendToGetProject()
 	g_Globle.SendTo(temp);
 }
 
-void CTabDetailDlg::SendToGetDetails()
+bool CTabDetailDlg::SendToGetDetails()
 {
 	int ndex = ui.cbx_book->currentIndex();
 	int nSize = m_vPro.size();
@@ -158,8 +181,13 @@ void CTabDetailDlg::SendToGetDetails()
 		}
 		Json::FastWriter writer;  
 		string temp = writer.write(root);
-		g_Globle.SendTo(temp);
+		if (g_Globle.SendTo(temp) != 0)
+			return false;
+		else
+			return true;
 	}
+	else
+		return false;
 }
 void CTabDetailDlg::GetBook(Json::Value root)
 {
@@ -194,6 +222,19 @@ void CTabDetailDlg::GetBook(Json::Value root)
 	{
 		ui.cbx_book->setCurrentIndex(nFindex);
 	}
+
+	/*QCompleter* completer = ui.cbx_book->completer();
+	if (completer)
+		completer->setModel(ui.cbx_book->model());
+	else
+	{
+		QCompleter* completer = new QCompleter(ui.cbx_book->model(), this);
+		completer->setFilterMode(Qt::MatchContains);
+		ui.cbx_book->setCompleter(completer);
+	}*/
+	QCompleter* completer = new QCompleter(ui.cbx_book->model(), this);
+	completer->setFilterMode(Qt::MatchContains);
+	ui.cbx_book->setCompleter(completer);
 }
 
 void CTabDetailDlg::GetProject(Json::Value root)

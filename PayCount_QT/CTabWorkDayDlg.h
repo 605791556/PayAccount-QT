@@ -30,6 +30,7 @@ public:
 	~CTabWorkDayDlg();
 
 	Ui::CTabWorkDayDlg ui;
+	QMovie* m_pMovie;
 
 signals:
 	void sg_CalBak(void* pdata);
@@ -47,8 +48,9 @@ public:
 	void SetListValue();
 	void SendToGetStaff();
 	void GetStaff(Json::Value root);
-	void SendToGetOnePayList();
+	bool SendToGetOnePayList();
 	void GetOnePayList(Json::Value root);
+	void SetCtrlVisible(bool bLoadOk);
 
 public:
 	bool                m_bDateInit;

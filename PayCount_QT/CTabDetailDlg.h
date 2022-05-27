@@ -22,6 +22,7 @@ public:
 
 private:
 	Ui::CTabDetailDlg ui;
+	QMovie* m_pMovie;
 
 signals:
 	void sg_CalBak(void* pdata);
@@ -36,12 +37,13 @@ public:
 	void pageIn();
 	void SendToGetBook();
 	void SendToGetProject();
-	void SendToGetDetails();
+	bool SendToGetDetails();
 	void GetBook(Json::Value root);
 	void GetProject(Json::Value root);
 	void GetDetails(Json::Value root);
 	void InitListCtrl();
 	void SetListValue(QString strDate,int nYs,double fLs, int nNum,int* n,vector<PRO_DETAIL> vts);
+	void SetCtrlVisible(bool bLoadOk);
 
 public:
 	vector<BOOK_STU> m_vet;

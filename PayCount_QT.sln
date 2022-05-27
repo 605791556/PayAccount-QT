@@ -1,20 +1,42 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PayCount_QT", "PayCount_QT\PayCount_QT.vcxproj", "{7B98CC63-FA38-46FF-8D90-057330C3B5CC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PayServer-HP", "PayServer\PayServer.vcxproj", "{842573F6-C2AD-445B-8380-CD659E9E72E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Debug|x64 = Debug|x64
 		Release|Win32 = Release|Win32
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Debug|Win32.Build.0 = Debug|Win32
+		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Debug|x64.ActiveCfg = Debug|x64
+		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Debug|x64.Build.0 = Debug|x64
 		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Release|Win32.ActiveCfg = Release|Win32
 		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Release|Win32.Build.0 = Release|Win32
+		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Release|x64.ActiveCfg = Release|x64
+		{7B98CC63-FA38-46FF-8D90-057330C3B5CC}.Release|x64.Build.0 = Release|x64
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Debug|Win32.Build.0 = Debug|Win32
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Debug|x64.ActiveCfg = Debug|x64
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Debug|x64.Build.0 = Debug|x64
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Release|Win32.ActiveCfg = Release|Win32
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Release|Win32.Build.0 = Release|Win32
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Release|x64.ActiveCfg = Release|x64
+		{842573F6-C2AD-445B-8380-CD659E9E72E3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {ACFD8FAB-4EB9-4308-98A9-B196D75FA4B1}
+		Qt5Version = $(DefaultQtVersion)
 	EndGlobalSection
 EndGlobal

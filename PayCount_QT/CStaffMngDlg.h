@@ -5,7 +5,7 @@
 #include "ui_CStaffMngDlg.h"
 #include "cgloble.h"
 
-#define  LISTCOLUMN 9
+#define  LISTCOLUMN 8
 
 class CStaffMngDlg : public QDialog
 {
@@ -29,6 +29,7 @@ public slots:
 	void BtnGo();
 	void BtnLast();
 	void BtnNext();
+	void st_doubleClicked(int row, int column);
 
 public:
 	int m_nCount;//数据总数

@@ -67,9 +67,22 @@
       </widget>
      </item>
      <item>
+      <widget class="QLabel" name="label_load">
+       <property name="text">
+        <string>TextLabel</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QLabel" name="label">
        <property name="text">
         <string>1.（封面，印刷，折页，点页，胶订，打包，样书，入库）不可删除</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
      </item>
@@ -77,6 +90,9 @@
       <widget class="QLabel" name="label_2">
        <property name="text">
         <string>2.单击排列顺序进行编辑，编辑完后请保存</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
        </property>
       </widget>
      </item>

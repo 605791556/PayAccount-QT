@@ -30,7 +30,7 @@ public:
 	void InitDlg(QWidget* stfMng,bool bAdd);
 	void SendToJudgeStaff(QString strIdcard);
 	void SendToAddStaff();
-	void SendToMdfStaff(QString strName,QString strSex,int age,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay);
+	void SendToMdfStaff(QString strName,QString strSex,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay);
 };
 
 #endif // CADDSTAFFDLG_H

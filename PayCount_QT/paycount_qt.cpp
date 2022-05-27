@@ -46,7 +46,11 @@ void PayCount_QT::st_CalBak(void* pdata)
 }
 
 PayCount_QT::PayCount_QT(QWidget *parent)
-	: QMainWindow(parent)
+	: QMainWindow(parent),
+	m_pTabMonthDlg(nullptr),
+	m_pTabWorkDlg(nullptr),
+	m_pTabDetailDlg(nullptr),
+	m_pTabProcessDlg(nullptr)
 {
 	m_bInitTab = false;
 	qRegisterMetaType<NET_STATE>("NET_STATE");
@@ -68,6 +72,10 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	{
 		ui.BTN_INIT->setVisible(false);
 	}
+	if (g_Globle.m_nType == TYPE_COMMON)
+	{
+		ui.BTN_ACCOUNT->setVisible(false);
+	}
 
 	setWindowFlags(Qt::FramelessWindowHint);//去掉边框
 	setAttribute(Qt::WA_TranslucentBackground);//透明
@@ -88,10 +96,6 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	connect(ui.BTN_LOCK, SIGNAL(clicked()), this, SLOT(BtnLock()));
 	connect(ui.BTN_CLOSE, SIGNAL(clicked()), this, SLOT(BtnClose()));
 
-	m_pTabMonthDlg   = new CTabMonthDlg;
-	m_pTabWorkDlg    = new CTabWorkDayDlg;
-	m_pTabDetailDlg  = new CTabDetailDlg;
-	m_pTabProcessDlg = new CTabProcessDlg;
 	//初始化tabctrl
 	InitTabCtrl();
 
@@ -110,10 +114,14 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 
 PayCount_QT::~PayCount_QT()
 {
-	delete m_pTabMonthDlg;
-	delete m_pTabWorkDlg;
-	delete m_pTabDetailDlg;
-	delete m_pTabProcessDlg;
+	if(m_pTabMonthDlg)
+		delete m_pTabMonthDlg;
+	if (m_pTabWorkDlg)
+		delete m_pTabWorkDlg;
+	if (m_pTabDetailDlg)
+		delete m_pTabDetailDlg;
+	if (m_pTabProcessDlg)
+		delete m_pTabProcessDlg;
 }
 
 void PayCount_QT::InitTabCtrl()
@@ -121,12 +129,23 @@ void PayCount_QT::InitTabCtrl()
 	ui.tabWidget->clear();
 	ui.tabWidget->setTabPosition(QTabWidget::North);
 
-	ui.tabWidget->insertTab(EM_PAGE_JD,m_pTabProcessDlg,CH("进度"));
-	ui.tabWidget->insertTab(EM_PAGE_MX,m_pTabDetailDlg,CH("明细"));
-	ui.tabWidget->insertTab(EM_PAGE_ZGTJ,m_pTabWorkDlg,CH("做工统计"));
-	ui.tabWidget->insertTab(EM_PAGE_YHS,m_pTabMonthDlg,CH("月核算"));
+	if (g_Globle.m_nType == TYPE_COMMON)
+	{
+		m_pTabProcessDlg = new CTabProcessDlg;
+		ui.tabWidget->insertTab(EM_PAGE_JD, m_pTabProcessDlg, CH("进度"));
+		ui.tabWidget->setCurrentIndex(EM_PAGE_JD);
+	}
+	else
+	{
+		m_pTabDetailDlg = new CTabDetailDlg;
+		m_pTabWorkDlg = new CTabWorkDayDlg;
+		m_pTabMonthDlg = new CTabMonthDlg;
+		ui.tabWidget->insertTab(EM_PAGE_MX - 1, m_pTabDetailDlg, CH("明细"));
+		ui.tabWidget->insertTab(EM_PAGE_ZGTJ - 1, m_pTabWorkDlg, CH("做工统计"));
+		ui.tabWidget->insertTab(EM_PAGE_YHS - 1, m_pTabMonthDlg, CH("月核算"));
+		ui.tabWidget->setCurrentIndex(EM_PAGE_YHS - 1);
+	}
 	ui.tabWidget->setTabShape(QTabWidget::Rounded);//设置选项卡的形状
-	ui.tabWidget->setCurrentIndex(EM_PAGE_YHS);
 	m_bInitTab = true;
 }
 
@@ -134,14 +153,21 @@ void PayCount_QT::st_tabChanged(int index)
 {
 	if(!m_bInitTab)
 		return;
-	if (index == EM_PAGE_YHS)
-		m_pTabMonthDlg->pageIn();
-	else if (index == EM_PAGE_ZGTJ)
-		m_pTabWorkDlg->pageIn();
-	else if (index == EM_PAGE_MX)
-		m_pTabDetailDlg->pageIn();
-	else if (index == EM_PAGE_JD)
-		m_pTabProcessDlg->pageIn();
+
+	if (g_Globle.m_nType == TYPE_COMMON)
+	{
+		if (index == EM_PAGE_JD)
+			m_pTabProcessDlg->pageIn();
+	}
+	else
+	{
+		if (index == EM_PAGE_YHS - 1)
+			m_pTabMonthDlg->pageIn();
+		else if (index == EM_PAGE_ZGTJ - 1)
+			m_pTabWorkDlg->pageIn();
+		else if (index == EM_PAGE_MX - 1)
+			m_pTabDetailDlg->pageIn();
+	}
 }
 
 void PayCount_QT::paintEvent(QPaintEvent *)

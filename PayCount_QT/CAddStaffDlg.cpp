@@ -78,7 +78,6 @@ CAddStaffDlg::CAddStaffDlg(QWidget* stfMng,bool bAdd,int row,QWidget *parent)
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(st_BtnSave()));
 	InitDlg(stfMng,bAdd);
 
-	ui.EDIT_AGE->setValidator(g_Globle.itVtor);
 	ui.EDIT_IDCARD->setValidator(g_Globle.nzVtor);
 	ui.EDIT_TEL->setValidator(g_Globle.itVtor);
 	ui.EDIT_DEX->setValidator(g_Globle.itVtor);
@@ -116,27 +115,24 @@ void CAddStaffDlg::InitDlg(QWidget* stfMng,bool bAdd)
 		else
 			ui.COMBO_SEX->setCurrentIndex(1);
 
-		QString strage=pDlg->ui.tableWidget->item(m_row,3)->text();
-		ui.EDIT_AGE->setText(strage);
-
 		QString idcard=pDlg->m_vet[m_row].strIdCard;
 		strOldIdcard=idcard;
 		ui.EDIT_IDCARD->setText(idcard);
 
-		QString strtell=pDlg->ui.tableWidget->item(m_row,5)->text();
+		QString strtell=pDlg->ui.tableWidget->item(m_row,4)->text();
 		ui.EDIT_TEL->setText(strtell);
 
 		QString strDex = QString("%1").arg(pDlg->m_vet[m_row].sort);
 		ui.EDIT_DEX->setText(strDex);
 
-		QString strType = pDlg->ui.tableWidget->item(m_row,6)->text();
+		QString strType = pDlg->ui.tableWidget->item(m_row,5)->text();
 		for (int i =0;i<STAFF_TYPE_MAX;i++)
 		{
 			if (strType == StaffType[i])
 				ui.COMBO_TYPE->setCurrentIndex(i);
 		}
 
-		QString strDaypay=pDlg->ui.tableWidget->item(m_row,7)->text();
+		QString strDaypay=pDlg->ui.tableWidget->item(m_row,6)->text();
 		ui.EDIT_DAYPAY->setText(strDaypay);
 
 		ui.BTN_SAVE->setText(CH("±£´æ"));
@@ -157,7 +153,6 @@ void CAddStaffDlg::SendToAddStaff()
 {
 	QString strName=ui.EDIT_NAME->text();
 	QString strSex= ui.COMBO_SEX->currentText();
-	int age = ui.EDIT_AGE->text().toInt();
 	QString strIDCARD= ui.EDIT_IDCARD->text();
 	QString strTel= ui.EDIT_TEL->text();
 	STAFF_TYPE type = (STAFF_TYPE)ui.COMBO_TYPE->currentIndex();
@@ -175,7 +170,6 @@ void CAddStaffDlg::SendToAddStaff()
 	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=sstrname;
 	string sstrsex = strSex.toLocal8Bit();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_SEX]]=sstrsex;
-	root[CMD_STAFFMSG[EM_STAFF_MSG_AGE]]=age;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]]=strStaffID.toStdString();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_IDCARD]]=strIDCARD.toStdString();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_TEL]]=strTel.toStdString();
@@ -188,7 +182,7 @@ void CAddStaffDlg::SendToAddStaff()
 
 }
 
-void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,int age,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay)
+void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,QString strStaffID, QString strIdcard,QString strTel,STAFF_TYPE type,int sort,double fDaypay)
 {
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_MDF_STAFF;
@@ -196,7 +190,6 @@ void CAddStaffDlg::SendToMdfStaff(QString strName,QString strSex,int age,QString
 	root[CMD_STAFFMSG[EM_STAFF_MSG_NAME]]=sstrname;
 	string sstrsex = strSex.toLocal8Bit();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_SEX]]=sstrsex;
-	root[CMD_STAFFMSG[EM_STAFF_MSG_AGE]]=age;
 	root[CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]]=strStaffID.toStdString();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_IDCARD]]=strIdcard.toStdString();
 	root[CMD_STAFFMSG[EM_STAFF_MSG_TEL]]=strTel.toStdString();
@@ -212,7 +205,6 @@ void CAddStaffDlg::st_BtnSave()
 {
 	QString strName=ui.EDIT_NAME->text();
 	QString strSex= ui.COMBO_SEX->currentText();
-	int age = ui.EDIT_AGE->text().toInt();
 	QString strIDCARD= ui.EDIT_IDCARD->text();
 	QString strTel= ui.EDIT_TEL->text();
 	STAFF_TYPE type = (STAFF_TYPE)ui.COMBO_TYPE->currentIndex();
@@ -243,6 +235,6 @@ void CAddStaffDlg::st_BtnSave()
 			return;
 		}
 		
-		SendToMdfStaff(strName,strSex,age,m_strStaffID,strIDCARD,strTel,type,sort,fDayPay);
+		SendToMdfStaff(strName,strSex,m_strStaffID,strIDCARD,strTel,type,sort,fDayPay);
 	}
 }

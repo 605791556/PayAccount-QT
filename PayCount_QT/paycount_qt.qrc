@@ -1,29 +1,30 @@
 <RCC>
     <qresource prefix="/PayCount_QT">
+        <file>pic/account.png</file>
+        <file>pic/back.png</file>
+        <file>pic/book.png</file>
+        <file>pic/cancel.png</file>
+        <file>pic/cbg.png</file>
+        <file>pic/cbg2.png</file>
         <file>pic/close.png</file>
+        <file>pic/edit.png</file>
         <file>pic/frame.png</file>
+        <file>pic/init.png</file>
+        <file>pic/key.png</file>
+        <file>pic/load.gif</file>
+        <file>pic/lock.png</file>
+        <file>pic/log.png</file>
+        <file>pic/login_bg.png</file>
+        <file>pic/login_btn.png</file>
         <file>pic/max.png</file>
         <file>pic/min.png</file>
-        <file>pic/login_bg.png</file>
-        <file>pic/set.png</file>
-        <file>pic/login_btn.png</file>
+        <file>pic/no_pic.png</file>
         <file>pic/ok.png</file>
-        <file>pic/load.gif</file>
-        <file>pic/yc2.png</file>
-        <file>pic/cbg.png</file>
-        <file>pic/account.png</file>
-        <file>pic/book.png</file>
-        <file>pic/init.png</file>
-        <file>pic/log.png</file>
         <file>pic/pay.png</file>
         <file>pic/pro.png</file>
         <file>pic/pwd.png</file>
+        <file>pic/set.png</file>
         <file>pic/staff.png</file>
-        <file>pic/lock.png</file>
-        <file>pic/cancel.png</file>
-        <file>pic/edit.png</file>
-        <file>pic/no_pic.png</file>
-        <file>pic/key.png</file>
-        <file>pic/cbg2.png</file>
+        <file>pic/yc2.png</file>
     </qresource>
 </RCC>

@@ -89,9 +89,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_CSetDlg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
-    <ClCompile Include="HP-Socket\Global\helper.cpp">
-      <Filter>helper</Filter>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_cgloble.cpp">
       <Filter>Generated Files\Debug</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
     </ClCompile>
     <ClCompile Include="cgloble.cpp">
       <Filter>globle</Filter>
-    </ClCompile>
-    <ClCompile Include="common.cpp">
-      <Filter>common</Filter>
     </ClCompile>
     <ClCompile Include="CTabMonthDlg.cpp">
       <Filter>Source Files</Filter>
@@ -293,6 +287,12 @@
     <ClCompile Include="GeneratedFiles\Release\moc_CTabProcessDlg.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\HP-Socket\Global\helper.cpp">
+      <Filter>helper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\common.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="paycount_qt.h">
@@ -453,15 +453,6 @@
     <ClInclude Include="GeneratedFiles\ui_CSetDlg.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
-    <ClInclude Include="HP-Socket\Global\helper.h">
-      <Filter>helper</Filter>
-    </ClInclude>
-    <ClInclude Include="HP-Socket\Common\Src\GeneralHelper.h">
-      <Filter>helper</Filter>
-    </ClInclude>
-    <ClInclude Include="common.h">
-      <Filter>common</Filter>
-    </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_CTabMonthDlg.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
@@ -524,6 +515,18 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferPtr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HP-Socket\Src\Common\GeneralHelper.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\HP-Socket\Global\helper.h">
+      <Filter>helper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\common.h">
+      <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

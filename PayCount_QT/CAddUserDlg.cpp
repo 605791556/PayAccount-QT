@@ -61,6 +61,12 @@ CAddUserDlg::CAddUserDlg(QWidget *parent)
 	ui.setupUi(this);
 	connect(this,&CAddUserDlg::sg_CalBak,this,&CAddUserDlg::st_CalBak);
 	connect(ui.BTN_ADD,SIGNAL(clicked()),this,SLOT(st_BtnAdd()));
+
+	QRegExpValidator* pRevalidotor = new QRegExpValidator(QRegExp("[A-Za-z0-9_-@#$%&*]+&*"), this);
+	ui.EDIT_USER->setValidator(pRevalidotor);
+	ui.EDIT_PWD->setValidator(pRevalidotor);
+	ui.EDIT_PWD2->setValidator(pRevalidotor);
+
 	g_Globle.SetCallback(UserAddCallback,this);
 }
 

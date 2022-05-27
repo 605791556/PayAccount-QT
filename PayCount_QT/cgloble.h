@@ -31,13 +31,14 @@
 #include "GeneralHelper.h"
 #include "helper.h"
 
+#pragma comment(lib,"HPSocket.lib")
 #ifdef _DEBUG
 #pragma comment(lib,"json_vc71_libmtd.lib")
 #else
 #pragma comment(lib,"json_vc71_libmt.lib")
 #endif
 
-
+using std::string;
 #define CH(x) QString::fromLocal8Bit(x)
 
 enum NET_STATE
@@ -382,6 +383,8 @@ private:
 	virtual EnHandleResult OnClose(ITcpClient* pSender, CONNID dwConnID, EnSocketOperation enOperation, int iErrorCode);
 
 public:
+	//获取exe版本号
+	 QString version();
 	//初始化
 	bool InitGloble();
 	//按钮图片切片
@@ -398,6 +401,7 @@ public:
 	string GetAppDataPath();
 	void DoRun(string strData);
 	int GetDays(int year,int month);
+	string parseIp(const char* adress);
 public:
 	QString    m_strIP;
 	int        m_nPort;

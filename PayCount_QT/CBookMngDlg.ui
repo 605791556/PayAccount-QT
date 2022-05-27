@@ -167,7 +167,7 @@
         <string>下单日期：</string>
        </property>
        <property name="alignment">
-        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>
@@ -229,6 +229,20 @@
        </property>
        <property name="text">
         <string>添加</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BTN_PL_RK">
+       <property name="text">
+        <string>批量入库</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="BTN_PL_DEL">
+       <property name="text">
+        <string>批量删除</string>
        </property>
       </widget>
      </item>

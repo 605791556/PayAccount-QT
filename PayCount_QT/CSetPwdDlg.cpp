@@ -48,6 +48,12 @@ CSetPwdDlg::CSetPwdDlg(QWidget *parent)
 	ui.setupUi(this);
 	connect(this,&CSetPwdDlg::sg_CalBak,this,&CSetPwdDlg::st_CalBak);
 	connect(ui.BTN_SAVE,SIGNAL(clicked()),this,SLOT(BtnSave()));
+
+	QRegExpValidator* pRevalidotor = new QRegExpValidator(QRegExp("[A-Za-z0-9_-@#$%&*]+&*"), this);
+	ui.EDIT_OLDPWD->setValidator(pRevalidotor);
+	ui.EDIT_NEWPWD->setValidator(pRevalidotor);
+	ui.EDIT_NEWPWD2->setValidator(pRevalidotor);
+
 	g_Globle.SetCallback(MdfPwdCallback,this);
 }
 

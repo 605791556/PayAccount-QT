@@ -76,6 +76,7 @@ CTabProcessDlg::CTabProcessDlg(QWidget *parent)
 	}
 	ui.cbx_rk->setCurrentIndex(1);
 	ui.cbx_book->setMaxVisibleItems(40);
+	pageIn();
 }
 
 CTabProcessDlg::~CTabProcessDlg()

@@ -1,6 +1,10 @@
 #include "cgloble.h"
 
-#pragma comment(lib,"HPSocket_U.lib")
+#ifdef WIN32
+#include <windows.h>
+#pragma comment(lib, "version.lib")
+#pragma comment(lib,"ws2_32.lib")
+#endif
 
 CGloble g_Globle;
 
@@ -50,6 +54,57 @@ CGloble::~CGloble()
 	delete dbVtor;
 }
 
+QString CGloble::version()
+{
+#ifdef WIN32
+	char szFilePath[MAX_PATH + 1] = { 0 };
+	GetModuleFileNameA(NULL, szFilePath, MAX_PATH);
+
+	QString result = "";
+	QString fullName = QString::fromUtf8(szFilePath);
+	char* pData = nullptr;
+	do
+	{
+		unsigned int dwLen = GetFileVersionInfoSize(fullName.toStdWString().c_str(), 0);
+		if (0 == dwLen)
+		{
+			break;
+		}
+		pData = new char[dwLen + 1];
+		BOOL bSuccess = GetFileVersionInfo(fullName.toStdWString().c_str(), 0, dwLen, pData);
+		if (!bSuccess)
+		{
+			break;
+		}
+
+		VS_FIXEDFILEINFO* pVsInfo;
+		if (VerQueryValueA(pData, "\\VarFileInfo\\Translation", (void**)&pVsInfo, &dwLen))
+		{
+			unsigned int version_len = 0;
+			if (VerQueryValueA(pData, "\\", (void**)&pVsInfo, &version_len))
+			{
+				sprintf(pData, "%d.%d.%d.%d", HIWORD(pVsInfo->dwFileVersionMS), LOWORD(pVsInfo->dwFileVersionMS), HIWORD(pVsInfo->dwFileVersionLS), LOWORD(pVsInfo->dwFileVersionLS));
+				result = pData;
+			}
+		}
+	} while (0);
+
+	if (nullptr != pData)
+	{
+		delete pData;
+	}
+
+	auto v = result.split(".");
+	if (v.length() == 4)
+	{
+		result = QString("%1.%2.%3").arg(v[0]).arg(v[1]).arg(v[2]);
+	}
+	return result;
+#else
+	return "";
+#endif
+}
+
 bool CGloble::InitGloble()
 {
 	QString strIniPathName = qApp->applicationDirPath() + "/config/config.ini";
@@ -68,7 +123,7 @@ bool CGloble::InitGloble()
 		m_nPort = GetIniValue("SOCKET","port").toInt();
 		m_strName = GetIniValue("SOCKET","name").toString();
 		m_strTitle = GetIniValue("SOCKET","title").toString();
-		m_strVersion = GetIniValue("SOCKET","verson").toString();
+		m_strVersion = version();// GetIniValue("SOCKET", "verson").toString();
 		return true;
 	}
 }
@@ -175,13 +230,36 @@ EnHandleResult CGloble::OnClose(ITcpClient* pSender, CONNID dwConnID, EnSocketOp
 	return HR_OK;
 }
 
+std::string CGloble::parseIp(const char* adress)
+{
+#ifdef WIN32
+	struct hostent* hptr = gethostbyname(adress);
+	if (hptr == nullptr)
+		return nullptr;
+	else
+	{
+		char ip[20];
+		memset(ip, 0, 20);
+		memcpy(&ip, inet_ntoa(*((struct in_addr*)hptr->h_addr_list[0])), 20);
+		std::string strIp = ip;
+		return strIp;
+	}
+#else
+
+#endif
+}
+
 bool CGloble::ConnectSer()
 {
 	m_pkgInfo.Reset();
 	
 	const ushort* str = m_strIP.utf16();
 	const wchar_t* p = (const wchar_t*)str;
-	BOOL bRet = m_Client->Start(p, m_nPort, m_bAsyncConn);
+	//BOOL bRet = m_Client->Start(p, m_nPort, m_bAsyncConn);
+	//BOOL bRet = m_Client->Start((LPCTSTR)m_strIP.toStdString().c_str(), m_nPort, m_bAsyncConn);
+
+	std::string ip = parseIp(m_strIP.toStdString().c_str());
+	BOOL bRet = m_Client->Start((LPCTSTR)ip.c_str(), m_nPort, m_bAsyncConn);
 	if(bRet)
 	{
 		if (m_heart == INVALID_HANDLE_VALUE)
@@ -313,7 +391,7 @@ DWORD WINAPI hreatThread(LPVOID lpParam)
 	DWORD dw = WaitForSingleObject(pGloble->m_hExit,2000);
 	while (dw != WAIT_OBJECT_0)
 	{
-		EnServiceState state =  pGloble->m_Client->GetState();
+		EnServiceState state = pGloble->m_Client->GetState();
 		if (state == SS_STOPPED)
 		{
 			pGloble->ConnectSer();

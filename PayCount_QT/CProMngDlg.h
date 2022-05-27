@@ -16,6 +16,7 @@ public:
 	~CProMngDlg();
 
 	Ui::CProMngDlg ui;
+	QMovie* m_pMovie;
 	void resizeEvent(QResizeEvent *);
 
 public:
@@ -33,10 +34,11 @@ public slots:
 public:
 	void InitListCtrl();
 	void SetListValue();
-	void SendToGetProject();
+	bool SendToGetProject();
 	void SendToSaveProNdex();
 	void SendToDelProject(int nProID);
 	void GetProject(Json::Value root);
+	void SetCtrlVisible(bool bLoadOk);
 	
 };
 

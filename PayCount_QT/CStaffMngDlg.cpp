@@ -71,6 +71,7 @@ CStaffMngDlg::CStaffMngDlg(QWidget *parent)
 	connect(ui.BTN_GO,SIGNAL(clicked()),this,SLOT(BtnGo()));
 	connect(ui.BTN_LAST,SIGNAL(clicked()),this,SLOT(BtnLast()));
 	connect(ui.BTN_NEXT,SIGNAL(clicked()),this,SLOT(BtnNext()));
+	connect(ui.tableWidget, &QTableWidget::cellDoubleClicked, this, &CStaffMngDlg::st_doubleClicked);
 
 	g_Globle.SetCallback(StaffMngCallback,this);
 	InitListCtrl();
@@ -108,11 +109,11 @@ void CStaffMngDlg::InitListCtrl()
 		"QScrollBar::add-line{background:transparent;}");
 
 	QStringList headers; 
-	headers<<CH("序号")<<CH("姓名")<<CH("性别")<<CH("年龄")<<CH("入职时间")<<CH("联系方式")<<CH("类型")<<CH("日薪")<<CH("操作");
+	headers<<CH("序号")<<CH("姓名")<<CH("性别")<<CH("入职时间")<<CH("联系方式")<<CH("类型")<<CH("日薪")<<CH("操作");
 	ui.tableWidget->setColumnCount(LISTCOLUMN); 
 	ui.tableWidget->setHorizontalHeaderLabels(headers);
 
-	ui.tableWidget->setColumnWidth(8,75);
+	ui.tableWidget->setColumnWidth(7,75);
 }
 
 void CStaffMngDlg::SetListCtrlValue()
@@ -135,18 +136,15 @@ void CStaffMngDlg::SetListCtrlValue()
 		ui.tableWidget->item(i,1)->setData(1,vt);
 		//性别
 		ui.tableWidget->setItem(i,2,new QTableWidgetItem(m_vet[i].strSex));
-		//年龄
-		str = QString("%1").arg(m_vet[i].age);
-		ui.tableWidget->setItem(i,3,new QTableWidgetItem(str));
 		//入职时间
-		ui.tableWidget->setItem(i,4,new QTableWidgetItem(m_vet[i].strInTime));
+		ui.tableWidget->setItem(i,3,new QTableWidgetItem(m_vet[i].strInTime));
 		//联系方式
-		ui.tableWidget->setItem(i,5,new QTableWidgetItem(m_vet[i].strTel));
+		ui.tableWidget->setItem(i,4,new QTableWidgetItem(m_vet[i].strTel));
 		//类型
-		ui.tableWidget->setItem(i,6,new QTableWidgetItem(StaffType[m_vet[i].type]));
+		ui.tableWidget->setItem(i,5,new QTableWidgetItem(StaffType[m_vet[i].type]));
 		//日薪
 		str = QString::number(m_vet[i].fDaypay,'f',2);
-		ui.tableWidget->setItem(i,7,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(i,6,new QTableWidgetItem(str));
 		//编辑
 		QPushButton* btn = new QPushButton(this);
 		CGloble::SetButtonStyle(btn,":/PayCount_QT/pic/edit.png",3);
@@ -171,7 +169,7 @@ void CStaffMngDlg::SetListCtrlValue()
 		hLayout->setAlignment(widget, Qt::AlignCenter);
 		hLayout->setContentsMargins(10, 0, 20, 0);
 		widget->setLayout(hLayout);
-		ui.tableWidget->setCellWidget(i,8,widget);
+		ui.tableWidget->setCellWidget(i,7,widget);
 		n++;
 	}
 
@@ -209,14 +207,12 @@ void CStaffMngDlg::resizeEvent(QResizeEvent *event)
 	int w = ui.tableWidget->width();
 	for (int i=0;i<LISTCOLUMN;i++)
 	{
-		if(i==0|| i==2 || i==3)
+		if(i==0|| i==2)
 			ui.tableWidget->setColumnWidth(i,40);
-		else if(i==6)
-			ui.tableWidget->setColumnWidth(i,75);
-		else if(i==8)
-			ui.tableWidget->setColumnWidth(i,75);
+		else if (i == 7)
+			ui.tableWidget->setColumnWidth(i, 75);
 		else
-			ui.tableWidget->setColumnWidth(i,(w-75*2-40*3)/(LISTCOLUMN-5));
+			ui.tableWidget->setColumnWidth(i,(w - 40*2 - 90)/(LISTCOLUMN-3));
 	}
 }
 
@@ -260,7 +256,6 @@ void CStaffMngDlg::GetStaff(Json::Value root)
 				stu.strname=CH(cstr);
 				const char* cstr2 = js[i][CMD_STAFFMSG[EM_STAFF_MSG_SEX]].asCString();
 				stu.strSex=CH(cstr2);
-				stu.age = js[i][CMD_STAFFMSG[EM_STAFF_MSG_AGE]].asInt();
 				stu.strStaffID = js[i][CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]].asCString();
 				stu.strIdCard = js[i][CMD_STAFFMSG[EM_STAFF_MSG_IDCARD]].asCString();
 				stu.strInTime = js[i][CMD_STAFFMSG[EM_STAFF_MSG_INTIME]].asCString();
@@ -350,4 +345,15 @@ void CStaffMngDlg::BtnNext()
 		m_dex++;
 		SendToGetStaff(m_strKeyWord,(m_dex-1)*20,20);
 	}
+}
+
+
+void CStaffMngDlg::st_doubleClicked(int row, int column)
+{
+	QString strStaffID = ui.tableWidget->item(row, 1)->data(1).toString();
+	CAddStaffDlg dlg(this, false, row);
+	int nType = dlg.exec();
+	g_Globle.SetCallback(StaffMngCallback, this);
+	if (nType == QDialog::Accepted)
+		BtnFind();
 }

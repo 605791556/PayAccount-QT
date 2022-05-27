@@ -36,6 +36,7 @@ void CProMngDlg::st_CalBak(void* pdata)
 			{
 				GetProject(root);
 			}
+			SetCtrlVisible(true);
 		}
 		break;
 	case SOCK_CMD_DEL_PROJECT:
@@ -44,7 +45,8 @@ void CProMngDlg::st_CalBak(void* pdata)
 				QMessageBox::information(this, CH("错误"), CH("删除失败！"));
 			else
 			{
-				SendToGetProject();
+				if (SendToGetProject())
+					SetCtrlVisible(false);
 				QMessageBox::information(this, CH("提示"), CH("删除成功！"));
 			}
 		}
@@ -55,8 +57,8 @@ void CProMngDlg::st_CalBak(void* pdata)
 				QMessageBox::information(this, CH("错误"), CH("保存排列顺序失败！"));
 			else
 			{
-				SendToGetProject();
-				QMessageBox::information(this, CH("提示"), CH("保存排列顺序成功！"));
+				if (SendToGetProject())
+					SetCtrlVisible(false);
 			}
 		}
 		break;
@@ -75,7 +77,8 @@ CProMngDlg::CProMngDlg(QWidget *parent)
 	connect(ui.BTN_SAVE_DEX,SIGNAL(clicked()),this,SLOT(BtnSaveDex()));
 	g_Globle.SetCallback(ProMngCallback,this);
 	InitListCtrl();
-	SendToGetProject();
+	if(SendToGetProject())
+		SetCtrlVisible(false);
 }
 
 CProMngDlg::~CProMngDlg()
@@ -114,6 +117,20 @@ void CProMngDlg::InitListCtrl()
 	ui.tableWidget->setHorizontalHeaderLabels(headers);
 
 	ui.tableWidget->setColumnWidth(5,75);
+
+	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
+	ui.label_load->setMovie(m_pMovie);
+	ui.label_load->setVisible(false);
+}
+
+void CProMngDlg::SetCtrlVisible(bool bLoadOk)
+{
+	ui.tableWidget->setVisible(bLoadOk);
+	ui.label_load->setVisible(!bLoadOk);
+	if (bLoadOk)
+		m_pMovie->stop();
+	else
+		m_pMovie->start();
 }
 
 void CProMngDlg::SetListValue()
@@ -182,7 +199,7 @@ void CProMngDlg::resizeEvent(QResizeEvent *event)
 	}
 }
 
-void CProMngDlg::SendToGetProject()
+bool CProMngDlg::SendToGetProject()
 {
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_PROJECT;
@@ -192,7 +209,9 @@ void CProMngDlg::SendToGetProject()
 	if(g_Globle.SendTo(temp) != 0)
 	{
 		QMessageBox::information(this, CH("提示"), CH("发送网络请求失败，请检查网络是否正常！"));
+		return false;
 	}
+	return true;
 }
 
 void CProMngDlg::GetProject(Json::Value root)
@@ -288,7 +307,8 @@ void CProMngDlg::st_BtnEdit()
 	g_Globle.SetCallback(ProMngCallback,this);
 	if (ret == QDialog::Accepted)
 	{
-		SendToGetProject();
+		if (SendToGetProject())
+			SetCtrlVisible(false);
 	}
 
 }
@@ -358,6 +378,7 @@ void CProMngDlg::BtnAdd()
 	g_Globle.SetCallback(ProMngCallback,this);
 	if (ret == QDialog::Accepted)
 	{
-		SendToGetProject();
+		if (SendToGetProject())
+			SetCtrlVisible(false);
 	}
 }

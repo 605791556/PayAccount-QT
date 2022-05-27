@@ -1,4 +1,5 @@
 #include "CTabMonthDlg.h"
+#include <QCompleter>
 
 CTabMonthDlg* gTabMonthDlg = NULL;
 
@@ -20,7 +21,8 @@ void MonthCheckCallback(void* p,string strData)
 
 void CTabMonthDlg::st_CalBak(void* pdata)
 {
-	QtConcurrent::run(CalBakThread,pdata);
+	//QtConcurrent::run(CalBakThread,pdata);
+	CalBakThread(pdata);
 }
 
 void CalBakThread(void* pdata)
@@ -205,6 +207,10 @@ void CTabMonthDlg::InitListCtrl()
 		ui.tableView->setModel(m_pViewModel);
 	}
 
+	QCompleter* completer = new QCompleter(this);
+	completer->setFilterMode(Qt::MatchContains);
+	ui.EDIT_KEYWORD->setCompleter(completer);
+
 	QString strYear, strMonth,strDate;
 	strYear = ui.CB_YEAR->currentText();
 	strMonth = ui.CB_MONTH->currentText();
@@ -301,12 +307,15 @@ void CTabMonthDlg::GetStaff(Json::Value root)
 		Json:: Value js = root[CMD_RetType[EM_CMD_RETYPE_VALUE]];
 		if (js.isArray())
 		{
+			QStringList list_name;
 			int nCount = js.size();
 			for (int i=0;i<nCount;i++)
 			{
 				STAFF_STU stu;
-				stu.strname = js[i][CMD_STAFFMSG[EM_STAFF_MSG_NAME]].asCString();
+				const char* cstr = js[i][CMD_STAFFMSG[EM_STAFF_MSG_NAME]].asCString();
+				stu.strname = CH(cstr);
 				stu.strStaffID = js[i][CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]].asCString();
+				list_name.append(stu.strname);
 				m_vet.push_back(stu);
 
 				MONTH_PAY_STAFF staff;
@@ -314,6 +323,13 @@ void CTabMonthDlg::GetStaff(Json::Value root)
 				staff.strStaffName =CH(str.data());
 				staff.strStaffID = js[i][CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]].asCString();
 				m_vStaffs.push_back(staff);
+			}
+			QCompleter* cmplter = ui.EDIT_KEYWORD->completer();
+			if (cmplter)
+			{
+				QStringListModel* list_model = new QStringListModel(this);
+				list_model->setStringList(list_name);
+				cmplter->setModel(list_model);
 			}
 		}
 	}

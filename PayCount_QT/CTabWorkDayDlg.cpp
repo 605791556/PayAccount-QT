@@ -1,5 +1,6 @@
 #include "CTabWorkDayDlg.h"
 #include "CDayPayDlg.h"
+#include <QCompleter>
 
 void WorkCalCallback(void* p,string strData)
 {
@@ -35,7 +36,8 @@ void CTabWorkDayDlg::st_CalBak(void* pdata)
 			else
 			{
 				GetStaff(root);
-				SendToGetOnePayList();
+				if (SendToGetOnePayList())
+					SetCtrlVisible(false);
 			}
 		}
 		break;
@@ -48,6 +50,7 @@ void CTabWorkDayDlg::st_CalBak(void* pdata)
 				GetOnePayList(root);
 				SetListValue();
 			}
+			SetCtrlVisible(true);
 		}
 		break;
 	}
@@ -72,6 +75,13 @@ CTabWorkDayDlg::CTabWorkDayDlg(QWidget *parent)
 	InitListCtrl();
 
 	ui.label_2->setStyleSheet("color:red;");
+	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
+	ui.label_load->setMovie(m_pMovie);
+	ui.label_load->setVisible(false);
+
+	QCompleter* completer = new QCompleter(this);
+	completer->setFilterMode(Qt::MatchContains);
+	ui.edit_keyword->setCompleter(completer);
 }
 
 CTabWorkDayDlg::~CTabWorkDayDlg()
@@ -80,6 +90,17 @@ CTabWorkDayDlg::~CTabWorkDayDlg()
 	{
 		delete m_pViewModel;
 	}
+}
+
+void CTabWorkDayDlg::SetCtrlVisible(bool bLoadOk)
+{
+	ui.tableView->setVisible(bLoadOk);
+	ui.BTN_UPDATE->setEnabled(bLoadOk);
+	ui.label_load->setVisible(!bLoadOk);
+	if (bLoadOk)
+		m_pMovie->stop();
+	else
+		m_pMovie->start();
 }
 
 void CTabWorkDayDlg::pageIn()
@@ -211,7 +232,8 @@ void CTabWorkDayDlg::st_DateChanged(const QDate &date)
 	if(!m_bDateInit)
 		return;
 	g_Globle.SetCallback(WorkCalCallback,this);
-	SendToGetOnePayList();
+	if (SendToGetOnePayList())
+		SetCtrlVisible(false);
 }
 
 void CTabWorkDayDlg::st_KeyWordChanged(const QString & strKeyWord)
@@ -223,20 +245,29 @@ void CTabWorkDayDlg::st_KeyWordChanged(const QString & strKeyWord)
 		for (int i=0;i<nCount;i++)
 		{
 			int nFind = m_vet[i].strname.indexOf(strKeyWord);
-			if (nFind>=0)
+			if (nFind >= 0)
 			{
 				m_vItem.push_back(i);
+				ui.tableView->setRowHidden(i, false);
 			}
+			else
+				ui.tableView->setRowHidden(i,true);
 		}
 	}
+	else
+	{
+		int nRows = m_pViewModel->rowCount();
+		for (int i = 0; i < nRows; i++)
+			ui.tableView->setRowHidden(i, false);
+	}
+	
+	//int nRows = m_pViewModel->rowCount();
+	//for (int i=0;i<nRows;i++)
+	//	m_pViewModel->item(i, 0)->setBackground(QBrush(QColor("#eeefd7")));//默认色
 
-	int nRows = m_pViewModel->rowCount();
-	for (int i=0;i<nRows;i++)
-		m_pViewModel->item(i, 0)->setBackground(QBrush(QColor("#eeefd7")));//默认色
-
-	int nrow = m_vItem.size();
-	for (int i=0;i<nrow;i++)
-		m_pViewModel->item(m_vItem[i], 0)->setBackground(QBrush(QColor(99, 184, 255)));//关键色 
+	//int nrow = m_vItem.size();
+	//for (int i=0;i<nrow;i++)
+	//	m_pViewModel->item(m_vItem[i], 0)->setBackground(QBrush(QColor(99, 184, 255)));//关键色 
 }
 
 void CTabWorkDayDlg::st_RowDoubleClicked(const QModelIndex & mdIndex)
@@ -246,7 +277,8 @@ void CTabWorkDayDlg::st_RowDoubleClicked(const QModelIndex & mdIndex)
 	g_Globle.SetCallback(WorkCalCallback,this);
 	if (ret == QDialog::Accepted)
 	{
-		SendToGetOnePayList();
+		if (SendToGetOnePayList())
+			SetCtrlVisible(false);
 	}
 }
 
@@ -273,6 +305,7 @@ void CTabWorkDayDlg::GetStaff(Json::Value root)
 		Json:: Value js = root[CMD_RetType[EM_CMD_RETYPE_VALUE]];
 		if (js.isArray())
 		{
+			QStringList list_name;
 			int nCount = js.size();
 			for (int i=0;i<nCount;i++)
 			{
@@ -282,17 +315,25 @@ void CTabWorkDayDlg::GetStaff(Json::Value root)
 				stu.strname = CH(str.data());
 				stu.strStaffID = js[i][CMD_STAFFMSG[EM_STAFF_MSG_STAFFID]].asCString();
 				stu.fDaypay = js[i][CMD_STAFFMSG[EM_STAFF_MSG_DAYPAY]].asDouble();
+				list_name.append(stu.strname);
 				m_vet.push_back(stu);
+			}
+			QCompleter* cmplter = ui.edit_keyword->completer();
+			if (cmplter)
+			{
+				QStringListModel* list_model = new QStringListModel(this);
+				list_model->setStringList(list_name);
+				cmplter->setModel(list_model);
 			}
 		}
 	}
 }
 
-void CTabWorkDayDlg::SendToGetOnePayList()
+bool CTabWorkDayDlg::SendToGetOnePayList()
 {
 	USES_CONVERSION;
 	if(!m_pViewModel)
-		return;
+		return false;
 
 	//先清空数据
 	m_pViewModel->removeRows(0,m_pViewModel->rowCount());//清空
@@ -301,22 +342,27 @@ void CTabWorkDayDlg::SendToGetOnePayList()
 	QString strDate = date.toString("yyyy/MM/dd");
 
 	int nSize = m_vet.size();
-	if (nSize>0)
+	if (nSize > 0)
 	{
 		Json::Value root;
-		root[CONNECT_CMD]=SOCK_CMD_GET_DAYPAY_LIST;
-		root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]]=strDate.toStdString();
-		for (int i = 0; i < nSize;i++)
+		root[CONNECT_CMD] = SOCK_CMD_GET_DAYPAY_LIST;
+		root[CMD_GETDAYPAY[EM_GET_DAYPAY_DATE]] = strDate.toStdString();
+		for (int i = 0; i < nSize; i++)
 		{
 			Json::Value one1;
-			one1[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]]=m_vet[i].strStaffID.toStdString();
-			one1[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFNAME]]=T2A(m_vet[i].str2);
+			one1[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFID]] = m_vet[i].strStaffID.toStdString();
+			one1[CMD_GETDAYPAY[EM_GET_DAYPAY_STAFFNAME]] = T2A(m_vet[i].str2);
 			root[CMD_RetType[EM_CMD_RETYPE_VALUE]].append(one1);
 		}
-		Json::FastWriter writer;  
+		Json::FastWriter writer;
 		string temp = writer.write(root);
-		g_Globle.SendTo(temp);
+		if (g_Globle.SendTo(temp) != 0)
+			return false;
+		else
+			return true;
 	}
+	else
+		return false;
 }
 
 void CTabWorkDayDlg::GetOnePayList(Json::Value root)
