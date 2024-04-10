@@ -54,6 +54,7 @@ enum USER_TYPE
 	TYPE_COMMON,//普通用户
 	TYPE_MNG,//管理员
 	TYPE_SUPER,//超级管理员
+	TYPE_ONLY_BK,//图书管理员
 	TYPE_MAX
 };
 extern QString TypeName[];

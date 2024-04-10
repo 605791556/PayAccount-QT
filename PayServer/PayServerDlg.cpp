@@ -1084,7 +1084,8 @@ int CPayServerDlg::SendTo(CONNID clientID, Json::Value js)
 	header.seq = ++SEQ;
 	header.body_len = body_len;
 
-	TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
+	TPkgBody* pBody = new TPkgBody[body_len];
+	//TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
 	memset(pBody, 0, body_len);
 	strcpy(pBody->desc, desc);
 
@@ -1100,6 +1101,7 @@ int CPayServerDlg::SendTo(CONNID clientID, Json::Value js)
 		str.Format("send error,conid:%d, err:%d",clientID,::SYS_GetLastError());
 		AddString(str);	
 	}
+	delete[] pBody;
 	return 0;
 }
 

@@ -8,7 +8,7 @@
 
 CGloble g_Globle;
 
-QString TypeName[] = {  CH("普通用户"),  CH("管理员"),  CH("超级管理员") };
+QString TypeName[] = {  CH("普通用户"),  CH("管理员"),  CH("超级管理员"),  CH("书籍录入员") };
 QString BookType[] = { CH("全开"), CH("对开")};
 QString StaffType[] = {  CH("工人"),  CH("师傅") ,  CH("师傅+工人")};
 QString ZyType[] = { CH("全开四折页"), CH("四折页"), CH("大三折页"), CH("三折页"), CH("二折页")};
@@ -255,8 +255,9 @@ bool CGloble::ConnectSer()
 	
 	const ushort* str = m_strIP.utf16();
 	const wchar_t* p = (const wchar_t*)str;
-	//BOOL bRet = m_Client->Start(p, m_nPort, m_bAsyncConn);
-	//BOOL bRet = m_Client->Start((LPCTSTR)m_strIP.toStdString().c_str(), m_nPort, m_bAsyncConn);
+
+	m_strIP = "127.0.0.1";
+	m_nPort = 48467;
 
 	std::string ip = parseIp(m_strIP.toStdString().c_str());
 	BOOL bRet = m_Client->Start((LPCTSTR)ip.c_str(), m_nPort, m_bAsyncConn);
@@ -365,7 +366,8 @@ int CGloble::SendTo(string strData)
 	header.em_LinkType = LINK_TYPE_CLIENT;
 	header.body_len = body_len;
 
-	TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
+	//TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
+	TPkgBody* pBody = new TPkgBody[body_len];
 	memset(pBody, 0, body_len);
 	strcpy(pBody->desc, desc);
 
@@ -375,10 +377,14 @@ int CGloble::SendTo(string strData)
 	bufs[1].len = body_len;
 	bufs[1].buf = (char*)pBody;
 
-	if(m_Client->SendPackets(bufs, 2))
+	if (m_Client->SendPackets(bufs, 2))
+	{
+		delete[] pBody;
 		return 0;
+	}
 	else
 	{
+		delete[] pBody;
 		int err = ::SYS_GetLastError();
 		Log("send error：%d",err);
 		return  err;
