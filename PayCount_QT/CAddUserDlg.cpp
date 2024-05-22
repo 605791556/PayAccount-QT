@@ -94,11 +94,14 @@ void CAddUserDlg::SendToAddUser()
 
 	bool nCk = ui.RDO_COMMON->isChecked();//普通用户
 	bool nCk2 = ui.RDO_MANAGE->isChecked();//管理员
+	bool nCk3 = ui.RDO_BKADD->isChecked();//图书录入员
 
 	if(nCk)
 		type = TYPE_COMMON;
 	else if(nCk2)
 		type = TYPE_MNG;
+	else if (nCk3)
+		type = TYPE_ONLY_BK;
 
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_ADD_USER;
@@ -118,6 +121,7 @@ void CAddUserDlg::st_BtnAdd()
 
 	bool nCk = ui.RDO_COMMON->isChecked();//普通用户
 	bool nCk2 = ui.RDO_MANAGE->isChecked();//管理员
+	bool nCk3 = ui.RDO_BKADD->isChecked();//图书录入员
 
 	if (strName.isEmpty())
 	{
@@ -139,7 +143,7 @@ void CAddUserDlg::st_BtnAdd()
 		QMessageBox::information(this, CH("提示"), CH("密码不一致！"));
 		return;
 	}
-	else if (!nCk && !nCk2)
+	else if (!nCk && !nCk2 && !nCk3)
 	{
 		QMessageBox::information(this, CH("提示"), CH("请选择用户权限！"));
 		return;

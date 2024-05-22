@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 #define CMD_CHAR_MAX 256
 #define CONNECT_CMD "cmd"
@@ -423,6 +424,8 @@ enum EM_DETAIL_MSG
 	EM_DETAIL_MSG_NAME,
 	EM_DETAIL_MSG_IDCARD,
 	EM_DETAIL_MSG_NUMBER,
+	EM_DETAIL_MSG_MONEY,
+	EM_DETAIL_MSG_DATE,
 	EM_DETAIL_MSG_MAX
 };
 extern const char CMD_DETAILMSG[EM_DETAIL_MSG_MAX][CMD_CHAR_MAX];
@@ -519,3 +522,10 @@ enum EM_HEART
 	EM_HEART_MAX
 };
 extern const char HEARTMSG[EM_HEART_MAX][CMD_CHAR_MAX];
+
+class CommonFun
+{
+public:
+	static std::string compress_string(const std::string& str);
+	static std::string decompress_string(const std::string& str);
+};

@@ -727,7 +727,7 @@ void CDayPayDlg::SendToSaveDayPay()
 void CDayPayDlg::GetDPay(Json::Value root)
 {
 	m_fDaypay = root[CMD_STAFFMSG[EM_STAFF_MSG_DAYPAY]].asDouble();
-	QString str = QString::number(m_fDaypay,'f',4);
+	QString str = QString::number(m_fDaypay,'f',2);
 	ui.edit_payday->setText(str);
 }
 

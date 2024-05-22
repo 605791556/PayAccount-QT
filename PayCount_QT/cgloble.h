@@ -172,7 +172,17 @@ struct STU_DETAIL
 {
 	QString strName;
 	QString stridCard;
+	QString strDate;
 	int number;
+	STU_DETAIL() {}
+	STU_DETAIL(QString name, QString id, QString date, int num):
+		strName(name),
+		stridCard(id),
+		strDate(date),
+		number(num)
+	{
+
+	}
 };
 
 struct WOCKCAL
@@ -397,10 +407,10 @@ public:
 	QVariant GetIniValue(QString qstrnodename,QString qstrkeyname);
 	bool ConnectSer();
 	void SetCallback(FUN_CALLBACK callback,void* param);
-	int SendTo(string strData);
+	int SendTo(const string& strData);
 	string GetLogFileName();
 	string GetAppDataPath();
-	void DoRun(string strData);
+	void DoRun(const string& strData);
 	int GetDays(int year,int month);
 	string parseIp(const char* adress);
 public:

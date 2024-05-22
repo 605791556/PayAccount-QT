@@ -60,6 +60,7 @@ public:
     {
         if (CBookMngDlg->objectName().isEmpty())
             CBookMngDlg->setObjectName(QStringLiteral("CBookMngDlg"));
+        CBookMngDlg->setWindowModality(Qt::NonModal);
         CBookMngDlg->resize(1101, 628);
         verticalLayout = new QVBoxLayout(CBookMngDlg);
         verticalLayout->setSpacing(6);

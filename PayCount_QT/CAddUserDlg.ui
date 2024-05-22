@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>288</width>
+    <width>433</width>
     <height>282</height>
    </rect>
   </property>
@@ -102,7 +102,7 @@
     <rect>
      <x>90</x>
      <y>18</y>
-     <width>161</width>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
@@ -117,7 +117,7 @@
     <rect>
      <x>90</x>
      <y>58</y>
-     <width>161</width>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
@@ -125,6 +125,9 @@
     <font>
      <pointsize>11</pointsize>
     </font>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QLineEdit" name="EDIT_PWD2">
@@ -132,7 +135,7 @@
     <rect>
      <x>90</x>
      <y>100</y>
-     <width>161</width>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
@@ -140,6 +143,9 @@
     <font>
      <pointsize>11</pointsize>
     </font>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
    </property>
   </widget>
   <widget class="QRadioButton" name="RDO_COMMON">
@@ -181,7 +187,7 @@
   <widget class="QPushButton" name="BTN_ADD">
    <property name="geometry">
     <rect>
-     <x>110</x>
+     <x>160</x>
      <y>180</y>
      <width>81</width>
      <height>31</height>
@@ -211,7 +217,25 @@
     </font>
    </property>
    <property name="text">
-    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;提示：普通用户只能录入进度，而管理员则具有&lt;/p&gt;&lt;p&gt;修改数据的权限，请注意权限分配。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;提示：普通用户只能录入进度，而管理员则具有修改数据的权限，&lt;/p&gt;&lt;p&gt;请注意权限分配。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QRadioButton" name="RDO_BKADD">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>135</y>
+     <width>111</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>图书录入员</string>
    </property>
   </widget>
  </widget>

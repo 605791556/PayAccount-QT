@@ -1,4 +1,5 @@
 #include "cgloble.h"
+#include "Base64.h"
 
 #ifdef WIN32
 #include <windows.h>
@@ -8,7 +9,7 @@
 
 CGloble g_Globle;
 
-QString TypeName[] = {  CH("普通用户"),  CH("管理员"),  CH("超级管理员"),  CH("书籍录入员") };
+QString TypeName[] = {  CH("普通用户"),  CH("管理员"),  CH("超级管理员"),  CH("图书录入员") };
 QString BookType[] = { CH("全开"), CH("对开")};
 QString StaffType[] = {  CH("工人"),  CH("师傅") ,  CH("师傅+工人")};
 QString ZyType[] = { CH("全开四折页"), CH("四折页"), CH("大三折页"), CH("三折页"), CH("二折页")};
@@ -164,13 +165,16 @@ QVariant CGloble::GetIniValue(QString qstrnodename,QString qstrkeyname)
 	return qvar;
 }
 
-void CGloble::DoRun(string strData)
+void CGloble::DoRun(const string& strData)
 {
 	try
 	{
 		if (m_pCallBack && m_pHand)
 		{
-			m_pCallBack(m_pHand,strData);
+			int out_len = 0;
+			std::string img_decode_data = ZBase64::Decode(strData.c_str(), strData.length(), out_len);
+			string data = CommonFun::decompress_string(img_decode_data);
+			m_pCallBack(m_pHand, data);
 		}
 	}
 	catch (...)
@@ -210,8 +214,8 @@ EnHandleResult CGloble::OnReceive(ITcpClient* pSender, CONNID dwConnID, int iLen
 			}
 			else
 			{
-				TPkgBody* pBody = (TPkgBody*)buffer.Ptr();
-				DoRun(pBody->desc);
+				string zipData = (char*)buffer.Ptr();
+				DoRun(zipData);
 
 				required = sizeof(TPkgHeader);
 			}
@@ -255,9 +259,8 @@ bool CGloble::ConnectSer()
 	
 	const ushort* str = m_strIP.utf16();
 	const wchar_t* p = (const wchar_t*)str;
-
-	m_strIP = "127.0.0.1";
-	m_nPort = 48467;
+	//BOOL bRet = m_Client->Start(p, m_nPort, m_bAsyncConn);
+	//BOOL bRet = m_Client->Start((LPCTSTR)m_strIP.toStdString().c_str(), m_nPort, m_bAsyncConn);
 
 	std::string ip = parseIp(m_strIP.toStdString().c_str());
 	BOOL bRet = m_Client->Start((LPCTSTR)ip.c_str(), m_nPort, m_bAsyncConn);
@@ -354,37 +357,32 @@ void Log(char* fmt, ...)
 	va_end(args);
 }
 
-int CGloble::SendTo(string strData)
+int nx = 0;
+int mx = 0;
+int CGloble::SendTo(const string& strData)
 {
+	string zip_data = CommonFun::compress_string(strData);
+	std::string str_encode_64 = ZBase64::Encode((unsigned char*)zip_data.c_str(), zip_data.size());
+
 	static DWORD SEQ = 0;//流水号
-	LPCSTR desc = strData.c_str();
-	int desc_len = (int)strlen(desc) + 1;
-	int body_len = offsetof(TPkgBody, desc) + desc_len;
+
+	int body_len = str_encode_64.length();
 
 	TPkgHeader header;
 	header.seq = ++SEQ;
 	header.em_LinkType = LINK_TYPE_CLIENT;
 	header.body_len = body_len;
 
-	//TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
-	TPkgBody* pBody = new TPkgBody[body_len];
-	memset(pBody, 0, body_len);
-	strcpy(pBody->desc, desc);
-
 	WSABUF bufs[2];
 	bufs[0].len = sizeof(TPkgHeader);
 	bufs[0].buf = (char*)&header;
 	bufs[1].len = body_len;
-	bufs[1].buf = (char*)pBody;
+	bufs[1].buf = (char*)str_encode_64.c_str();
 
-	if (m_Client->SendPackets(bufs, 2))
-	{
-		delete[] pBody;
+	if(m_Client->SendPackets(bufs, 2))
 		return 0;
-	}
 	else
 	{
-		delete[] pBody;
 		int err = ::SYS_GetLastError();
 		Log("send error：%d",err);
 		return  err;

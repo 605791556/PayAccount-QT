@@ -221,7 +221,7 @@ void CTabWorkDayDlg::SetListValue()
 		m_pViewModel->item(i, 0)->setBackground(QBrush(QColor("#eeefd7")));
 	}
 
-	str = CH("总计：")+QString::number(all_money,'f',4);
+	str = CH("总计：")+QString::number(all_money,'f',2);
 	ui.label_total->setText(str);
 
 	ui.tableView->setUpdatesEnabled(true);  //恢复界面刷新

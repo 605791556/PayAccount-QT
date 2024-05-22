@@ -36,12 +36,13 @@ public:
     QRadioButton *RDO_MANAGE;
     QPushButton *BTN_ADD;
     QLabel *label_5;
+    QRadioButton *RDO_BKADD;
 
     void setupUi(QDialog *CAddUserDlg)
     {
         if (CAddUserDlg->objectName().isEmpty())
             CAddUserDlg->setObjectName(QStringLiteral("CAddUserDlg"));
-        CAddUserDlg->resize(288, 282);
+        CAddUserDlg->resize(433, 282);
         label = new QLabel(CAddUserDlg);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(13, 20, 71, 20));
@@ -66,16 +67,18 @@ public:
         label_4->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         EDIT_USER = new QLineEdit(CAddUserDlg);
         EDIT_USER->setObjectName(QStringLiteral("EDIT_USER"));
-        EDIT_USER->setGeometry(QRect(90, 18, 161, 20));
+        EDIT_USER->setGeometry(QRect(90, 18, 271, 20));
         EDIT_USER->setFont(font);
         EDIT_PWD = new QLineEdit(CAddUserDlg);
         EDIT_PWD->setObjectName(QStringLiteral("EDIT_PWD"));
-        EDIT_PWD->setGeometry(QRect(90, 58, 161, 20));
+        EDIT_PWD->setGeometry(QRect(90, 58, 271, 20));
         EDIT_PWD->setFont(font);
+        EDIT_PWD->setEchoMode(QLineEdit::Password);
         EDIT_PWD2 = new QLineEdit(CAddUserDlg);
         EDIT_PWD2->setObjectName(QStringLiteral("EDIT_PWD2"));
-        EDIT_PWD2->setGeometry(QRect(90, 100, 161, 20));
+        EDIT_PWD2->setGeometry(QRect(90, 100, 271, 20));
         EDIT_PWD2->setFont(font);
+        EDIT_PWD2->setEchoMode(QLineEdit::Password);
         RDO_COMMON = new QRadioButton(CAddUserDlg);
         RDO_COMMON->setObjectName(QStringLiteral("RDO_COMMON"));
         RDO_COMMON->setGeometry(QRect(98, 135, 81, 20));
@@ -86,7 +89,7 @@ public:
         RDO_MANAGE->setFont(font);
         BTN_ADD = new QPushButton(CAddUserDlg);
         BTN_ADD->setObjectName(QStringLiteral("BTN_ADD"));
-        BTN_ADD->setGeometry(QRect(110, 180, 81, 31));
+        BTN_ADD->setGeometry(QRect(160, 180, 81, 31));
         BTN_ADD->setFont(font);
         label_5 = new QLabel(CAddUserDlg);
         label_5->setObjectName(QStringLiteral("label_5"));
@@ -94,6 +97,10 @@ public:
         QFont font1;
         font1.setPointSize(9);
         label_5->setFont(font1);
+        RDO_BKADD = new QRadioButton(CAddUserDlg);
+        RDO_BKADD->setObjectName(QStringLiteral("RDO_BKADD"));
+        RDO_BKADD->setGeometry(QRect(300, 135, 111, 20));
+        RDO_BKADD->setFont(font);
 
         retranslateUi(CAddUserDlg);
 
@@ -110,7 +117,8 @@ public:
         RDO_COMMON->setText(QApplication::translate("CAddUserDlg", "\346\231\256\351\200\232\347\224\250\346\210\267", 0));
         RDO_MANAGE->setText(QApplication::translate("CAddUserDlg", "\347\256\241\347\220\206\345\221\230", 0));
         BTN_ADD->setText(QApplication::translate("CAddUserDlg", "\346\267\273\345\212\240", 0));
-        label_5->setText(QApplication::translate("CAddUserDlg", "<html><head/><body><p>\346\217\220\347\244\272\357\274\232\346\231\256\351\200\232\347\224\250\346\210\267\345\217\252\350\203\275\345\275\225\345\205\245\350\277\233\345\272\246\357\274\214\350\200\214\347\256\241\347\220\206\345\221\230\345\210\231\345\205\267\346\234\211</p><p>\344\277\256\346\224\271\346\225\260\346\215\256\347\232\204\346\235\203\351\231\220\357\274\214\350\257\267\346\263\250\346\204\217\346\235\203\351\231\220\345\210\206\351\205\215\343\200\202</p></body></html>", 0));
+        label_5->setText(QApplication::translate("CAddUserDlg", "<html><head/><body><p>\346\217\220\347\244\272\357\274\232\346\231\256\351\200\232\347\224\250\346\210\267\345\217\252\350\203\275\345\275\225\345\205\245\350\277\233\345\272\246\357\274\214\350\200\214\347\256\241\347\220\206\345\221\230\345\210\231\345\205\267\346\234\211\344\277\256\346\224\271\346\225\260\346\215\256\347\232\204\346\235\203\351\231\220\357\274\214</p><p>\350\257\267\346\263\250\346\204\217\346\235\203\351\231\220\345\210\206\351\205\215\343\200\202</p></body></html>", 0));
+        RDO_BKADD->setText(QApplication::translate("CAddUserDlg", "\345\233\276\344\271\246\345\275\225\345\205\245\345\221\230", 0));
     } // retranslateUi
 
 };

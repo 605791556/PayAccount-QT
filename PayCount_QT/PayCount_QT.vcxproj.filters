@@ -293,6 +293,9 @@
     <ClCompile Include="..\common\common.cpp">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\Base64.cpp">
+      <Filter>common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="paycount_qt.h">
@@ -526,6 +529,9 @@
       <Filter>helper</Filter>
     </ClInclude>
     <ClInclude Include="..\common\common.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Base64.h">
       <Filter>common</Filter>
     </ClInclude>
   </ItemGroup>

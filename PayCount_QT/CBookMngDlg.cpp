@@ -276,16 +276,15 @@ void CBookMngDlg::InitCombox()
 void CBookMngDlg::resizeEvent(QResizeEvent *event)
 {
 	int w = ui.tableWidget->width();
+	int realw = (w - 110 - 300) / (LISTCOLUMN - 2) - 1;
 	for (int i=0;i<LISTCOLUMN;i++)
 	{
-		if(i == 0 || i==1|| i==5 || i==7|| i==10||  i==14)
-			ui.tableWidget->setColumnWidth(i,40);
-		else if(i==2)
+		if(i==2)
 			ui.tableWidget->setColumnWidth(i,110);
 		else if(i==3)
 			ui.tableWidget->setColumnWidth(i,300);
-		else if(i==16)
-			ui.tableWidget->setColumnWidth(i,75);
+		else
+			ui.tableWidget->setColumnWidth(i, realw);
 	}
 }
 

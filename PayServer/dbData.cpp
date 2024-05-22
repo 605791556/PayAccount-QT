@@ -60,6 +60,7 @@ int CDbData::InitSqlite3(CString& strdbFilePath)
 	return 0;
 }
 
+
 bool CDbData::_JudgeStaff(CString strStaffName, Json::Value& root)
 {
 	USES_CONVERSION;
@@ -1076,16 +1077,35 @@ bool CDbData::GetBooks(Json::Value& root,CString strKeyWord,int rkType,EM_DATE_T
 	return true;
 }
 
-bool CDbData::GetSampleBooks(Json::Value& root,BOOK_RK rkType)
+bool CDbData::GetSampleBooks(Json::Value& root,BOOK_RK rkType, EM_DATE_TYPE dateType)
 {
 	USES_CONVERSION;
 	try
 	{
-		
-		if(rkType == BOOK_RK_MAX)
-			m_sql.Format("SELECT bookID,name FROM book WHERE del='0' ORDER BY xd_date ASC ");
+		CString strTimeBegin;
+		CString strTimeNow;
+		if (dateType != EM_DATE_TYPE_ALL)
+		{
+			CTime tm;
+			tm = CTime::GetCurrentTime();
+			strTimeNow = tm.Format("%Y/%m/%d");
+			strTimeBegin = g_Globle.ReturnBeginTime(dateType);
+		}
+
+		if (rkType == BOOK_RK_MAX)
+		{
+			if (dateType == EM_DATE_TYPE_ALL)
+				m_sql.Format("SELECT bookID,name FROM book WHERE del='0' ORDER BY xd_date ASC ");
+			else
+				m_sql.Format("SELECT bookID,name FROM book WHERE del='0' AND (xd_date BETWEEN '%s' AND  '%s') ORDER BY xd_date ASC ", strTimeBegin, strTimeNow);
+		}
 		else
-			m_sql.Format("SELECT bookID,name FROM book WHERE book.rk_type='%d' AND del='0' ORDER BY xd_date ASC ",rkType);
+		{
+			if (dateType == EM_DATE_TYPE_ALL)
+				m_sql.Format("SELECT bookID,name FROM book WHERE book.rk_type='%d' AND del='0' ORDER BY xd_date ASC ", rkType);
+			else
+				m_sql.Format("SELECT bookID,name FROM book WHERE book.rk_type='%d' AND del='0' AND (xd_date BETWEEN '%s' AND  '%s') ORDER BY xd_date ASC", rkType, strTimeBegin, strTimeNow);
+		}
 
 		sqlite3_stmt *stmt = NULL;//Óï¾ä¾ä±ú
 		int result = sqlite3_prepare_v2(m_sqlite, m_sql, -1, &stmt, NULL);
@@ -2872,7 +2892,7 @@ bool CDbData::_GetDetails(Json::Value& root,vector<PROJECT_STU> vProIDs,CString 
 		}
 #else
 		sqlite3_exec(m_sqlite, "begin transaction", 0, 0, NULL);
-		m_sql.Format("SELECT staff.name,staff.staffID,day_pay.number FROM day_pay,staff WHERE day_pay.proID=? AND day_pay.bookID=? AND day_pay.staffID = staff.staffID");
+		m_sql.Format("SELECT staff.name,staff.staffID,day_pay.number,day_pay.money,day_pay.date FROM day_pay,staff WHERE day_pay.proID=? AND day_pay.bookID=? AND day_pay.staffID = staff.staffID");
 		result = sqlite3_prepare_v2(m_sqlite, m_sql, -1, &stmt, NULL);
 
 		for (int i=0;i<num && result== SQLITE_OK;i++)
@@ -2891,7 +2911,10 @@ bool CDbData::_GetDetails(Json::Value& root,vector<PROJECT_STU> vProIDs,CString 
 				const char* tmp = (char*)sqlite3_column_text(stmt, 0);
 				one2[CMD_DETAILMSG[EM_DETAIL_MSG_NAME]] = g_Globle.UTF8ToEncode(tmp);
 				one2[CMD_DETAILMSG[EM_DETAIL_MSG_IDCARD]] = (char*)sqlite3_column_text(stmt, 1);
+				int number = sqlite3_column_int(stmt, 2);
 				one2[CMD_DETAILMSG[EM_DETAIL_MSG_NUMBER]] = sqlite3_column_int(stmt, 2);
+				one2[CMD_DETAILMSG[EM_DETAIL_MSG_MONEY]] = sqlite3_column_double(stmt, 3);
+				one2[CMD_DETAILMSG[EM_DETAIL_MSG_DATE]] = (char*)sqlite3_column_text(stmt, 4);
 				one1[CMD_RetType[EM_CMD_RETYPE_VALUE]].append(one2);
 			}
 			root[CMD_RetType[EM_CMD_RETYPE_VALUE]].append(one1);

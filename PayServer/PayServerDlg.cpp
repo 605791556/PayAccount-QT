@@ -11,6 +11,7 @@
 #include <tlhelp32.h>
 #include <shlwapi.h>
 #include <DbgHelp.h>
+#include "..\common\Base64.h"
 
 #pragma comment(lib, "Dbghelp.lib")
 #pragma comment(lib,"Shlwapi.lib")
@@ -447,9 +448,6 @@ void CPayServerDlg::DoRun(string strData,Json::Value& js,TPkgInfo* pInfo)
 		Json::Value root;
 		r.parse(strData,root);
 
-		Json::FastWriter writer;  
-		string temp = writer.write(root);
-
 		int em_dlg = root[CMD_DLG].asInt();
 		EM_SOCK_CMD cmd = (EM_SOCK_CMD)root[CONNECT_CMD].asInt();
 		js[CMD_DLG]=em_dlg;
@@ -556,7 +554,8 @@ void CPayServerDlg::DoRun(string strData,Json::Value& js,TPkgInfo* pInfo)
 		case SOCK_CMD_GET_SAMPLE_BOOK:
 			{
 				BOOK_RK rkType = (BOOK_RK)root[CMD_GETBOOK[GETBOOK_RKTYPE]].asInt();
-				bRet=theApp.m_dbData->GetSampleBooks(js,rkType);
+				EM_DATE_TYPE em_date = (EM_DATE_TYPE)root[CMD_GETBOOK[GETBOOK_DATE]].asInt();
+				bRet=theApp.m_dbData->GetSampleBooks(js,rkType, em_date);
 			}
 			break;
 		case SOCK_CMD_DEL_BOOK:
@@ -1073,27 +1072,22 @@ int CPayServerDlg::SendTo(CONNID clientID, Json::Value js)
 {
 	Json::FastWriter writer;  
 	string strData = writer.write(js);
+	string zip_data = CommonFun::compress_string(strData);
+	std::string str_encode_64 = ZBase64::Encode((unsigned char*)zip_data.c_str(), zip_data.size());
 
 	static DWORD SEQ = 0;//Á÷Ë®ºÅ
-	LPCSTR desc = strData.c_str();
-	int desc_len = (int)strlen(desc) + 1;
-	int body_len = offsetof(TPkgBody, desc) + desc_len;
+	int body_len = str_encode_64.length();
 
 	DWORD all_len = m_Server->GetSocketBufferSize();
 	TPkgHeader header;
 	header.seq = ++SEQ;
 	header.body_len = body_len;
 
-	TPkgBody* pBody = new TPkgBody[body_len];
-	//TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
-	memset(pBody, 0, body_len);
-	strcpy(pBody->desc, desc);
-
 	WSABUF bufs[2];
 	bufs[0].len = sizeof(TPkgHeader);
 	bufs[0].buf = (char*)&header;
 	bufs[1].len = body_len;
-	bufs[1].buf = (char*)pBody;
+	bufs[1].buf = (char*)str_encode_64.c_str();
 
 	if(!m_Server->SendPackets(clientID,bufs, 2))
 	{
@@ -1101,7 +1095,6 @@ int CPayServerDlg::SendTo(CONNID clientID, Json::Value js)
 		str.Format("send error,conid:%d, err:%d",clientID,::SYS_GetLastError());
 		AddString(str);	
 	}
-	delete[] pBody;
 	return 0;
 }
 
@@ -1200,9 +1193,12 @@ EnHandleResult CPayServerDlg::OnReceive(ITcpServer* pSender, CONNID dwConnID, in
 					}
 					else
 					{
-						TPkgBody* pBody = (TPkgBody*)(BYTE*)buffer;
+						int out_len;
+						char* str = (char*)buffer.Ptr();
+						std::string img_decode_data = ZBase64::Decode(str, buffer.Size(), out_len);
+						string data = CommonFun::decompress_string(img_decode_data);
 						Json::Value js;
-						g_PaySerDlg->DoRun(pBody->desc,js,pInfo);
+						g_PaySerDlg->DoRun(data,js,pInfo);
 						SendTo(dwConnID,js);
 
 						required = sizeof(TPkgHeader);

@@ -8,6 +8,7 @@
 #include "CTabWorkDayDlg.h"
 #include "CTabDetailDlg.h"
 #include "CTabProcessDlg.h"
+#include "CBookMngDlg.h"
 
 enum EM_PAGE_TYPE
 {
@@ -18,6 +19,7 @@ enum EM_PAGE_TYPE
 	EM_PAGE_MAX
 };
 
+class CBookMngDlg;
 class PayCount_QT : public QMainWindow
 {
 	Q_OBJECT
@@ -50,7 +52,10 @@ protected:
 	void mouseReleaseEvent(QMouseEvent *);
 	//双击改变窗口大小
 	void mouseDoubleClickEvent(QMouseEvent *);
+
+	void moveEvent(QMoveEvent *event);
 	void InitTabCtrl();
+	void InitHeaderBtn();
 
 signals:
 	void sg_CalBak(void* pdata);
@@ -69,6 +74,10 @@ public slots:
 	void BtnLog();
 	void BtnLock();
 	void BtnClose();
+
+private:
+	CBookMngDlg* m_pBookMng = nullptr;
+	QDialog * dlg;
 };
 
 #endif // PAYCOUNT_QT_H

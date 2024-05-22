@@ -2,14 +2,22 @@
 #define CTABDETAILDLG_H
 
 #include <QWidget>
+#include <QMap>
 #include "ui_CTabDetailDlg.h"
 #include "cgloble.h"
+
+//struct PRO_DETAIL
+//{
+//	int nProID;
+//	int ndex;//listctrl排列顺序，从0开始
+//	vector<STU_DETAIL> vDetails;
+//};
 
 struct PRO_DETAIL
 {
 	int nProID;
 	int ndex;//listctrl排列顺序，从0开始
-	vector<STU_DETAIL> vDetails;
+	QMap<QString, QMap<QString, STU_DETAIL>> vDetails;
 };
 
 class CTabDetailDlg : public QWidget
@@ -31,7 +39,9 @@ public slots:
 	void st_CalBak(void* pdata);
 	void st_rkCbxChanged(int);
 	void st_bookCbxChanged(int);
+	void st_xdTimeCbxChanged(int);
 	void st_BtnUpdate();
+	//void st_init();
 
 public:
 	void pageIn();
@@ -42,7 +52,7 @@ public:
 	void GetProject(Json::Value root);
 	void GetDetails(Json::Value root);
 	void InitListCtrl();
-	void SetListValue(QString strDate,int nYs,double fLs, int nNum,int* n,vector<PRO_DETAIL> vts);
+	void SetListValue(QString strDate,int nYs,double fLs, const vector<PRO_DETAIL>& vts,double money);
 	void SetCtrlVisible(bool bLoadOk);
 
 public:

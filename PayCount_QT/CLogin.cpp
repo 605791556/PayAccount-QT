@@ -53,6 +53,8 @@ CLogin::CLogin(QWidget *parent)
 		ui.label_msg->setText(CH("服务器连接失败！"));
 
 	m_nx = m_ny = 0;
+
+
 }
 
 CLogin::~CLogin()

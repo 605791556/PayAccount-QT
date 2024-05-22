@@ -68,14 +68,6 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	CGloble::SetButtonStyle(ui.BTN_MIN,":/PayCount_QT/pic/min.png",3);
 	CGloble::SetButtonStyle(ui.BTN_MAX,":/PayCount_QT/pic/max.png",3);
 	CGloble::SetButtonStyle(ui.BTN_CLOSE,":/PayCount_QT/pic/close.png",3);
-	if (g_Globle.m_strUserName != "admin")
-	{
-		ui.BTN_INIT->setVisible(false);
-	}
-	if (g_Globle.m_nType == TYPE_COMMON)
-	{
-		ui.BTN_ACCOUNT->setVisible(false);
-	}
 
 	setWindowFlags(Qt::FramelessWindowHint);//去掉边框
 	setAttribute(Qt::WA_TranslucentBackground);//透明
@@ -96,9 +88,9 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	connect(ui.BTN_LOCK, SIGNAL(clicked()), this, SLOT(BtnLock()));
 	connect(ui.BTN_CLOSE, SIGNAL(clicked()), this, SLOT(BtnClose()));
 
+	InitHeaderBtn();
 	//初始化tabctrl
 	InitTabCtrl();
-
 	m_nx = m_ny = 0;
 	m_bmax = true;
 
@@ -135,7 +127,7 @@ void PayCount_QT::InitTabCtrl()
 		ui.tabWidget->insertTab(EM_PAGE_JD, m_pTabProcessDlg, CH("进度"));
 		ui.tabWidget->setCurrentIndex(EM_PAGE_JD);
 	}
-	else
+	else if (g_Globle.m_nType == TYPE_MNG)
 	{
 		m_pTabDetailDlg = new CTabDetailDlg;
 		m_pTabWorkDlg = new CTabWorkDayDlg;
@@ -147,6 +139,38 @@ void PayCount_QT::InitTabCtrl()
 	}
 	ui.tabWidget->setTabShape(QTabWidget::Rounded);//设置选项卡的形状
 	m_bInitTab = true;
+}
+
+void PayCount_QT::InitHeaderBtn()
+{
+	if (g_Globle.m_nType == TYPE_SUPER)//超级管理员
+	{
+		
+	}
+	else if (g_Globle.m_nType == TYPE_MNG)//管理员
+	{
+		ui.BTN_INIT->setVisible(false);
+	}
+	else if (g_Globle.m_nType == TYPE_COMMON)//普通用户
+	{
+		ui.BTN_INIT->setVisible(false);
+		ui.BTN_ACCOUNT->setVisible(false);
+		ui.BTN_USER->setVisible(false);
+		ui.BTN_BOOK->setVisible(false);
+		ui.BTN_PRO->setVisible(false);
+		ui.BTN_PAY->setVisible(false);
+		ui.BTN_LOG->setVisible(false);
+		ui.BTN_LOCK->setVisible(false);
+	}
+	else if (g_Globle.m_nType == TYPE_ONLY_BK)//图书录入员
+	{
+		ui.BTN_INIT->setVisible(false);
+		ui.BTN_ACCOUNT->setVisible(false);
+		ui.BTN_USER->setVisible(false);
+		ui.BTN_PRO->setVisible(false);
+		ui.BTN_PAY->setVisible(false);
+		ui.BTN_LOG->setVisible(false);
+	}
 }
 
 void PayCount_QT::st_tabChanged(int index)
@@ -191,6 +215,21 @@ void PayCount_QT::resizeEvent(QResizeEvent *event)
 	ui.label_4->move(ui.label_4->x(),height-22);
 }
 
+void PayCount_QT::moveEvent(QMoveEvent *event)
+{
+	if (m_pBookMng)
+	{
+		int x = this->pos().x();
+		int y = this->pos().y();
+		int width = this->width();
+		int height = this->height();
+		m_pBookMng->setGeometry(x, y + 100, width + 2, height - 123);
+	}
+
+	// 调用基类的moveEvent以保持默认行为  
+	QMainWindow::moveEvent(event);
+}
+
 void PayCount_QT::mouseMoveEvent(QMouseEvent *event)
 {
 	if (m_nx==0 && m_ny==0)
@@ -204,6 +243,11 @@ void PayCount_QT::mouseMoveEvent(QMouseEvent *event)
 		int g_x = event->globalX();
 		int g_y = event->globalY();
 		move(g_x-m_nx,g_y-m_ny);
+
+		int width = this->width();
+		int height = this->height();
+		if (m_pBookMng)
+			m_pBookMng->setGeometry(g_x - m_nx, g_y - m_ny + 100, width + 2, height - 123);
 	}
 }
 
@@ -229,6 +273,9 @@ void PayCount_QT::mouseDoubleClickEvent(QMouseEvent *event)
 
 void PayCount_QT::BtnClose()
 {
+	if (m_pBookMng)
+		m_pBookMng->close();
+
 	m_bInitTab = false;
 	close();
 }
@@ -281,8 +328,28 @@ void PayCount_QT::BtnStaff()
 }
 void PayCount_QT::BtnBook()
 {
-	CBookMngDlg dlg;
-	dlg.exec();
+	if (g_Globle.m_nType == TYPE_ONLY_BK)
+	{
+		/*QDialog* dlg = new QDialog();
+		dlg->resize(400, 300);
+		dlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+		dlg->show();*/
+		if (m_pBookMng == nullptr)
+		{
+			m_pBookMng = new CBookMngDlg(this);
+			m_pBookMng->setWindowFlags(m_pBookMng->windowFlags() | Qt::FramelessWindowHint);
+			int width = this->width();
+			int height = this->height();
+			m_pBookMng->setGeometry(0, 100, width + 2, height - 123);
+		}
+		m_pBookMng->show();
+		//dlg->raise();
+	}
+	else
+	{
+		CBookMngDlg dlg;
+		dlg.exec();
+	}
 }
 void PayCount_QT::BtnProject()
 {

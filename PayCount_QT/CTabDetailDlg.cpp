@@ -17,7 +17,9 @@ void DetailCallback(void* p,string strData)
 
 void CTabDetailDlg::st_CalBak(void* pdata)
 {
+	string str;
 	string* pStrData = (string*)pdata;
+	str = *pStrData;
 	Json::Reader r;
 	Json::Value root;
 	r.parse(*pStrData,root);
@@ -47,8 +49,8 @@ void CTabDetailDlg::st_CalBak(void* pdata)
 			{
 				GetProject(root);
 				InitListCtrl();
-				if (SendToGetDetails())
-					SetCtrlVisible(false);
+				/*if (SendToGetDetails())
+					SetCtrlVisible(false);*/
 			}
 		}
 		break;
@@ -74,6 +76,7 @@ CTabDetailDlg::CTabDetailDlg(QWidget *parent)
 	connect(ui.BTN_UPDATE, SIGNAL(clicked()), this, SLOT(st_BtnUpdate()));
 	connect(ui.cbx_rk,SIGNAL(currentIndexChanged(int)),this,SLOT(st_rkCbxChanged(int)));
 	connect(ui.cbx_book,SIGNAL(currentIndexChanged(int)),this,SLOT(st_bookCbxChanged(int)));
+	connect(ui.cbx_xd_time, SIGNAL(currentIndexChanged(int)), this, SLOT(st_xdTimeCbxChanged(int)));
 	CGloble::SetButtonStyle(ui.BTN_UPDATE,":/PayCount_QT/pic/ok.png",3);
 
 	//初始化入库combox
@@ -82,18 +85,33 @@ CTabDetailDlg::CTabDetailDlg(QWidget *parent)
 	{
 		ui.cbx_rk->addItem(rkType[i]);
 	}
+	//初始化下单时间combox
+	for (int i = 0; i < EM_DATE_TYPE_MAX; i++)
+	{
+		ui.cbx_xd_time->addItem(DateName[i]);
+	}
+	ui.cbx_xd_time->setCurrentIndex(1);
+
 	ui.cbx_rk->setCurrentIndex(1);
 	ui.cbx_book->setMaxVisibleItems(40);
 	ui.cbx_book->setEditable(true);
 	m_pMovie = new QMovie(":/PayCount_QT/pic/load.gif");
 	ui.label_load->setMovie(m_pMovie);
 	ui.label_load->setVisible(false);
+
+	//QTimer::singleShot(1000, this, SLOT(st_init()));
 }
 
 CTabDetailDlg::~CTabDetailDlg()
 {
 	delete m_pMovie;
 }
+
+//void CTabDetailDlg::st_init()
+//{
+//	SendToGetBook();
+//	SendToGetProject();
+//}
 
 void CTabDetailDlg::pageIn()
 {
@@ -108,6 +126,10 @@ void CTabDetailDlg::SetCtrlVisible(bool bLoadOk)
 	ui.BTN_UPDATE->setEnabled(bLoadOk);
 	ui.tableWidget->setVisible(bLoadOk);
 	ui.label_load->setVisible(!bLoadOk);
+
+	ui.label_5->setVisible(bLoadOk);
+	ui.label_all_money->setVisible(bLoadOk);
+
 	if (bLoadOk)
 		m_pMovie->stop();
 	else
@@ -116,7 +138,8 @@ void CTabDetailDlg::SetCtrlVisible(bool bLoadOk)
 
 void CTabDetailDlg::st_BtnUpdate()
 {
-	pageIn();
+	if (SendToGetDetails())
+		SetCtrlVisible(false);
 }
 
 void CTabDetailDlg::st_rkCbxChanged(int ndex)
@@ -129,8 +152,13 @@ void CTabDetailDlg::st_bookCbxChanged(int ndex)
 	if(ndex>=0)
 		m_LastBookID = ui.cbx_book->itemData(ndex).value<QString>();
 
-	if (SendToGetDetails())
-		SetCtrlVisible(false);
+	/*if (SendToGetDetails())
+		SetCtrlVisible(false);*/
+}
+
+void CTabDetailDlg::st_xdTimeCbxChanged(int)
+{
+	SendToGetBook();
 }
 
 void CTabDetailDlg::SendToGetBook()
@@ -145,6 +173,7 @@ void CTabDetailDlg::SendToGetBook()
 	Json::Value root;
 	root[CONNECT_CMD]=SOCK_CMD_GET_SAMPLE_BOOK;
 	root[CMD_GETBOOK[GETBOOK_RKTYPE]] = em_rk;
+	root[CMD_GETBOOK[GETBOOK_DATE]] = ui.cbx_xd_time->currentIndex();
 	Json::FastWriter writer;  
 	string temp = writer.write(root);
 	g_Globle.SendTo(temp);
@@ -281,14 +310,11 @@ void CTabDetailDlg::GetProject(Json::Value root)
 void CTabDetailDlg::GetDetails(Json::Value root)
 {
 	int nNum = m_vPro.size();
-	int* n = new int[nNum];
-	for (int i=0;i<nNum;i++)
-		n[i] = 0;
-
 	QString strDate;
 	strDate = root[CMD_BOOKMSG[BOOKMSG_DATE]].asCString();
 	int nYs = root[CMD_BOOKMSG[BOOKMSG_YS]].asInt();
 	double fLs = root[CMD_BOOKMSG[BOOKMSG_LS]].asDouble();
+	double all_money = 0.;
 
 	vector<PRO_DETAIL> vts;
 	if (root.isMember(CMD_RetType[EM_CMD_RETYPE_VALUE]))
@@ -313,36 +339,43 @@ void CTabDetailDlg::GetDetails(Json::Value root)
 							int nSize2 = root2.size();
 							for (int j=0;j<nSize2;j++)//明细遍历
 							{
-								STU_DETAIL stu;
 								Json::Value one2 = root2[j];
 								const char* cstr = one2[CMD_DETAILMSG[EM_DETAIL_MSG_NAME]].asCString();
-								stu.strName=CH(cstr);
-								stu.stridCard = one2[CMD_DETAILMSG[EM_DETAIL_MSG_IDCARD]].asCString();
-								stu.number = one2[CMD_DETAILMSG[EM_DETAIL_MSG_NUMBER]].asInt();
-								proDtl.vDetails.push_back(stu);
-							}
-							//对vDetails容器处理，如有相同姓名的明细则合并
-							for (int j=0;j<proDtl.vDetails.size();j++)
-							{
-								if (proDtl.vDetails.size() >= 2 && j<proDtl.vDetails.size()-1)
+								QString strName=CH(cstr);
+								QString stridCard = one2[CMD_DETAILMSG[EM_DETAIL_MSG_IDCARD]].asCString();
+								QString strDate = one2[CMD_DETAILMSG[EM_DETAIL_MSG_DATE]].asCString();
+								int number = one2[CMD_DETAILMSG[EM_DETAIL_MSG_NUMBER]].asInt();
+								double money = one2[CMD_DETAILMSG[EM_DETAIL_MSG_MONEY]].asDouble();
+								all_money += money;
+
+								if (proDtl.vDetails.contains(strDate))
 								{
-									vector<STU_DETAIL>::iterator it ;
-									vector<STU_DETAIL>::iterator src = proDtl.vDetails.begin()+j;
-									for(it=proDtl.vDetails.begin()+j+1;it!=proDtl.vDetails.end();)
+									QMap<QString, STU_DETAIL> day_alls = proDtl.vDetails[strDate];//1天的所有职工数据
+									if (day_alls.contains(stridCard))
 									{
-										if(src->stridCard == it->stridCard)
-										{
-											src->number+=it->number;
-											it=proDtl.vDetails.erase(it);  
-										}
-										else
-											++it;
+										int has_num = day_alls[stridCard].number;
+										day_alls[stridCard].number = has_num + number;
+										proDtl.vDetails[strDate] = day_alls;
+									}
+									else
+									{
+										STU_DETAIL stu;
+										stu.number = number;
+										stu.strName = strName;
+										day_alls[stridCard] = stu;
+										proDtl.vDetails[strDate] = day_alls;
 									}
 								}
 								else
-									break;
+								{
+									QMap<QString, STU_DETAIL> day_alls;
+									STU_DETAIL stu;
+									stu.number = number;
+									stu.strName = strName;
+									day_alls[stridCard] = stu;
+									proDtl.vDetails[strDate] = day_alls;
+								}
 							}
-							n[i] = proDtl.vDetails.size();
 						}
 					}
 					vts.push_back(proDtl);
@@ -350,12 +383,14 @@ void CTabDetailDlg::GetDetails(Json::Value root)
 			}	
 		}
 	}
-	SetListValue(strDate,nYs,fLs, nNum,n,vts);
+	SetListValue(strDate,nYs,fLs,vts, all_money);
 }
 
 void CTabDetailDlg::InitListCtrl()
 {
 	ui.tableWidget->clear();
+	ui.tableWidget->clearContents();
+	ui.tableWidget->setRowCount(0);
 
 	ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);//整行选择
 	ui.tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);//禁止编辑
@@ -391,21 +426,23 @@ void CTabDetailDlg::InitListCtrl()
 	ui.tableWidget->setHorizontalHeaderLabels(strList);
 }
 
-void CTabDetailDlg::SetListValue(QString strDate,int nYs,double fLs, int nNum,int* n,vector<PRO_DETAIL> vts)
+//nNum:项目个数
+//n:有多少个不同的日期
+void CTabDetailDlg::SetListValue(QString strDate,int nYs,double fLs, const vector<PRO_DETAIL>& vts,double money)
 {
 	ui.tableWidget->clearContents();
+	ui.tableWidget->setRowCount(0);
 
-	int max=0,dex=0;
-	for (int i=0;i<nNum;i++)
+	int max = 0;//最大行数
+	for (int i=0;i<vts.size();i++)
 	{
-		if (n[i]>max)
-		{
-			max = n[i];
-			dex=i;
-		}
+		if (vts[i].vDetails.count() > max)
+			max = vts[i].vDetails.count();
 	}
-	if(max <=0)
-		return;
+
+	QString strmoney = QString::number(money, 'f', 2);
+	ui.label_all_money->setText(strmoney);
+	ui.label_all_money->setStyleSheet("QLabel { color: red; }");
 
 	ui.tableWidget->setRowCount(max+1);
 	//基本信息
@@ -416,31 +453,40 @@ void CTabDetailDlg::SetListValue(QString strDate,int nYs,double fLs, int nNum,in
 	str = QString::number(fLs,'f',2);
 	ui.tableWidget->setItem(0,2,new QTableWidgetItem(str));//令数
 
-	for (int i=0;i<n[dex];i++)
-	{
-		QString str;
-		for (int j=0;j<nNum;j++)
-		{
-			int nTmp = vts[j].vDetails.size();
-			if (i < nTmp)
-				str = QString("%1: %2").arg(vts[j].vDetails[i].strName).arg(vts[j].vDetails[i].number);
-			else
-				str="";
-
-			ui.tableWidget->setItem(i,3+vts[j].ndex,new QTableWidgetItem(str));
-		}
-	}
-
-	for (int i = 0;i<nNum;i++)
+	for (int i = 0; i < vts.size(); i++)
 	{
 		int number_all = 0;
-		int nTmp = vts[i].vDetails.size();
-		for (int j =0;j<nTmp;j++)
+		QString str;
+		PRO_DETAIL onePro = vts[i];
+		QMapIterator<QString, QMap<QString, STU_DETAIL>> day_map(onePro.vDetails);
+		int day_index = 0;//当前第几个日期
+		while (day_map.hasNext())
 		{
-			number_all+=vts[i].vDetails[j].number;
+			day_map.next();
+			str = day_map.key();//date
+			QMap<QString, STU_DETAIL> tails_map = day_map.value();
+			
+			QMapIterator<QString, STU_DETAIL> staff_map(tails_map);
+			int staff_num = 0;//多少个职工
+			while (staff_map.hasNext())
+			{
+				staff_map.next();
+				QString strName = staff_map.value().strName;
+				int number = staff_map.value().number;
+				QString strStaffMsg = QString("%1: %2").arg(strName).arg(number);
+				str += ("\r\n" + strStaffMsg);
+				number_all += number;
+				staff_num++;
+			}
+			int curHeight = ui.tableWidget->rowHeight(day_index);//当前行高度
+			int wantHeight = (staff_num + 1) * 30;//预置高度
+			int realHeight = curHeight > wantHeight ? curHeight : wantHeight;
+			ui.tableWidget->setRowHeight(day_index, realHeight);//设置当前行的高度
+			ui.tableWidget->setItem(day_index, 3 + vts[i].ndex, new QTableWidgetItem(str));
+			day_index++;
 		}
+		//当前项目统计总数
 		str = QString(CH("合计：%1")).arg(number_all);
-		ui.tableWidget->setItem(max,3+vts[i].ndex,new QTableWidgetItem(str));
+		ui.tableWidget->setItem(max, 3 + vts[i].ndex, new QTableWidgetItem(str));
 	}
-	delete[] n;
 }

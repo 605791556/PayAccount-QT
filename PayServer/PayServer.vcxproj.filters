@@ -60,9 +60,6 @@
     <ClInclude Include="dbData.h">
       <Filter>头文件\db</Filter>
     </ClInclude>
-    <ClInclude Include="..\common\globle.h">
-      <Filter>头文件\common</Filter>
-    </ClInclude>
     <ClInclude Include="..\common\common.h">
       <Filter>头文件\common</Filter>
     </ClInclude>
@@ -87,6 +84,12 @@
     <ClInclude Include="..\HP-Socket\Src\Common\crypto\crypto.h">
       <Filter>头文件\common</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\globle.h">
+      <Filter>头文件\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\Base64.h">
+      <Filter>头文件\common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PayServer.cpp">
@@ -101,9 +104,6 @@
     <ClCompile Include="dbData.cpp">
       <Filter>源文件\db</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\globle.cpp">
-      <Filter>源文件\common</Filter>
-    </ClCompile>
     <ClCompile Include="..\common\common.cpp">
       <Filter>源文件\common</Filter>
     </ClCompile>
@@ -114,6 +114,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\HP-Socket\Src\Common\crypto\crypto.cpp">
+      <Filter>源文件\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\globle.cpp">
+      <Filter>源文件\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\Base64.cpp">
       <Filter>源文件\common</Filter>
     </ClCompile>
   </ItemGroup>

@@ -70,7 +70,7 @@ public:
             PayCount_QTClass->setObjectName(QStringLiteral("PayCount_QTClass"));
         PayCount_QTClass->setWindowModality(Qt::NonModal);
         PayCount_QTClass->setEnabled(true);
-        PayCount_QTClass->resize(943, 611);
+        PayCount_QTClass->resize(1188, 707);
         QFont font;
         font.setPointSize(8);
         PayCount_QTClass->setFont(font);

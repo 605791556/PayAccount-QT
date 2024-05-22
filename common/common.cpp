@@ -1,5 +1,6 @@
 //#include "stdafx.h"
 #include "common.h"
+#include "zlib.h"
 
 const char CMD_LOGIN[EM_LOGIN_MAX][CMD_CHAR_MAX]=
 {
@@ -259,7 +260,9 @@ const char CMD_DETAILMSG[EM_DETAIL_MSG_MAX][CMD_CHAR_MAX]=
 	"proid",
 	"name",
 	"idcard",
-	"number"
+	"number",
+	"money",
+	"date"
 };
 
 const char CMD_GETDAYPAY[EM_GET_DAYPAY_MAX][CMD_CHAR_MAX]=
@@ -333,3 +336,76 @@ const char CHART_MONTH[EM_GET_CHART_MONTH_MAX][CMD_CHAR_MAX]=
 	"month",
 	"value"
 };
+
+
+// 将 json_data 压缩为 gzip_data
+std::string CommonFun::compress_string(const std::string& str)
+{
+	z_stream zs;
+	memset(&zs, 0, sizeof(zs));
+
+	if (deflateInit2(&zs, Z_BEST_COMPRESSION, Z_DEFLATED, 15 | 16, 8, Z_DEFAULT_STRATEGY) != Z_OK) {
+		return "";
+	}
+
+	zs.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(str.data()));
+	zs.avail_in = static_cast<uInt>(str.size());
+
+	int ret;
+	char outbuffer[32768];
+	std::string result;
+
+	do {
+		zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
+		zs.avail_out = sizeof(outbuffer);
+
+		ret = deflate(&zs, Z_FINISH);
+		if (result.size() < zs.total_out) {
+			result.append(outbuffer, zs.total_out - result.size());
+		}
+	} while (ret == Z_OK);
+
+	deflateEnd(&zs);
+
+	if (ret != Z_STREAM_END) {
+		return "";
+	}
+
+	return result;
+}
+
+// 解压缩 gzip_data 到 json_data
+std::string CommonFun::decompress_string(const std::string& str)
+{
+	z_stream zs;
+	memset(&zs, 0, sizeof(zs));
+
+	if (inflateInit2(&zs, 16 + MAX_WBITS) != Z_OK) {
+		return "";
+	}
+
+	zs.next_in = reinterpret_cast<Bytef*>(const_cast<char*>(str.data()));
+	zs.avail_in = static_cast<uInt>(str.size());
+
+	int ret;
+	char outbuffer[32768];
+	std::string result;
+
+	do {
+		zs.next_out = reinterpret_cast<Bytef*>(outbuffer);
+		zs.avail_out = sizeof(outbuffer);
+
+		ret = inflate(&zs, 0);
+		if (result.size() < zs.total_out) {
+			result.append(outbuffer, zs.total_out - result.size());
+		}
+	} while (ret == Z_OK);
+
+	inflateEnd(&zs);
+
+	if (ret != Z_STREAM_END) {
+		return "";
+	}
+
+	return result;
+}

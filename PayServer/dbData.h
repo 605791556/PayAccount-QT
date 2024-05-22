@@ -42,7 +42,7 @@ public:
 	bool ModifyBook(CString strID, CString strName,CString strCbs,CString strDate,int nBc1,int nBc2, int nSize1,int nSize2,int nKb, double yz,int ys,int bc,double ls,int yzType,int zyType,int rkType,CString strMsg);
 	bool RkBook(string strListID);
 	bool GetBooks(Json::Value& root,CString strKeyWord,int rkType,EM_DATE_TYPE dateType,int nStart = 0,int nNum = 20);
-	bool GetSampleBooks(Json::Value& root,BOOK_RK rkType);
+	bool GetSampleBooks(Json::Value& root,BOOK_RK rkType, EM_DATE_TYPE dateType);
 	bool _JudgeBook(CString strName, Json::Value& root);
 	//通过bookID获取印张,印数和印张类型
 	bool GetYzAndType(CString strBookID,double& yz,int& ys,int& type);
