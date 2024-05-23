@@ -102,6 +102,21 @@ PayCount_QT::PayCount_QT(QWidget *parent)
 	ui.label->setStyleSheet("color: white");
 
 	showMaximized();
+
+	if (g_Globle.m_nType == TYPE_ONLY_BK)
+	{
+		if (m_pBookMng == nullptr)
+		{
+			m_pBookMng = new CBookMngDlg(this);
+			m_pBookMng->setWindowFlags(m_pBookMng->windowFlags() | Qt::FramelessWindowHint);
+			int x = this->pos().x();
+			int y = this->pos().y();
+			int width = this->width();
+			int height = this->height();
+			m_pBookMng->setGeometry(x, y + 100, width + 2, height - 123);
+		}
+		m_pBookMng->show();
+	}
 }
 
 PayCount_QT::~PayCount_QT()
@@ -127,7 +142,7 @@ void PayCount_QT::InitTabCtrl()
 		ui.tabWidget->insertTab(EM_PAGE_JD, m_pTabProcessDlg, CH("½ø¶È"));
 		ui.tabWidget->setCurrentIndex(EM_PAGE_JD);
 	}
-	else if (g_Globle.m_nType == TYPE_MNG)
+	else if (g_Globle.m_nType == TYPE_MNG || g_Globle.m_nType == TYPE_SUPER)
 	{
 		m_pTabDetailDlg = new CTabDetailDlg;
 		m_pTabWorkDlg = new CTabWorkDayDlg;
@@ -330,10 +345,6 @@ void PayCount_QT::BtnBook()
 {
 	if (g_Globle.m_nType == TYPE_ONLY_BK)
 	{
-		/*QDialog* dlg = new QDialog();
-		dlg->resize(400, 300);
-		dlg->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
-		dlg->show();*/
 		if (m_pBookMng == nullptr)
 		{
 			m_pBookMng = new CBookMngDlg(this);
@@ -343,7 +354,6 @@ void PayCount_QT::BtnBook()
 			m_pBookMng->setGeometry(0, 100, width + 2, height - 123);
 		}
 		m_pBookMng->show();
-		//dlg->raise();
 	}
 	else
 	{

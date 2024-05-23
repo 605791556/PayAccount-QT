@@ -531,13 +531,17 @@ void CPayServerDlg::DoRun(string strData,Json::Value& js,TPkgInfo* pInfo)
 				delete[] pIDs;
 				if(!bLogind)
 				{
-					if (pInfo)
+					bRet = theApp.m_dbData->Login(strUser, strPass, show_pass, js);
+					if (pInfo && bRet)
 					{
-						WaitForSingleObject(m_mutex, INFINITE); 
-						pInfo->user = strUser;
-						ReleaseMutex(m_mutex);
+						bool loginok = js[CMD_LOGINMSG[EM_LOGINMSG_BOK]].asBool();
+						if (loginok)
+						{
+							WaitForSingleObject(m_mutex, INFINITE);
+							pInfo->user = strUser;
+							ReleaseMutex(m_mutex);
+						}
 					}
-					bRet=theApp.m_dbData->Login(strUser,strPass,show_pass,js);
 				}
 			}
 			break;

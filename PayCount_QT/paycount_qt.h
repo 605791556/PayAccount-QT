@@ -8,7 +8,6 @@
 #include "CTabWorkDayDlg.h"
 #include "CTabDetailDlg.h"
 #include "CTabProcessDlg.h"
-#include "CBookMngDlg.h"
 
 enum EM_PAGE_TYPE
 {
@@ -77,7 +76,6 @@ public slots:
 
 private:
 	CBookMngDlg* m_pBookMng = nullptr;
-	QDialog * dlg;
 };
 
 #endif // PAYCOUNT_QT_H
